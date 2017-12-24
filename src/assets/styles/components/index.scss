@@ -1,0 +1,14 @@
+@import "buttons";
+@import "alert";
+
+.alert{
+    &__header{
+        font-size: 16px;
+        margin: 5px 0px;
+    }
+    &__list{
+        padding-left: 20px;
+        font-size: 14px;
+        margin-bottom: 0px;
+    }
+}

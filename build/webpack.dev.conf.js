@@ -19,7 +19,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   devtool: config.dev.devtool,
 
   // these devServer options should be customized in /config/index.js
-  devServer: {
+    devServer: {
     clientLogLevel: 'warning',
     historyApiFallback: true,
     hot: true,
@@ -28,7 +28,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
     overlay: config.dev.errorOverlay
-      ? { warnings: false, errors: true }
+      ? { warnings: true, errors: true }
       : false,
     publicPath: config.dev.assetsPublicPath,
     proxy: config.dev.proxyTable,

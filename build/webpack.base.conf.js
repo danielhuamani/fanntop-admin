@@ -2,6 +2,7 @@
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
+const webpack = require('webpack')
 const vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve (dir) {
@@ -36,21 +37,68 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'styles': resolve('src/assets/styles/')
     }
   },
   module: {
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: vueLoaderConfig
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ],
       },
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ],
       },
+      {
+        test: /\.sass$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader?indentedSyntax'
+        ],
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          loaders: {
+            // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
+            // the "scss" and "sass" values for the lang attribute to the right configs here.
+            // other preprocessors should work out of the box, no loader config like this necessary.
+            'scss': [
+              'vue-style-loader',
+              'css-loader',
+              'sass-loader'
+            ],
+            'sass': [
+              'vue-style-loader',
+              'css-loader',
+              'sass-loader?indentedSyntax'
+            ]
+          }
+          // other vue-loader options go here
+        }
+      },
+      // {
+      //   loader: 'sass-resources-loader',
+      //   options: {
+      //     resources: resolve('src/style/abstract/_variables.scss')
+      //   }
+      // },
+
+      // {
+      //   test: /\.scss$/,
+      //   loaders: ['style', 'css', 'sass'],
+      // },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -74,9 +122,28 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      {
+            test: /\.scss$/,
+            use: [{
+                loader: "style-loader" // creates style nodes from JS strings
+            }, {
+                loader: "css-loader" // translates CSS into CommonJS
+            }, {
+                loader: "sass-loader" // compiles Sass to CSS
+            }]
+      },
     ]
   },
+  // plugins: [
+  //   new webpack.LoaderOptionsPlugin({
+  //     options: {
+  //       scss: {
+  //         import: [path.resolve(__dirname, '../src/assets/styles/main.scss')]
+  //       }
+  //     }
+  //   })
+  // ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).
