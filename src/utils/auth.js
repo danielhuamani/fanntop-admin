@@ -1,12 +1,12 @@
 const TOKEN = 'token'
 const USER_ID = 'user_id'
 const EMAIL = 'email'
+// const EXP = 'exp'
 
 export function jwtDecode (token) {
   let base64Url = token.split('.')[1]
   let base64 = base64Url.replace('-', '+').replace('_', '/')
   let dataUser = JSON.parse(window.atob(base64))
-  console.log(dataUser, 'data')
   return dataUser
 }
 
@@ -14,7 +14,8 @@ export function setTokenData (token) {
   let jsonData = jwtDecode(token)
   setToken(token)
   setUserId(jsonData.user_id)
-  setUserId(jsonData.email)
+  setEmail(jsonData.email)
+  // setExpire(jsonData.exp)
 }
 
 export function setToken (token) {
@@ -39,4 +40,16 @@ export function getUserId () {
 
 export function getEmail () {
   return localStorage.getItem(EMAIL)
+}
+
+// function setExpire (expire) {
+//   if (!expire) { return null; }
+//   const date = new Date(0)
+//   date.setUTCSeconds(token.exp)
+//   return date;
+// }
+
+export function isAuthenticated () {
+  const idToken = getToken()
+  return !!idToken
 }

@@ -1,9 +1,8 @@
 <template>
-  <h3>Dashboard</h3>
+    <h3>dashboard</h3>
 </template>
-
 <script>
   export default {
-    name: 'Dashboard'
+    name: 'dashboard'
   }
 </script>
