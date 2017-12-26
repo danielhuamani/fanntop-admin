@@ -42,6 +42,17 @@ export function getEmail () {
   return localStorage.getItem(EMAIL)
 }
 
+export function removeToken () {
+  return localStorage.removeItem(TOKEN)
+}
+
+export function removeUserId () {
+  return localStorage.removeItem(USER_ID)
+}
+
+export function removeEmail () {
+  return localStorage.removeItem(EMAIL)
+}
 // function setExpire (expire) {
 //   if (!expire) { return null; }
 //   const date = new Date(0)
@@ -52,4 +63,10 @@ export function getEmail () {
 export function isAuthenticated () {
   const idToken = getToken()
   return !!idToken
+}
+
+export function authLogout () {
+  removeToken()
+  removeUserId()
+  removeEmail()
 }

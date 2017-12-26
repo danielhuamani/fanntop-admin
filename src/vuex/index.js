@@ -8,6 +8,11 @@ const store = new Vuex.Store({
       email: '',
       id: ''
     }
+  },
+  getters: {
+    getUser: state => {
+      return state.user.email
+    }
   }
 })
 

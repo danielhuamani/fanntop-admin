@@ -28,6 +28,9 @@
   .fade-enter, .fade-leave-active {
     opacity: 0
   }
+  .content-page{
+    margin-top: 20px;
+  }
 </style>
 <script>
   import sidebar from '@/components/common/sidebar'

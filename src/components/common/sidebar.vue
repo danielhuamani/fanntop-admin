@@ -9,7 +9,7 @@
     <ul class="menu__nav">
       <li class="menu__nav__option">
         <router-link :to="{ name: 'dashboard'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="fa fa-users"></i>
+          <i class="fa fa-home"></i>
           Dashboard
         </router-link>
       </li>
