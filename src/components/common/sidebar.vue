@@ -18,8 +18,14 @@
           <i class="fa fa-users"></i>
           Clientes
         </router-link>
-
       </li>
+      <li class="menu__nav__option">
+        <router-link :to="{ name: 'influencers'}" class="menu__nav__link" active-class="menu__nav__link--active">
+          <i class="fa fa-child"></i>
+          Influenciadores
+        </router-link>
+      </li>
+
     </ul>
   </div>
 </template>

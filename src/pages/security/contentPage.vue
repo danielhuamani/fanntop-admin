@@ -29,7 +29,7 @@
     opacity: 0
   }
   .content-page{
-    margin-top: 20px;
+    margin-top: 40px;
   }
 </style>
 <script>

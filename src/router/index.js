@@ -4,6 +4,7 @@ import Login from '@/pages/security/login'
 import Page from '@/pages/security/contentPage'
 import Dashboard from '@/pages/security/dashboard'
 import clientList from '@/pages/client/clientList'
+import influencersList from '@/pages/influencers/influencersList'
 import middlewareAuth from '@/middleware/auth'
 
 Vue.use(Router)
@@ -32,6 +33,12 @@ export default new Router({
           path: 'client',
           name: 'client',
           component: clientList,
+          beforeEnter: middlewareAuth
+        },
+        {
+          path: 'influencers',
+          name: 'influencers',
+          component: influencersList,
           beforeEnter: middlewareAuth
         }
       ]

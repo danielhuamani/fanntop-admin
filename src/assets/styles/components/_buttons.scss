@@ -1,7 +1,18 @@
+@import "../abstract/variables";
+
 .btn--primary_sm{
     font-size: 16px;
 }
 
 .btn{
     cursor: pointer;
+}
+
+.btn-create{
+    background: #09f;
+    color: $color-white;
+    &:hover{
+        color: $color-white;
+        background: darken( #09f, 5% );
+    }
 }
