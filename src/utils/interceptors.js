@@ -1,45 +1,41 @@
 import Vue from 'vue'
-import { getToken, setTokenData } from './auth'
+import { getToken, setTokenData, authLogout } from './auth'
 
-Vue.axios.interceptors.push((request, next) => {
-    /**
-     * Here we will fecth the token from local storage and
-     * attach it (if exists) to the Authorization header on EVERY request.
-     */
+export default function setupAxios () {
+  Vue.axios.interceptors.request.use((config) => {
     let token = getToken()
-
     if (token) {
-        request.headers = request.headers || {}
-        request.headers.Authorization = `Bearer ${token}`
+      config.headers.common['Authorization'] = 'JWT ' + token
     }
+    return config
+  }, function (error) {
+    return Promise.reject(error)
+  })
 
-    /**
-     * Here is where we can refresh the token.
-     */
-    next((response) => {
-        /**
-         * If we get a 401 response from the API means that we are Unauthorized to
-         * access the requested end point.
-         * This means that probably our token has expired and we need to get a new one.
-         */
-        if (response.status === 401) {
-            return Vue.axios.post('/security/token-refresh/', {'token': token}).then((result) => {
-                // Save the new token on local storage
-                setTokenData(result.data.token)
-
-                // Resend the failed request whatever it was (GET, POST, PATCH) and return its resposne
-                return Vue.axios(request).then((response) => {
-                    return response
-                })
-            })
-            .catch(() => {
-                /**
-                 * We weren't able to refresh the token so the best thing to do is
-                 * logout the user (removing any user information from storage)
-                 * and redirecting to login page
-                 */
-                return router.go({name: 'login'})
-            })
-        }
-    })
-})
+  Vue.axios.interceptors.response.use(function (response) {
+    return response
+  }, function (error) {
+    const originalRequest = error.config
+    const token = getToken()
+    if ((error.response.status === 401 && !originalRequest._retry) || (error.response.data.detail === 'Signature has expired.' && error.response.status === 403)) {
+      originalRequest._retry = true
+      return Vue.axios.post('/security/token-refresh/', {'token': token}).then((result) => {
+        setTokenData(result.data.token)
+        originalRequest.headers['Authorization'] = 'JWT ' + result.data.token
+        return Vue.axios(originalRequest)
+      })
+      .catch((error) => {
+        console.log('errors', error.response.data.errors)
+        authLogout()
+        window.location.href = '/'
+      })
+    }
+    if (error.response.status === 404 && !originalRequest._retry) {
+      originalRequest._retry = true
+      authLogout()
+      window.location.href = '/'
+      return
+    }
+    return Promise.reject(error)
+  })
+}

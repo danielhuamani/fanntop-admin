@@ -2,7 +2,7 @@
     <div class="search_component material d-flex  justify-content-between">
         <div class="input-group search_component__group">
           <span class="input-group-addon" id="basic-addon1">
-            <i class="fa fa-search" aria-hidden="true"></i>
+            <i zclass="fa fa-search" aria-hidden="true"></i>
           </span>
           <input type="search" placeholder="Buscar" class="form-control">
 
