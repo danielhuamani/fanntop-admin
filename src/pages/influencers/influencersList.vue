@@ -2,8 +2,8 @@
     <div class="row">
       <div class="col-12">
         <h3 class="title_page">Influenciadores</h3>
-        <search-global></search-global>
-        <table-global :headerField="headerField" ></table-global>
+        <search-global nameUrl="influencer_create"></search-global>
+        <table-global  v-on:orderBy="orderBy" nameUrl="influencer_detail" :headerField="headerField" :tablaDataList="influencersList" ></table-global>
       </div>
     </div>
 </template>
@@ -22,36 +22,54 @@
           {
             field: 'name',
             name: 'Nombre',
-            col: 'col-3'
+            col: 'col-3',
+            orderBy: true,
+            is_boolean: false
           },
           {
             field: 'slug',
             name: 'Url',
-            col: 'col-3'
+            col: 'col-3',
+            orderBy: true,
+            is_boolean: false
           },
           {
             field: 'position',
             name: 'Posición',
-            col: 'col-3'
+            col: 'col-3',
+            orderBy: true,
+            is_boolean: false
           },
           {
             field: 'is_active',
             name: 'Activo',
-            col: 'col-2'
+            col: 'col-2',
+            orderBy: false,
+            is_boolean: true
           }
         ],
-        influencersList: {}
+        influencersList: {},
+        params: {}
       }
     },
     created () {
+      console.log('entro')
       this.getInfluencers()
     },
     methods: {
       getInfluencers () {
         var self = this
-        this.axios.get('/influencer').then(response => {
+        this.axios.get('/influencer', {
+          params: self.params
+        }).then(response => {
           self.influencersList = response.data
         })
+      },
+      orderBy (order) {
+        this.params = order
+        this.$router.push({name: 'influencer', query: order})
+        this.getInfluencers()
+        console.log(order, 'order')
       }
     }
   }

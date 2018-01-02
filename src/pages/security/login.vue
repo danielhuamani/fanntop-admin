@@ -111,7 +111,6 @@ export default {
         .then((response) => {
           let token = response.data.token
           setTokenData(token)
-          console.log(self.$router, '---', self.$route)
           self.$router.push({name: 'dashboard'})
         })
         .catch((error) => {

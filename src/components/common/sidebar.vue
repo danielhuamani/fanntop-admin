@@ -20,7 +20,7 @@
         </router-link>
       </li>
       <li class="menu__nav__option">
-        <router-link :to="{ name: 'influencers'}" class="menu__nav__link" active-class="menu__nav__link--active">
+        <router-link :to="{ name: 'influencer'}" class="menu__nav__link" active-class="menu__nav__link--active">
           <i class="fa fa-child"></i>
           Influenciadores
         </router-link>
@@ -38,6 +38,9 @@
     width: 250px;
     max-width: 250px;
     height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
     &__container_logo{
       padding: 20px 10px;
       display: flex;

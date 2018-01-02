@@ -5,6 +5,8 @@ import Page from '@/pages/security/contentPage'
 import Dashboard from '@/pages/security/dashboard'
 import clientList from '@/pages/client/clientList'
 import influencersList from '@/pages/influencers/influencersList'
+import influencerDetail from '@/pages/influencers/influencerDetail'
+import influencerCreate from '@/pages/influencers/influencerCreate'
 import middlewareAuth from '@/middleware/auth'
 
 Vue.use(Router)
@@ -36,9 +38,21 @@ export default new Router({
           beforeEnter: middlewareAuth
         },
         {
-          path: 'influencers',
-          name: 'influencers',
+          path: 'influencer',
+          name: 'influencer',
           component: influencersList,
+          beforeEnter: middlewareAuth
+        },
+        {
+          path: 'influencer/:id/update',
+          name: 'influencer_detail',
+          component: influencerDetail,
+          beforeEnter: middlewareAuth
+        },
+        {
+          path: 'influencer/create',
+          name: 'influencer_create',
+          component: influencerCreate,
           beforeEnter: middlewareAuth
         }
       ]

@@ -2,14 +2,13 @@
     <div class="search_component material d-flex  justify-content-between">
         <div class="input-group search_component__group">
           <span class="input-group-addon" id="basic-addon1">
-            <i zclass="fa fa-search" aria-hidden="true"></i>
+            <i class="fa fa-search" aria-hidden="true"></i>
           </span>
           <input type="search" placeholder="Buscar" class="form-control">
 
         </div>
-        <a href="" class="btn btn-create search_component__create">
-          Crear
-        </a>
+        <router-link :to="{ name: nameUrl}" class="btn btn-create search_component__create">crear</router-link>
+
     </div>
 </template>
 <style lang="scss">
@@ -28,6 +27,7 @@
 
 <script>
   export default {
-    name: 'searchGlobal'
+    name: 'searchGlobal',
+    props: ['nameUrl']
   }
 </script>

@@ -1,5 +1,8 @@
+@import "../abstract/variables";
 html, body{
     height: 100%;
+    background: $color-panel;
+
 }
 
 .form-control:focus{
@@ -11,4 +14,53 @@ html, body{
 }
 .material{
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    &__title{
+        margin-bottom: 30px;
+    }
+}
+.custom-control{
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+.page{
+    &__header{
+        padding: 15px;
+        background: $color-white;
+    }
+
+}
+.content{
+    margin-top: 40px;
+    background: $color-white;
+    padding: 15px;
+    &__seo{
+        margin: 10px 0;
+
+    }
+    &__field{
+        margin-bottom: 20px;
+    }
+    &__file{
+        height: 250px;
+        width: 100%;
+        cursor: pointer;
+        &__control{
+            height: 250px;
+            width: 100%;
+            img{
+                display: block;
+                margin: auto;
+                height: 100%;
+                width: auto;
+            }
+        }
+        &__input{
+            width: 100%;
+            height: 250px;
+        }
+    }
+}
+.custom-file-control{
+    cursor: pointer;
 }

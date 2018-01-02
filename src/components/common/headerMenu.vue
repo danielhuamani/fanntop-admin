@@ -30,6 +30,14 @@
         background: $color-white;
         padding: 10px 0px;
         box-shadow: 0 1px 2px rgba(0,0,0,.1);
+        position: fixed;
+        width: calc(100% - 250px );
+        z-index: 200;
+        /* background: red; */
+        top: 0;
+        left: 0;
+        right: 0;
+        margin-left: 250px;
         &__link_menu{
             font-size: 24px;
             cursor: pointer;

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { getToken, setTokenData, authLogout } from './auth'
+import { getToken, setTokenData } from './auth'
 
 export default function setupAxios () {
   Vue.axios.interceptors.request.use((config) => {
@@ -26,16 +26,16 @@ export default function setupAxios () {
       })
       .catch((error) => {
         console.log('errors', error.response.data.errors)
-        authLogout()
-        window.location.href = '/'
+        // authLogout()
+        // window.location.href = '/'
       })
     }
-    if (error.response.status === 404 && !originalRequest._retry) {
-      originalRequest._retry = true
-      authLogout()
-      window.location.href = '/'
-      return
-    }
+    // if (error.response.status === 404 && !originalRequest._retry) {
+    //   originalRequest._retry = true
+    //   authLogout()
+    //   window.location.href = '/'
+    //   return
+    // }
     return Promise.reject(error)
   })
 }
