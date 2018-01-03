@@ -5,7 +5,12 @@
       <h3 class="title_page">Influenciador {{influencerName}}</h3>
       <div class="page__header material d-flex  justify-content-end">
 
+      <a href="" class="btn btn-secondary btn-cancel" @click.prevent="goBack">
+          <i class="fa fa-undo-alt"></i>
+          Regresar
+        </a>
         <a href="" class="btn btn-success btn-save" @click.prevent="saveInfluencer">
+          <i class="fa fa-save"></i>
           Guardar
         </a>
       </div>
@@ -140,6 +145,9 @@
           self.fileImage = response.data.image
           // self.formData.append('image', response.data.image)
         })
+      },
+      goBack () {
+        this.$router.go(-1)
       },
       saveInfluencer () {
         var id = this.$route.params.id

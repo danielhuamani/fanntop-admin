@@ -40,12 +40,12 @@
     props: ['data_alert'],
     data () {
       return {
-        exist_alert: false
+        exist_alert: true
       }
     },
     methods: {
       closeAlert () {
-        this.exist_alert = true
+        this.$emit('clearAlert')
       }
     },
     computed: {
@@ -53,9 +53,16 @@
         this.alert = false
         return (alert + this.data_alert.status)
       },
-      existAlert () {
-        console.log(Object.values(this.data_alert), 'Object.keys(this.data_alert)')
-        return (this.data_alert.status && !this.exist_alert)
+      existAlert (dataAlert) {
+        var alert = false
+        var self = this
+        if (Object.values(this.data_alert.message).length > 0) {
+          setTimeout(function () {
+            self.closeAlert()
+          }, 5000)
+          alert = true
+        }
+        return alert
       }
     }
   }

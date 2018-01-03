@@ -4,7 +4,7 @@
     <sidebar></sidebar>
     <div class="row_wrapper container-fluid">
       <menu-header></menu-header>
-      <alert :data_alert="alert" ></alert>
+      <alert :data_alert="alert" v-on:clearAlert="clearAlert"></alert>
       <div class="content-page">
         <transition name="fade" mode="out-in"  appear>
           <router-view v-on:loading="loading" v-on:alert="message_alert"></router-view>
@@ -54,7 +54,7 @@
         is_loading: false,
         alert: {
           status: '',
-          message: null
+          message: {}
         }
       }
     },
@@ -63,8 +63,10 @@
         this.is_loading = status
       },
       message_alert (status, message) {
-        console.log(status, message)
         this.alert = {status: status, message: message}
+      },
+      clearAlert () {
+        this.alert = {status: '', message: []}
       }
     }
   }

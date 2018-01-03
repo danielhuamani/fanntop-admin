@@ -25,6 +25,18 @@
           Influenciadores
         </router-link>
       </li>
+      <li class="menu__nav__option">
+        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Producto')">
+          <i class="fa fa-shopping-cart"></i>
+          Productos</a>
+        <ul class="menu__nav__sub" v-if="isSubMenu('Producto')">
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'category'}" class="menu__nav__link" active-class="menu__nav__link--active">
+              Categoria
+            </router-link>
+          </li>
+        </ul>
+      </li>
 
     </ul>
   </div>
@@ -55,6 +67,25 @@
       margin: 0;
       margin-top: 20px;
       padding: 0;
+      &__sub{
+        margin: 0;
+        padding: 0;
+        &__option{
+          list-style-type: none;
+          &__link{
+            color: $color-white;
+            padding: 10px 10px 10px 30px;
+            display: block;
+            &:hover, &--active{
+              background: darken( $color-sidebar, 5% );
+              color: $color-white;
+              text-decoration: none;
+              transition: 0.3s ease all;
+              font-weight: bold;
+            }
+          }
+        }
+      }
       &__option{
         list-style-type: none;
       }
@@ -76,6 +107,21 @@
 
 <script>
   export default {
-    name: 'sidebar'
+    name: 'sidebar',
+    data () {
+      return {
+        subMenu: {
+          Producto: false
+        }
+      }
+    },
+    methods: {
+      SubMenu (nameMenu) {
+        this.subMenu[nameMenu] = !this.subMenu[nameMenu]
+      },
+      isSubMenu (nameMenu) {
+        return this.subMenu[nameMenu]
+      }
+    }
   }
 </script>

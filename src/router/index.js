@@ -7,6 +7,8 @@ import clientList from '@/pages/client/clientList'
 import influencersList from '@/pages/influencers/influencersList'
 import influencerDetail from '@/pages/influencers/influencerDetail'
 import influencerCreate from '@/pages/influencers/influencerCreate'
+import categoryList from '@/pages/category/categoryList'
+import categoryCreate from '@/pages/category/categoryCreate'
 import middlewareAuth from '@/middleware/auth'
 
 Vue.use(Router)
@@ -53,6 +55,18 @@ export default new Router({
           path: 'influencer/create',
           name: 'influencer_create',
           component: influencerCreate,
+          beforeEnter: middlewareAuth
+        },
+        {
+          path: 'category',
+          name: 'category',
+          component: categoryList,
+          beforeEnter: middlewareAuth
+        },
+        {
+          path: 'category/create',
+          name: 'category_create',
+          component: categoryCreate,
           beforeEnter: middlewareAuth
         }
       ]

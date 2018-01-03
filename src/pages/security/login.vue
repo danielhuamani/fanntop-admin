@@ -5,9 +5,7 @@
               <div class="row justify-content-center form-login__content-title  align-items-center">
 
                 <img src="../../assets/img/fanntop.svg" width="60" height="60" class=" ">
-                <div class="content form-login__title">
-                  Ingresar
-                </div>
+
               </div>
 
               <form v-on:submit.prevent="loginSubmit" class="ui large form ui form error" method="POST" action=".">
