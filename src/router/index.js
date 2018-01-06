@@ -9,6 +9,7 @@ import influencerDetail from '@/pages/influencers/influencerDetail'
 import influencerCreate from '@/pages/influencers/influencerCreate'
 import categoryList from '@/pages/category/categoryList'
 import categoryCreate from '@/pages/category/categoryCreate'
+import categoryUpdate from '@/pages/category/categoryUpdate'
 import middlewareAuth from '@/middleware/auth'
 
 Vue.use(Router)
@@ -67,6 +68,12 @@ export default new Router({
           path: 'category/create',
           name: 'category_create',
           component: categoryCreate,
+          beforeEnter: middlewareAuth
+        },
+        {
+          path: 'category/:id/update',
+          name: 'category_update',
+          component: categoryUpdate,
           beforeEnter: middlewareAuth
         }
       ]

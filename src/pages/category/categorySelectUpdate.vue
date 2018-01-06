@@ -1,10 +1,10 @@
 <template>
     <div>
         <label for="">Cateogria</label>
-        <div class="select_category " v-for="(categ, index) in data_category">
+        <div class="select_category" v-for="(categ, index) in data_category">
             <select v-on:change="getCategory($event, index)" class="custom-select"  :id="'id_category_' + index">
-                <option value=""  >Seleccione Categoria</option>
-                <option v-for="cat in categ" :value="cat.id">{{cat.name}}</option>
+                <option value="" :selected="index > nivelCategory" >Seleccione Categoria</option>
+                <option v-for="cat in categ" :selected="setSelectedInitial(cat.id)" :value="cat.id">{{cat.name}}</option>
             </select>
         </div>
     </div>
@@ -16,23 +16,25 @@
 </style>
 <script>
   export default {
-    name: 'categorySelect',
+    name: 'categorySelectUpdate',
     props: ['data_category', 'category_value', 'levels_category'],
     data () {
       return {
-        category: this.category_value,
+        category: null,
         category_prev: null,
         categoryAll: [],
         nivelCategory: null
       }
     },
     mounted () {
+      this.category = parseInt(this.category_value)
     },
     methods: {
       lenLevels () {
         return this.levels_category.length > 0
       },
       setSelectedInitial (categoryId) {
+        console.log(categoryId, 'category_id', this.levels_category.indexOf(categoryId))
         if (this.levels_category.indexOf(categoryId) === -1) {
           return null
         } else {
@@ -40,6 +42,7 @@
         }
       },
       getCategory (event, nivelCategory) {
+        console.log(nivelCategory, event.target.value)
         var value = event.target.value
         this.categoryAll.push(value)
         this.nivelCategory = nivelCategory

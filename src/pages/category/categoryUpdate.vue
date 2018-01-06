@@ -54,7 +54,7 @@
               <input type="text" v-model="category.position" class="form-control">
             </div>
             <div class="col-12 content__field">
-              <category-select v-on:load_category="loadCategory" :levels_category="levels_category" :category_value="category_value_initial" :data_category="categoryData"></category-select>
+              <category-select-update v-on:load_category="loadCategory" :levels_category="levels_category" :category_value="category_value_initial" :data_category="categoryData"></category-select-update>
             </div>
           </div>
         </div>
@@ -85,17 +85,17 @@
 </template>
 <script>
   import VueCkeditor from 'vueckeditor'
-  import categorySelect from './categorySelect'
+  import categorySelectUpdate from './categorySelectUpdate'
   export default {
-    name: 'categoryCreate',
+    name: 'categoryUpdate',
     components: {
       VueCkeditor,
-      categorySelect
+      categorySelectUpdate
     },
     data () {
       return {
         category: {
-          id: null,
+          id: '',
           name: '',
           description: '',
           image: '',
@@ -111,16 +111,19 @@
         category_initial: [],
         category_value_initial: null,
         levels_category: [],
-        list_category: {}
+        list_category: {},
+        position: 2
       }
     },
     created () {
       this.getCategories()
+      this.getCategory()
       // this.initialGetCategory(2, categories.data)
-      this.loadCategoryInitial()
+      // this.loadCategoryInitial()
     },
     mounted () {
-
+      console.log(this.$route.params.id, 'id')
+      this.category_value_initial = this.$route.params.id
     },
     methods: {
       fileUpload (e) {
@@ -150,9 +153,10 @@
         self.formData.append('slug', this.category.slug)
         self.formData.append('is_active', this.category.is_active)
         self.formData.append('position', this.category.position)
+        console.log(self.formData)
         this.axios({
-          method: 'post',
-          url: '/category/',
+          method: 'PATCH',
+          url: '/category/' + this.$route.params.id + '/',
           data: self.formData
         }).then(response => {
           this.$emit('alert', 'success', {'Se guardo correctamente': []})
@@ -169,13 +173,26 @@
         var self = this
         this.axios({
           method: 'get',
-          url: '/category/',
+          url: '/category/category_list/',
           params: {
             fields: 'id,name'
           }
         }).then(response => {
-          self.categories = response.data
           self.initialGetCategory(2, response.data)
+        })
+      },
+      getCategory () {
+        var self = this
+        this.axios({
+          method: 'get',
+          url: '/category/' + self.$route.params.id + '/'
+
+        }).then(response => {
+          self.category = response.data
+          self.fileImage = response.data.image
+          self.levels_category = response.data.levels_category
+          self.loadCategoryInitial()
+          // self.initialGetCategory(2, response.data)
         })
       },
       deleteCategory (pos, nivelCategory) {
@@ -188,13 +205,15 @@
       },
       loadCategoryInitial () {
         var self = this
+        console.log(self.levels_category.length, '232')
         if (self.levels_category.length > 0) {
           self.levels_category.forEach(function (val) {
             self.position = self.position + 1
             var pos = self.position
-            this.axios.get('/category/', {
+            self.axios.get('/category/category_list/', {
               params: {
-                category: val
+                category: val,
+                fields: 'id,name'
               }
             })
             .then((res) => {
@@ -222,7 +241,7 @@
         self.category.category = model
         if (value) {
           this.category_value_initial = value
-          this.axios.get('/category/', {
+          this.axios.get('/category/category_list/', {
             params: {
               category: value
             }

@@ -3,7 +3,7 @@
       <div class="col-12">
         <h3 class="title_page">Categorias</h3>
         <search-global nameUrl="category_create"></search-global>
-        <table-global  v-on:orderBy="orderBy" nameUrl="influencer_detail" :headerField="headerField" :tablaDataList="dataList" ></table-global>
+        <table-global  v-on:orderBy="orderBy" nameUrl="category_update" :headerField="headerField" :tablaDataList="dataList" ></table-global>
       </div>
     </div>
 </template>
