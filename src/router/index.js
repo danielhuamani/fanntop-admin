@@ -2,17 +2,23 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/security/login'
 import Page from '@/pages/security/contentPage'
-import Dashboard from '@/pages/security/dashboard'
-import clientList from '@/pages/client/clientList'
-import influencersList from '@/pages/influencers/influencersList'
-import influencerDetail from '@/pages/influencers/influencerDetail'
-import influencerCreate from '@/pages/influencers/influencerCreate'
-import categoryList from '@/pages/category/categoryList'
-import categoryCreate from '@/pages/category/categoryCreate'
-import categoryUpdate from '@/pages/category/categoryUpdate'
-import middlewareAuth from '@/middleware/auth'
+import categoryRouter from './category'
+import dashboardRouter from './dashboard'
+import clientRouter from './client'
+import influencerRouter from './influencer'
+import attributeRouter from './attribute'
+import productRouter from './product'
+import familyRouter from './family'
 
 Vue.use(Router)
+const routerChildren = [
+  ...dashboardRouter,
+  ...clientRouter,
+  ...categoryRouter,
+  ...influencerRouter,
+  ...attributeRouter,
+  ...productRouter,
+  ...familyRouter]
 
 export default new Router({
   mode: 'history',
@@ -27,56 +33,7 @@ export default new Router({
       name: 'page',
       component: Page,
       auth: true,
-      children: [
-        {
-          path: 'dashboard',
-          component: Dashboard,
-          name: 'dashboard',
-          beforeEnter: middlewareAuth
-        },
-        {
-          path: 'client',
-          name: 'client',
-          component: clientList,
-          beforeEnter: middlewareAuth
-        },
-        {
-          path: 'influencer',
-          name: 'influencer',
-          component: influencersList,
-          beforeEnter: middlewareAuth
-        },
-        {
-          path: 'influencer/:id/update',
-          name: 'influencer_detail',
-          component: influencerDetail,
-          beforeEnter: middlewareAuth
-        },
-        {
-          path: 'influencer/create',
-          name: 'influencer_create',
-          component: influencerCreate,
-          beforeEnter: middlewareAuth
-        },
-        {
-          path: 'category',
-          name: 'category',
-          component: categoryList,
-          beforeEnter: middlewareAuth
-        },
-        {
-          path: 'category/create',
-          name: 'category_create',
-          component: categoryCreate,
-          beforeEnter: middlewareAuth
-        },
-        {
-          path: 'category/:id/update',
-          name: 'category_update',
-          component: categoryUpdate,
-          beforeEnter: middlewareAuth
-        }
-      ]
+      children: routerChildren
     }
   ]
 })

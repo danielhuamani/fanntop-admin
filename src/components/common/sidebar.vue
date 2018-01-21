@@ -31,8 +31,23 @@
           Productos</a>
         <ul class="menu__nav__sub" v-if="isSubMenu('Producto')">
           <li class="menu__nav__sub__option">
-            <router-link :to="{ name: 'category'}" class="menu__nav__link" active-class="menu__nav__link--active">
+            <router-link :to="{ name: 'product'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Catalogo
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'category'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               Categoria
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'family'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Grupo Atributos
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'attribute'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Atributos
             </router-link>
           </li>
         </ul>
@@ -72,17 +87,17 @@
         padding: 0;
         &__option{
           list-style-type: none;
-          &__link{
+        }
+        &__link{
+          color: $color-white;
+          padding: 10px 10px 10px 30px;
+          display: block;
+          &:hover, &--active{
+            background: darken( $color-sidebar, 5% );
             color: $color-white;
-            padding: 10px 10px 10px 30px;
-            display: block;
-            &:hover, &--active{
-              background: darken( $color-sidebar, 5% );
-              color: $color-white;
-              text-decoration: none;
-              transition: 0.3s ease all;
-              font-weight: bold;
-            }
+            text-decoration: none;
+            transition: 0.3s ease all;
+            font-weight: bold;
           }
         }
       }

@@ -254,6 +254,7 @@
             }
           })
         } else {
+          this.category_value_initial = value
           this.deleteCategory(self.position, nivelCategory)
         }
       }

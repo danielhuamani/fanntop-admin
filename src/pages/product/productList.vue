@@ -1,20 +1,20 @@
 <template>
     <div class="row">
       <div class="col-12">
-        <h3 class="title_page">Categorias</h3>
-        <search-global nameUrl="category_create"></search-global>
-        <table-nivel-global  v-on:orderBy="orderBy" nameUrl="category_update" :headerField="headerField" :tablaDataList="dataList" ></table-nivel-global>
+        <h3 class="title_page">Product</h3>
+        <search-global nameUrl="product_create"></search-global>
+        <table-global  v-on:orderBy="orderBy" nameUrl="product_create" :headerField="headerField" :tablaDataList="influencersList" ></table-global>
       </div>
     </div>
 </template>
 <script>
   import searchGlobal from '@/componentsGlobals/search'
-  import tableNivelGlobal from '@/componentsGlobals/tableNivel'
+  import tableGlobal from '@/componentsGlobals/table'
   export default {
-    name: 'categoryList',
+    name: 'influencers',
     components: {
       searchGlobal,
-      tableNivelGlobal
+      tableGlobal
     },
     data () {
       return {
@@ -48,28 +48,27 @@
             is_boolean: true
           }
         ],
-        dataList: {},
+        influencersList: {},
         params: {}
       }
     },
     created () {
       console.log('entro')
-      this.getData()
+      this.getInfluencers()
     },
     methods: {
-      getData () {
+      getInfluencers () {
         var self = this
-        self.params['category'] = 'category'
-        this.axios.get('/category', {
+        this.axios.get('/product', {
           params: self.params
         }).then(response => {
-          self.dataList = response.data
+          self.influencersList = response.data
         })
       },
       orderBy (order) {
         this.params = order
-        this.$router.push({name: 'category', query: order})
-        this.getData()
+        this.$router.push({name: 'product', query: order})
+        this.getInfluencers()
         console.log(order, 'order')
       }
     }

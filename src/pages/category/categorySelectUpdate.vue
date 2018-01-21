@@ -3,7 +3,7 @@
         <label for="">Cateogria</label>
         <div class="select_category" v-for="(categ, index) in data_category">
             <select v-on:change="getCategory($event, index)" class="custom-select"  :id="'id_category_' + index">
-                <option value="" :selected="index > nivelCategory" >Seleccione Categoria</option>
+                <option value="" :selected="index > nivelCategory || !category_value " >Seleccione Categoria</option>
                 <option v-for="cat in categ" :selected="setSelectedInitial(cat.id)" :value="cat.id">{{cat.name}}</option>
             </select>
         </div>
@@ -34,7 +34,7 @@
         return this.levels_category.length > 0
       },
       setSelectedInitial (categoryId) {
-        console.log(categoryId, 'category_id', this.levels_category.indexOf(categoryId))
+        console.log(categoryId, 'category_id', this.levels_category, this.levels_category.indexOf(categoryId), 'selected')
         if (this.levels_category.indexOf(categoryId) === -1) {
           return null
         } else {
