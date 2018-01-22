@@ -65,7 +65,7 @@
         const id = this.$route.params.id
         const self = this
         if (id) {
-          this.axios.get('/family/' + id + '/', {
+          this.axios.get('/family/family/' + id + '/', {
           }).then(response => {
             self.family = response.data
           })

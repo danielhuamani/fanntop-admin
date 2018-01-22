@@ -37,7 +37,7 @@
                   </label>
                 </div>
                 <div class="col-1">
-                  <i class="fa fa-edit icon_edit"></i>
+                  <i class="fa fa-edit icon_edit" data-toggle="modal" data-target="#exampleModalCenter" ></i>
                 </div>
                 <div class="col-1">
                   <i class="fa fa-times icon_delete"></i>
@@ -46,19 +46,23 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
+    <modal ></modal>
   </div>
 </template>
 
 <script>
+  import modal from '@/componentsGlobals/modal'
   import familyGroupAdd from './familyGroupAdd'
   import familyGroupHeaderRead from './familyGroupHeaderRead'
   export default {
     name: 'familyGroupRead',
     components: {
       familyGroupAdd,
-      familyGroupHeaderRead
+      familyGroupHeaderRead,
+      modal
     },
     data () {
       return {

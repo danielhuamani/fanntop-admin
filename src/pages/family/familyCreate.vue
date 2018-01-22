@@ -9,9 +9,7 @@
         </router-link>
       </div>
       <div class="d-flex  ">
-        <div class="col-4 ">
-          <family-name-edit></family-name-edit>
-        </div>
+        <family-name-edit></family-name-edit>
        <!--  <div class="col-8 second_element">
           <div class="row  material content">
             <div class="col-12 content__field">
