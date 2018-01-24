@@ -20,8 +20,21 @@
         </div>
         <div class="row attributes_group">
           <div class="col-12" v-for='family_group in familyGroupList'>
-            <familyGroupHeaderRead :attrName='family_group.name' :attrId='family_group.id' :attrPosition='family_group.position' v-on:editGroupFamily="editGroupFamily">
-            </familyGroupHeaderRead>
+            <div class="row attributes_info__sub_header align-items-center">
+                <div class="col-10" >
+                    <h6 class="">{{family_group.name}}</h6>
+                </div>
+
+                <div class="col-1" >
+                    <i class="fa fa-edit icon_edit " data-toggle="modal" @click="modalData(family_group.id)"
+                    data-target="#exampleModalCenter">
+                    </i>
+                </div>
+                <div class="col-1" >
+                    <i class="fa fa-times icon_delete"></i>
+                </div>
+
+            </div>
 
             <div class="attributes_info__attr">
               <div class="row attributes_info__attr__item">
@@ -37,7 +50,7 @@
                   </label>
                 </div>
                 <div class="col-1">
-                  <i class="fa fa-edit icon_edit" data-toggle="modal" data-target="#exampleModalCenter" ></i>
+                  <i class="fa fa-edit icon_edit"  ></i>
                 </div>
                 <div class="col-1">
                   <i class="fa fa-times icon_delete"></i>
@@ -49,12 +62,13 @@
 
       </div>
     </div>
-    <modal ></modal>
+    <family-group-modal v-if="showModal" :show="showModal" @close="showModal = false" :modalFamilyGroupId='modalFamilyGroupId' :urlFamilyGroup='urlFamilyGroup'>
+    </family-group-modal>
   </div>
 </template>
 
 <script>
-  import modal from '@/componentsGlobals/modal'
+  import familyGroupModal from './familyGroupModal'
   import familyGroupAdd from './familyGroupAdd'
   import familyGroupHeaderRead from './familyGroupHeaderRead'
   export default {
@@ -62,20 +76,23 @@
     components: {
       familyGroupAdd,
       familyGroupHeaderRead,
-      modal
+      familyGroupModal
     },
     data () {
       return {
-        familyGroupList: []
+        familyGroupList: [],
+        modalFamilyGroupId: '',
+        urlFamilyGroup: '/family/family-group/',
+        showModal: false
       }
     },
-    created () {
+    mounted () {
       this.getFamilyGroup()
     },
     methods: {
       getFamilyGroup () {
         var self = this
-        this.axios.get('/family/family-group/', {
+        this.axios.get(self.urlFamilyGroup, {
           params: {
             'family': self.$route.params.id
           }
@@ -88,6 +105,23 @@
       },
       editGroupFamily () {
         this.getFamilyGroup()
+      },
+      clearModalData () {
+
+      },
+      existModal () {
+        if (this.modalFamilyGroupId) {
+          return true
+        }
+        return false
+      },
+      close () {
+        this.modalFamilyGroupId = ''
+      },
+      modalData (id) {
+        this.showModal = true
+        this.modalFamilyGroupId = id
+        return this.modalFamilyGroupId
       }
     }
   }

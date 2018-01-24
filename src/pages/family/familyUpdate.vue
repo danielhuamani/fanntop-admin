@@ -85,7 +85,6 @@
   import VueCkeditor from 'vueckeditor'
   import familyNameUpdate from '@/components/family/familyNameUpdate'
   import familyNameRead from '@/components/family/familyNameRead'
-  import familyGroupUpdate from '@/components/family/familyGroupUpdate'
   import familyGroupRead from '@/components/family/familyGroupRead'
   export default {
     name: 'familyUpdate',
@@ -93,7 +92,6 @@
       VueCkeditor,
       familyNameUpdate,
       familyNameRead,
-      familyGroupUpdate,
       familyGroupRead
     },
     data () {
