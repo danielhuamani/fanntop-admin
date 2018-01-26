@@ -48,6 +48,20 @@
                 <option v-for="influencer in influencers" :value="influencer.id">{{influencer.name}}</option>
               </select>
             </div>
+            <div class="col-12 content__field">
+              <label for="">Categoria</label>
+              <select  class="custom-select" v-model='product.category'>
+                <option value=""  >Seleccione Categoria</option>
+                <option v-for="category in categories" :value="category.id">{{category.name}}</option>
+              </select>
+            </div>
+            <div class="col-12 content__field">
+              <label for="">Grupo de Atributo</label>
+              <select  class="custom-select" v-model='product.family' multiple>
+                <option value=""  >Seleccione Grupo</option>
+                <option v-for="family in families" :value="family.id">{{family.name}}</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -78,7 +92,7 @@
 <script>
   import VueCkeditor from 'vueckeditor'
   export default {
-    name: 'categoryCreate',
+    name: 'ProductCreate',
     components: {
       VueCkeditor
     },
@@ -93,17 +107,21 @@
           meta_description: '',
           slug: '',
           category: '',
-          influencer: ''
+          influencer: '',
+          family: ''
         },
         fileImage: '',
         formData: new FormData(),
         categories: [],
-        influencers: []
+        influencers: [],
+        families: []
 
       }
     },
     created () {
       this.getInfluencers()
+      this.getCategories()
+      this.getFamilies()
     },
     mounted () {
 
@@ -134,6 +152,26 @@
           }
         }).then(response => {
           self.influencers = response.data
+        })
+      },
+      getCategories () {
+        var self = this
+        this.axios.get('/category', {
+          params: {
+            fields: 'id,name'
+          }
+        }).then(response => {
+          self.categories = response.data
+        })
+      },
+      getFamilies () {
+        var self = this
+        this.axios.get('/family/family/', {
+          params: {
+            fields: 'id,name'
+          }
+        }).then(response => {
+          self.families = response.data
         })
       },
       saveCategory () {

@@ -21,13 +21,15 @@
         <div class="row attributes_group">
           <div class="col-12" v-for='family_group in familyGroupList'>
             <div class="row attributes_info__sub_header align-items-center">
-                <div class="col-10" >
+                <div class="col-9" >
                     <h6 class="">{{family_group.name}}</h6>
                 </div>
-
                 <div class="col-1" >
-                    <i class="fa fa-edit icon_edit " data-toggle="modal" @click="modalData(family_group.id)"
-                    data-target="#exampleModalCenter">
+                    <i class="fa fa-plus icon_add" @click="modalAttrAddData(family_group.id)"></i>
+                </div>
+                <div class="col-1" >
+                    <i class="fa fa-edit icon_edit " @click="modalData(family_group.id)"
+                    >
                     </i>
                 </div>
                 <div class="col-1" >
@@ -37,17 +39,16 @@
             </div>
 
             <div class="attributes_info__attr">
-              <div class="row attributes_info__attr__item">
+              <div class="row attributes_info__attr__item" v-for="attr in family_group.familygroup_familygroupatribute">
                 <div class="col-6">
                   <p class=" attributes_info__attr__value">
-                    Marca
+                    {{attr.name_attr}}
                   </p>
                 </div>
                 <div class="col-4">
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input">
-                    <span class="custom-control-indicator"></span>
-                  </label>
+                  <div class="status" :class='{"status--active" : attr.is_required}'>
+
+                  </div>
                 </div>
                 <div class="col-1">
                   <i class="fa fa-edit icon_edit"  ></i>
@@ -62,28 +63,37 @@
 
       </div>
     </div>
-    <family-group-modal v-if="showModal" :show="showModal" @close="showModal = false" :modalFamilyGroupId='modalFamilyGroupId' :urlFamilyGroup='urlFamilyGroup'>
+    <family-group-modal v-if="showGroupFamilyModal" :show="showGroupFamilyModal"
+    @close="showGroupFamilyModal = false" :modalFamilyGroupId='modalFamilyGroupId'
+    :urlFamilyGroup='urlFamilyGroup' @reloadFamilyGroup='reloadFamilyGroup'>
     </family-group-modal>
+    <family-group-attr-add-modal v-if="showGroupFamilyAttrAddModal" :show="showGroupFamilyAttrAddModal"
+    @close="showGroupFamilyAttrAddModal = false" :modalFamilyGroupId='modalFamilyGroupId'
+    :urlListAttr='urlListAttr' :urlFamilyGroupAttr='urlFamilyGroupAttr' @reloadFamilyGroup='reloadFamilyGroup'>
+  </family-group-attr-add-modal>
   </div>
 </template>
 
 <script>
   import familyGroupModal from './familyGroupModal'
+  import familyGroupAttrAddModal from './familyGroupAttrAddModal'
   import familyGroupAdd from './familyGroupAdd'
-  import familyGroupHeaderRead from './familyGroupHeaderRead'
   export default {
     name: 'familyGroupRead',
     components: {
       familyGroupAdd,
-      familyGroupHeaderRead,
-      familyGroupModal
+      familyGroupModal,
+      familyGroupAttrAddModal
     },
     data () {
       return {
         familyGroupList: [],
         modalFamilyGroupId: '',
         urlFamilyGroup: '/family/family-group/',
-        showModal: false
+        urlFamilyGroupAttr: '/family/family-group-attribute/',
+        urlListAttr: '/family/family_attribute/',
+        showGroupFamilyModal: false,
+        showGroupFamilyAttrAddModal: false
       }
     },
     mounted () {
@@ -103,23 +113,20 @@
       addGroupFamily () {
         this.getFamilyGroup()
       },
-      editGroupFamily () {
+      reloadFamilyGroup () {
         this.getFamilyGroup()
       },
+
       clearModalData () {
 
       },
-      existModal () {
-        if (this.modalFamilyGroupId) {
-          return true
-        }
-        return false
-      },
-      close () {
-        this.modalFamilyGroupId = ''
-      },
       modalData (id) {
-        this.showModal = true
+        this.showGroupFamilyModal = true
+        this.modalFamilyGroupId = id
+        return this.modalFamilyGroupId
+      },
+      modalAttrAddData (id) {
+        this.showGroupFamilyAttrAddModal = true
         this.modalFamilyGroupId = id
         return this.modalFamilyGroupId
       }

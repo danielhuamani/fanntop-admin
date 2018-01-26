@@ -64,9 +64,7 @@ html, body{
         margin: 10px 0;
 
     }
-    .custom-select{
-        width: 100%;
-    }
+
     label{
         display: block;
     }
@@ -105,6 +103,9 @@ html, body{
     .content{
         margin-left: 20px;
     }
+}
+.custom-select{
+  width: 100%;
 }
  .fa{
     cursor: pointer;

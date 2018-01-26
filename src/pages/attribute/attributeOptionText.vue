@@ -58,8 +58,8 @@
     methods: {
       addOption () {
         if (this.optionValue) {
+          this.$emit('setDataOptions', {'position': 0, 'option': this.optionValue})
           this.optionValue = ''
-          this.$emit('setDataOptions', {'position': 0, 'option': this.optionValue, 'attr': this.color})
         }
       },
       removeOption (index) {

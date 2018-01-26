@@ -78,7 +78,7 @@
   import attributeOptionText from './attributeOptionText'
   import attributeOptionColour from './attributeOptionColour'
   export default {
-    name: 'categoryCreate',
+    name: 'attributeCreate',
     components: {
       VueCkeditor,
       attributeOptionText,
@@ -145,6 +145,13 @@
       dataOptions (dataOptions) {
         console.log(dataOptions, 'dataOptions')
         this.attribute.attribute_options = dataOptions
+      },
+      setDataOptions (dataOptions) {
+        console.log(dataOptions, 'dataOptions')
+        this.attribute.attribute_options.push(dataOptions)
+      },
+      deleteDataOptions (index) {
+        this.$delete(this.attribute.attribute_options, index)
       }
 
     },

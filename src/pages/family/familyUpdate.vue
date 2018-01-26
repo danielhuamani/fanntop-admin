@@ -11,10 +11,8 @@
       <div class="d-flex  ">
         <component v-bind:is="statusFamily" v-on:changeStatusFamily='changeStatusFamily'>
         </component>
-        <component v-bind:is="statusFamilyGroup" >
-        </component>
-
-
+        <family-group-read>
+        </family-group-read>
       </div>
     </div>
   </div>
@@ -77,8 +75,18 @@
   .icon_delete{
     color: $color-danger;
   }
-  .icon_save{
+  .icon_add{
     color: $color-success;
+  }
+  .status{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: $color-gray-cl;
+    &--active{
+      background: $color-success;
+
+    }
   }
 </style>
 <script>
@@ -108,7 +116,6 @@
       }
     },
     created () {
-      this.getAttribute()
     },
     mounted () {
 
