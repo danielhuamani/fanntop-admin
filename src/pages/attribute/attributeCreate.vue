@@ -147,7 +147,6 @@
         this.attribute.attribute_options = dataOptions
       },
       setDataOptions (dataOptions) {
-        console.log(dataOptions, 'dataOptions')
         this.attribute.attribute_options.push(dataOptions)
       },
       deleteDataOptions (index) {

@@ -1,9 +1,9 @@
 <template>
     <div class="row">
       <div class="col-12">
-        <h3 class="title_page">Grupo Atributos</h3>
-        <search-global nameUrl="family_create"></search-global>
-        <table-global  v-on:orderBy="orderBy" nameUrl="family_update" :headerField="headerField" :tablaDataList="dataList" ></table-global>
+        <h3 class="title_page">Home Banner</h3>
+        <search-global nameUrl="home_create"></search-global>
+        <table-global v-on:orderBy="orderBy"  nameUrl="home_update" :headerField="headerField" :tablaDataList="dataList" ></table-global>
       </div>
     </div>
 </template>
@@ -11,7 +11,7 @@
   import searchGlobal from '@/componentsGlobals/search'
   import tableGlobal from '@/componentsGlobals/table'
   export default {
-    name: 'influencers',
+    name: 'home',
     components: {
       searchGlobal,
       tableGlobal
@@ -22,17 +22,23 @@
           {
             field: 'name',
             name: 'Nombre',
-            col: 'col-10',
+            col: 'col-6',
             orderBy: true,
-            is_boolean: false,
             type: 'text'
+          },
+          {
+            field: 'image_crop',
+            name: 'Image',
+            col: 'col-4',
+            is_image: true,
+            orderBy: false,
+            type: 'image'
           },
           {
             field: 'is_active',
             name: 'Activo',
             col: 'col-1',
             orderBy: false,
-            is_boolean: true,
             type: 'boolean'
           }
         ],
@@ -41,12 +47,12 @@
       }
     },
     created () {
-      this.getAttribute()
+      this.getHomeBanners()
     },
     methods: {
-      getAttribute () {
+      getHomeBanners () {
         var self = this
-        this.axios.get('/family/family', {
+        this.axios.get('/pages/home/', {
           params: self.params
         }).then(response => {
           self.dataList = response.data
@@ -54,10 +60,11 @@
       },
       orderBy (order) {
         this.params = order
-        this.$router.push({name: 'family', query: order})
-        this.getAttribute()
+        this.$router.push({name: 'home', query: order})
+        this.getHomeBanners()
         console.log(order, 'order')
       }
     }
+
   }
 </script>

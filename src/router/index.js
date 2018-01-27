@@ -9,7 +9,7 @@ import influencerRouter from './influencer'
 import attributeRouter from './attribute'
 import productRouter from './product'
 import familyRouter from './family'
-
+import homeRouter from './home'
 Vue.use(Router)
 const routerChildren = [
   ...dashboardRouter,
@@ -18,7 +18,8 @@ const routerChildren = [
   ...influencerRouter,
   ...attributeRouter,
   ...productRouter,
-  ...familyRouter]
+  ...familyRouter,
+  ...homeRouter]
 
 export default new Router({
   mode: 'history',

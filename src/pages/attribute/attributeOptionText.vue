@@ -7,11 +7,9 @@
         <a href="" class="btn btn-info" @click.prevent='addOption'>Agregar</a>
       </div>
     </div>
-    <div class="options" v-if='dataOptions && typeAttribute === "SELECT_SINGLE" || typeAttribute === "SELECT_MULTIPLE"'>
-      <div class="options__value" v-for='option, index in getDataOptions'>
-        <p class="options__value__text">{{option.option}}</p>
-        <i class="fa fa-times options__value__close" @click="removeOption(index)"></i>
-      </div>
+    <div class="options__value" v-for='option, index in getDataOptions'>
+      <p class="options__value__text">{{option.option}}</p>
+      <i class="fa fa-times options__value__close" @click="removeOption(index)"></i>
     </div>
   </div>
 </template>

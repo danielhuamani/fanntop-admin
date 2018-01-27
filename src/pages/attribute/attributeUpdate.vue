@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Nuevo Atributo</h3>
+      <h3 class="title_page">Actualizar Atributo</h3>
       <div class="page__header material d-flex  justify-content-end">
         <router-link :to="{ name: 'attribute'}" class="btn btn-secondary btn-cancel">
           <i class="fa fa-undo-alt"></i>

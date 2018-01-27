@@ -24,28 +24,32 @@
             name: 'Nombre',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false
+            is_boolean: false,
+            type: 'text'
           },
           {
             field: 'slug',
             name: 'Url',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false
+            is_boolean: false,
+            type: 'text'
           },
           {
             field: 'position',
             name: 'Posición',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false
+            is_boolean: false,
+            type: 'text'
           },
           {
             field: 'is_active',
             name: 'Activo',
             col: 'col-2',
             orderBy: false,
-            is_boolean: true
+            is_boolean: true,
+            type: 'boolean'
           }
         ],
         dataList: {},

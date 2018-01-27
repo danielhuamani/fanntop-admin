@@ -43,14 +43,24 @@
             <div class="col-12 content__field">
               <label for="">Imagen</label>
               <div class="content__image">
-                <label class="custom-file content__file">
-                <input type="file" id="file" class="custom-file-input content__file__input"  @change="fileUpload">
+                <label class="custom-file content__file" for="file_banner">
+                <input type="file" id="file_banner" class="custom-file-input content__file__input"  @change="fileUpload($event, 'image')">
                 <span class="custom-file-control content__file__control">
                   <img :src="fileImage" alt="" width="225" height="225">
                 </span>
                 </label>
               </div>
-
+            </div>
+            <div class="col-12 content__field">
+              <label for="">Banner</label>
+              <div class="content__image">
+                <label class="custom-file content__file" id="file_banner">
+                <input type="file" id="file_banner" class="custom-file-input content__file__input"  @change="fileUpload($event, 'banner')">
+                <span class="custom-file-control content__file__control">
+                  <img :src="fileImageBanner" alt="" width="225" height="225">
+                </span>
+                </label>
+              </div>
             </div>
           </div>
 
@@ -95,10 +105,12 @@
           image: '',
           title: '',
           meta_description: '',
-          slug: ''
+          slug: '',
+          banner: ''
         },
         influencerName: '',
         fileImage: '',
+        fileImageBanner: '',
         formData: new FormData()
       }
     },
@@ -108,22 +120,33 @@
 
     },
     methods: {
-      fileUpload (e) {
+      fileUpload (e, typeImage) {
+        console.log(typeImage, 'typeImage')
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {
           return
         }
-        return this.createImage(files[0])
+        // console.log(files[0])
+        // var x = files[0]
+        return this.createImage(files[0], typeImage)
+      // return new Buffer(x)
       },
-      createImage (file) {
+      createImage (file, typeImage) {
+      // var image = new Image()
         var reader = new FileReader()
         var vm = this
 
         reader.onload = (e) => {
-          vm.fileImage = reader.result
+          // vm.image = e.target.result
+          if (typeImage === 'image') {
+            vm.fileImage = reader.result
+          }
+          if (typeImage === 'banner') {
+            vm.fileImageBanner = reader.result
+          }
         }
         reader.readAsDataURL(file)
-        this.formData.append('image', file)
+        this.formData.append(typeImage, file)
       },
       saveInfluencer () {
         var self = this

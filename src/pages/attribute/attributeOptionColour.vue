@@ -8,12 +8,10 @@
         <a href="" class="btn btn-info" @click.prevent='addOption'>Agregar</a>
       </div>
     </div>
-    <div class="options" v-if='dataOptions && typeAttribute === "COLOUR"'>
-      <div class="options__value"  v-for='option, index in getDataOptions'>
-        <span :style='{background: option.attr}' class="options__value__colour">{{option.attr}}</span>
-        <p class="options__value__text">{{option.option}}</p>
-        <i class="fa fa-times options__value__close" @click="removeOption(index)"></i>
-      </div>
+    <div class="options__value"  v-for='option, index in getDataOptions'>
+      <span :style='{background: option.attr}' class="options__value__colour">{{option.attr}}</span>
+      <p class="options__value__text">{{option.option}}</p>
+      <i class="fa fa-times options__value__close" @click="removeOption(index)"></i>
     </div>
   </div>
 </template>
@@ -51,13 +49,13 @@
 
 <script>
   export default {
-    name: 'attributeOptionText',
+    name: 'attributeOptionColour',
     props: ['getDataOptions', 'typeAttribute'],
     data () {
       return {
         dataOptions: [],
         optionValue: '',
-        color: '#000'
+        color: '#000000'
       }
     },
     mounted () {
@@ -65,9 +63,9 @@
     methods: {
       addOption () {
         if (this.optionValue) {
-          this.optionValue = ''
-          this.color = '#000'
           this.$emit('setDataOptions', {'position': 0, 'option': this.optionValue, 'attr': this.color})
+          this.optionValue = ''
+          this.color = '#000000'
         }
       },
       removeOption (index) {

@@ -14,15 +14,22 @@
       </div>
       <div class="d-flex  ">
         <div class="col-8 ">
-          <div class="row material content">
-            <div class="col-12 content__field">
-              <label for="">Nombre</label>
-              <input type="text" v-model="product.name" class="form-control">
+          <div class="row  ">
+            <div class="col-12 material content">
+              <h5 class="material__title">Informacion Basica</h5>
+              <div class="row">
+                <div class="col-12 content__field">
+                  <label for="">Nombre</label>
+                  <input type="text" v-model="product.name" class="form-control">
+                </div>
+                <div class="col-12 content__field">
+                  <label for="">Descripción</label>
+                  <VueCkeditor height='140' language='es' v-model="product.description"></VueCkeditor>
+                </div>
+              </div>
             </div>
-            <div class="col-12 content__field">
-              <label for="">Descripción</label>
-              <VueCkeditor language='es' v-model="product.description"></VueCkeditor>
-            </div>
+            <productVariant v-if="product.attribute.length > 0" :is_variation="product.is_variation" :attribute_ids='product.attribute'>
+            </productVariant>
           </div>
 
         </div>
@@ -57,10 +64,30 @@
             </div>
             <div class="col-12 content__field">
               <label for="">Grupo de Atributo</label>
-              <select  class="custom-select" v-model='product.family' multiple>
+              <select  class="custom-select" v-model='product.family' @change="getAttributesVariation" multiple>
                 <option value=""  >Seleccione Grupo</option>
                 <option v-for="family in families" :value="family.id">{{family.name}}</option>
               </select>
+            </div>
+            <div class="col-12 content__field">
+
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" v-model="product.is_variation" class="custom-control-input">
+                <span class="custom-control-indicator"></span>
+                ¿Variacion?
+              </label>
+            </div>
+            <div class="col-12 content__field" v-if="product.is_variation">
+
+              <div class="" v-for="variation in attributes_variations">
+                <label class="custom-control custom-checkbox">
+                  <input type="checkbox" :value="variation.id" class="custom-control-input" v-model="product.attribute">
+                  <span class="custom-control-indicator"></span>
+                  {{variation.name}}
+                </label>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -90,11 +117,13 @@
   </div>
 </template>
 <script>
+  import productVariant from '@/components/product/productVariant'
   import VueCkeditor from 'vueckeditor'
   export default {
     name: 'ProductCreate',
     components: {
-      VueCkeditor
+      VueCkeditor,
+      productVariant
     },
     data () {
       return {
@@ -108,13 +137,16 @@
           slug: '',
           category: '',
           influencer: '',
-          family: ''
+          family: [],
+          attribute: [],
+          is_variation: false
         },
         fileImage: '',
         formData: new FormData(),
         categories: [],
         influencers: [],
-        families: []
+        families: [],
+        attributes_variations: []
 
       }
     },
@@ -198,6 +230,18 @@
           }
           this.$emit('alert', status, error.response.data)
         })
+      },
+      getAttributesVariation () {
+        const self = this
+        this.axios.get('/product/product-attributes/', {
+          params: {
+            fields: 'id,name',
+            family: self.product.family
+          }
+        }).then(response => {
+          self.attributes_variations = response.data
+        })
+        console.log(this.product.family)
       }
 
     },

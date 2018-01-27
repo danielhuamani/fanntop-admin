@@ -7,7 +7,7 @@
                   </div>
                   <div class="modal-body d-flex">
                     <div class="col-6 content__field">
-                      <label for="">Nombr</label>
+                      <label for="">Nombre</label>
                       <input class="form-control" v-model="familyGroup.name">
                     </div>
                     <div class="col-6 content__field">

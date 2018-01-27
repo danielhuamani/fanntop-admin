@@ -52,6 +52,18 @@
           </li>
         </ul>
       </li>
+      <li class="menu__nav__option">
+        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Pages')">
+          <i class="fa fa-shopping-cart"></i>
+          Pages</a>
+        <ul class="menu__nav__sub" v-if="isSubMenu('Pages')">
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'home'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Home
+            </router-link>
+          </li>
+        </ul>
+      </li>
 
     </ul>
   </div>
@@ -126,7 +138,8 @@
     data () {
       return {
         subMenu: {
-          Producto: false
+          Producto: false,
+          Pages: false
         }
       }
     },

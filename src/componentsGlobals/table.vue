@@ -25,8 +25,9 @@
                   </label>
                 </div>
                 <div :class="[field.col]" v-for="field in headerField">
-                  <h6 v-if="!field.is_boolean">{{getFieldData(dataRow, field)}}</h6>
-                  <span v-else v-bind:class="[getFieldData(dataRow, field) ? 'bg-success' : '', 'table__body__row__status']">
+                  <h6 v-if="field.type == 'text'" >{{getFieldData(dataRow, field)}}</h6>
+                  <img :src="getFieldData(dataRow, field)" v-if="field.type == 'image'"/>
+                  <span v-if="field.type == 'boolean'" v-bind:class="[getFieldData(dataRow, field) ? 'bg-success' : '', 'table__body__row__status']">
                   </span>
                 </div>
               </router-link>

@@ -3,7 +3,7 @@
       <div class="col-12">
         <h3 class="title_page">Atributos</h3>
         <search-global nameUrl="attribute_create"></search-global>
-        <table-global  v-on:orderBy="orderBy" nameUrl="attribute_detail" :headerField="headerField" :tablaDataList="dataList" ></table-global>
+        <table-global  v-on:orderBy="orderBy" nameUrl="attribute_update" :headerField="headerField" :tablaDataList="dataList" ></table-global>
       </div>
     </div>
 </template>
@@ -24,35 +24,40 @@
             name: 'Nombre',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false
+            is_boolean: false,
+            boolean: 'text'
           },
           {
             field: 'is_variation',
             name: 'Variación',
             col: 'col-2',
             orderBy: false,
-            is_boolean: true
+            is_boolean: true,
+            type: 'text'
           },
           {
             field: 'is_use_search',
             name: 'Busqueda',
             col: 'col-2',
             orderBy: false,
-            is_boolean: true
+            is_boolean: true,
+            type: 'text'
           },
           {
             field: 'is_filter',
             name: 'Filtrable',
             col: 'col-2',
             orderBy: false,
-            is_boolean: true
+            is_boolean: true,
+            type: 'text'
           },
           {
             field: 'is_active',
             name: 'Activo',
             col: 'col-2',
             orderBy: false,
-            is_boolean: true
+            is_boolean: true,
+            type: 'boolean'
           }
         ],
         dataList: {},
