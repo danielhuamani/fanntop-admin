@@ -54,7 +54,10 @@
               <input type="text" v-model="category.position" class="form-control">
             </div>
             <div class="col-12 content__field">
-              <category-select-update v-on:load_category="loadCategory" :levels_category="levels_category" :category_value="category_value_initial" :data_category="categoryData"></category-select-update>
+              <select v-model="category.category" class="custom-select"  >
+                  <option value="null"  >Seleccione Categoria</option>
+                  <option v-for="cat in categories" :value="cat.id">{{cat.name}}</option>
+              </select>
             </div>
           </div>
         </div>
@@ -102,7 +105,7 @@
           title: '',
           meta_description: '',
           slug: '',
-          category: ''
+          category: null
         },
         categoryName: '',
         fileImage: '',
@@ -153,6 +156,7 @@
         self.formData.append('slug', this.category.slug)
         self.formData.append('is_active', this.category.is_active)
         self.formData.append('position', this.category.position)
+        self.formData.append('category', this.category.category)
         console.log(self.formData)
         this.axios({
           method: 'PATCH',
@@ -175,10 +179,11 @@
           method: 'get',
           url: '/category/category_list/',
           params: {
-            fields: 'id,name'
+            fields: 'id,name',
+            category: self.$route.params.id
           }
         }).then(response => {
-          self.initialGetCategory(2, response.data)
+          self.categories = response.data
         })
       },
       getCategory () {

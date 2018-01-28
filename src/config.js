@@ -1,5 +1,5 @@
 const config = {
-  baseURL: 'http://localhost:8000/api-v1'
+  baseURL: 'http://localhost:8006/api-v1'
 
 }
 

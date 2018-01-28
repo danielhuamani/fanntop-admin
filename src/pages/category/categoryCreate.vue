@@ -54,7 +54,10 @@
               <input type="text" v-model="category.position" class="form-control">
             </div>
             <div class="col-12 content__field">
-              <category-select v-on:load_category="loadCategory" :levels_category="levels_category" :category_value="category_value_initial" :data_category="categoryData"></category-select>
+              <select v-on:change="getCategory($event, index)" v-model="category.category" class="custom-select"  :id="'id_category_' + index">
+                  <option value=""  >Seleccione Categoria</option>
+                  <option v-for="cat in categories" :value="cat.id">{{cat.name}}</option>
+              </select>
             </div>
           </div>
         </div>
@@ -150,6 +153,7 @@
         self.formData.append('slug', this.category.slug)
         self.formData.append('is_active', this.category.is_active)
         self.formData.append('position', this.category.position)
+        self.formData.append('position', this.category.category)
         this.axios({
           method: 'post',
           url: '/category/',
@@ -175,7 +179,6 @@
           }
         }).then(response => {
           self.categories = response.data
-          self.initialGetCategory(2, response.data)
         })
       },
       deleteCategory (pos, nivelCategory) {
@@ -237,11 +240,6 @@
         } else {
           this.deleteCategory(self.position, nivelCategory)
         }
-      }
-    },
-    computed: {
-      categoryData () {
-        return this.list_category
       }
     }
   }
