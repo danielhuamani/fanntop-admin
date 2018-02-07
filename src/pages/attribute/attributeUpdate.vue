@@ -27,7 +27,7 @@
               <label for="">Es Variación</label>
               <div class="checkbox">
                 <label class="label">
-                  <input  class="label__checkbox" v-model="attribute.type_name" type="checkbox" />
+                  <input  class="label__checkbox" v-model="attribute.is_variation" type="checkbox" />
                   <span class="label__text">
                     <span class="label__check">
                       <i class="fa fa-check icon"></i>
@@ -110,7 +110,7 @@
       getData () {
         var self = this
         var id = this.$route.params.id
-        this.axios.get('/attribute/' + id + '/', {
+        this.axios.get('/attribute/attribute/' + id + '/', {
           params: self.params
         }).then(response => {
           self.attribute = response.data
@@ -139,7 +139,7 @@
         var id = this.$route.params.id
         this.axios({
           method: 'put',
-          url: '/attribute/' + id + '/',
+          url: '/attribute/attribute/' + id + '/',
           data: self.attribute
         }).then(response => {
           this.$emit('alert', 'success', {'Se guardo correctamente': []})

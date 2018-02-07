@@ -129,7 +129,7 @@
 
         this.axios({
           method: 'post',
-          url: '/attribute/',
+          url: '/attribute/attribute/',
           data: self.attribute
         }).then(response => {
           this.$emit('alert', 'success', {'Se guardo correctamente': []})

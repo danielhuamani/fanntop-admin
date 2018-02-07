@@ -28,8 +28,12 @@
                 </div>
               </div>
             </div>
-            <productVariant v-if="product.attribute.length > 0" :is_variation="product.is_variation" :attribute_ids='product.attribute'>
-            </productVariant>
+            <productAttrVariant v-if="product.attribute.length > 0" :is_variation="product.is_variation" :attribute_ids='product.attribute'>
+            </productAttrVariant v-if="product.family" :family_id="product.family">
+            <!-- <productVariant>
+            </productVariant> -->
+            <productInfo v-if="product.family" :family_id="product.family">
+            </productInfo>
           </div>
 
         </div>
@@ -64,7 +68,7 @@
             </div>
             <div class="col-12 content__field">
               <label for="">Grupo de Atributo</label>
-              <select  class="custom-select" v-model='product.family' @change="getAttributesVariation" multiple>
+              <select  class="custom-select" v-model='product.family' @change="getAttributesVariation" >
                 <option value=""  >Seleccione Grupo</option>
                 <option v-for="family in families" :value="family.id">{{family.name}}</option>
               </select>
@@ -81,7 +85,7 @@
 
               <div class="" v-for="variation in attributes_variations">
                 <label class="custom-control custom-checkbox">
-                  <input type="checkbox" :value="variation.id" class="custom-control-input" v-model="product.attribute">
+                  <input type="checkbox" :value="variation.id" class="custom-control-input" @change="updateAttributeId" v-model="product.attribute">
                   <span class="custom-control-indicator"></span>
                   {{variation.name}}
                 </label>
@@ -117,12 +121,16 @@
   </div>
 </template>
 <script>
+  import productAttrVariant from '@/components/product/productAttrVariant'
   import productVariant from '@/components/product/productVariant'
+  import productInfo from '@/components/product/productInfo'
   import VueCkeditor from 'vueckeditor'
   export default {
     name: 'ProductCreate',
     components: {
       VueCkeditor,
+      productAttrVariant,
+      productInfo,
       productVariant
     },
     data () {
@@ -137,7 +145,7 @@
           slug: '',
           category: '',
           influencer: '',
-          family: [],
+          family: '',
           attribute: [],
           is_variation: false
         },
@@ -159,6 +167,9 @@
 
     },
     methods: {
+      updateAttributeId () {
+        this.$store.dispatch('updateAttrAttributes', this.product.attribute)
+      },
       fileUpload (e) {
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {

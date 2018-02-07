@@ -24,8 +24,7 @@
             name: 'Nombre',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false,
-            boolean: 'text'
+            type: 'text'
           },
           {
             field: 'is_variation',
@@ -70,7 +69,7 @@
     methods: {
       getAttribute () {
         var self = this
-        this.axios.get('/attribute', {
+        this.axios.get('/attribute/attribute', {
           params: self.params
         }).then(response => {
           self.dataList = response.data

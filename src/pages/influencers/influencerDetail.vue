@@ -198,10 +198,3 @@
     }
   }
 </script>
-id
-name
-description
-image
-title
-meta_description
-slug

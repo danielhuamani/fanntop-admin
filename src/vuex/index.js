@@ -1,18 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import ModuleProduct from './product'
 Vue.use(Vuex)
 const store = new Vuex.Store({
-  state: {
-    user: {
-      email: '',
-      id: ''
-    }
-  },
-  getters: {
-    getUser: state => {
-      return state.user.email
-    }
+  modules: {
+    ModuleProduct: ModuleProduct
   }
 })
 
