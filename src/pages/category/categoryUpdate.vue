@@ -125,7 +125,6 @@
       // this.loadCategoryInitial()
     },
     mounted () {
-      console.log(this.$route.params.id, 'id')
       this.category_value_initial = this.$route.params.id
     },
     methods: {

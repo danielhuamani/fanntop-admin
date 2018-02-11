@@ -1,5 +1,5 @@
 <template lang="html">
-  <select class="custom-select" v-model="select">
+  <select class="custom-select" @change="updateAttrValue($event.target.value)" :name='nameValidate' :class="{'form-control--error': errors.has(get_form_name()) }" v-validate="'required'" v-model="select">
     <option value="">Seleccione Grupo</option>
     <option :value="option.id" v-for='option in options'>{{option.option}}</option>
   </select>
@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'productoInfoSelect',
-  props: ['id_attr'],
+  props: ['id_attr', 'nameValidate'],
   data () {
     return {
       select: '',
@@ -29,6 +29,22 @@ export default {
       }).then(response => {
         self.options = response.data
       })
+    },
+    get_form_name () {
+      return 'form-1.' + this.nameValidate
+    },
+    updateAttrValue (value) {
+      this.$store.dispatch('updateProductClassAttrValue', {
+        attribute: this.id_attr,
+        type: 'value_option',
+        value: value
+      })
+      console.log(value, this.id_attr)
+    }
+  },
+  computed: {
+    setProductAttrValue () {
+      console.log(this.select)
     }
   }
 }

@@ -2,7 +2,7 @@
   <div class="col-12 material content specifications">
     <h5 class="material__title">Especificaciones</h5>
     <div class="row">
-      <div class="col-12" v-for="family_group in familyGroupAttr"  >
+      <div class="col-12" v-for="family_group in getFamilyGroupAttr"  >
         <h5 class="specifications__title">{{family_group.name}}</h5>
         <div class="row specifications__attr align-items-center" v-if="!attr.is_variation" v-for="attr in family_group.familygroup_familygroupatribute">
           <div class="col-4">
@@ -10,7 +10,7 @@
 
           </div>
           <div class="col-8">
-            <component :is="getTypeAttr(attr.type_name)"  :id_attr='attr.atribute'>
+            <component :is="getTypeAttr(attr.type_name)" :nameValidate='attr.name_attr'  :id_attr='attr.atribute'>
 
             </component>
           </div>
@@ -36,20 +36,23 @@ export default {
     }
   },
   created () {
-    this.getFamilyGroupAttr()
   },
   methods: {
-    getFamilyGroupAttr () {
-      const self = this
-      this.axios.get('/family/family-group/', {
-        params: {
-          fields: 'id,name,familygroup_familygroupatribute',
-          family: self.family_id
-        }
-      }).then(response => {
-        self.familyGroupAttr = response.data
-      })
-    },
+    // getFamilyGroupAttr () {
+    //   const self = this
+    //   if (self.family_id) {
+    //     this.axios.get('/family/family-group/', {
+    //       params: {
+    //         fields: 'id,name,familygroup_familygroupatribute',
+    //         family: self.family_id
+    //       }
+    //     }).then(response => {
+    //       self.familyGroupAttr = response.data
+    //     })
+    //   } else {
+    //     self.familyGroupAttr = []
+    //   }
+    // },
     getTypeAttr (typeAttr) {
       var typeComponent = ''
       switch (typeAttr) {
@@ -61,6 +64,11 @@ export default {
           break
       }
       return typeComponent
+    }
+  },
+  computed: {
+    getFamilyGroupAttr () {
+      return this.$store.getters.familyGroupAttr
     }
   }
 }

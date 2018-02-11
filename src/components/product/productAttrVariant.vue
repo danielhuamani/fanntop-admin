@@ -1,6 +1,7 @@
 <template lang="html">
-  <div class="">
-    <div class="col-12 material content">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12 material content">
       <h5 class="material__title">Variantes</h5>
       <div class="row">
           <div class="col-12">
@@ -51,33 +52,38 @@
           <h4 class="variations__header__title">Inventario</h4>
         </div>
         <div class="col-2">
-          <h4 class="variations__header__title"></h4>
+          <h4 class="variations__header__title">Favorito</h4>
         </div>
       </div>
       <div class="row variations__body align-items-center" v-for='productVariant in mergeProduct'>
         <div class="col-1">
           <label class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" value="10">
+            <input type="checkbox" class="custom-control-input"  @change='selectVariation($event, productVariant)' value="">
             <span class="custom-control-indicator"></span>
           </label>
         </div>
         <div class="col-3">
           <h4 class="variations__body__title" v-for="product in productVariant">{{product.name}}</h4>
+        </div>
+        <div class="col-2">
+          <h4 class="variations__body__title">-</h4>
+        </div>
+        <div class="col-2">
+          <h4 class="variations__body__title">-</h4>
+        </div>
+        <div class="col-2">
+          <h4 class="variations__body__title">-</h4>
+        </div>
+        <div class="col-2">
 
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">Precio</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">SKU</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">Inventario</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title"></h4>
+       <!--    <label class="custom-control custom-radio" >
+            <input type="radio" name="variation" class="custom-control-input" v-model='is_featured' @change='changeIsFeatured(productVariant)'
+             :value='getValueAttr(productVariant)'>
+            <span class="custom-control-indicator"></span>
+          </label> -->
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -113,7 +119,10 @@ export default {
       attributes: [],
       selected_attributes: [],
       products_attributes: {},
-      mergeProduct: []
+      mergeProduct: [],
+      selectIdsProduct: [],
+      selectAttrProduct: [],
+      is_featured: []
     }
   },
   created () {
@@ -160,17 +169,6 @@ export default {
         self.forOneLevel(Object.values(self.products_attributes)[0])
       }
     },
-    getAttributesOption () {
-      const self = this
-      this.axios.get('/product/product-attributes/', {
-        params: {
-          fields: 'id,name,attribute_options',
-          attribute_ids: self.attribute_ids
-        }
-      }).then(response => {
-        self.attributes = response.data
-      })
-    },
     forOneLevel (levelOne) {
       const self = this
       self.mergeProduct = []
@@ -188,10 +186,44 @@ export default {
           self.mergeProduct.push([levelOne[one], levelTwo[two]])
         }
       }
+    },
+    selectVariation (e, productVariant) {
+      const self = this
+      if (e.target.checked) {
+        var attributes = Object.keys(productVariant).map((key, index) => {
+          return parseInt(productVariant[key]['attribute_id'])
+        })
+        self.selectAttrProduct.push({
+          'stock': 0,
+          'price': 0,
+          'is_featured': false,
+          'attribute_option': attributes
+        })
+        // for (var attr in productVariant) {
+
+        //   console.log(productVariant[attr]['attribute_id'], attr)
+        // }
+      }
+      console.log('selectAttrProduct', self.selectAttrProduct)
+      self.$emit('productAttributes', self.selectAttrProduct)
+    },
+    changeIsFeatured (productVariant) {
+      // var attributes = Object.keys(productVariant).filter((key, index) => {
+      //   return productVariant[key]['attribute_id']
+      // })
+
+    },
+    getValueAttr (productVariant) {
+      var attributes = Object.keys(productVariant).map((key, index) => {
+        return productVariant[key]['attribute_id']
+      })
+      return attributes
     }
   },
   computed: {
     AttributesOption () {
+      // this.selectAttrProduct = []
+      // this.$emit('productAttributes', this.selectAttrProduct)
       return this.$store.getters.attrAttributes
     }
   }
@@ -200,3 +232,9 @@ export default {
 
 <style lang="css">
 </style>
+<!-- sku
+stock
+price
+product_class
+is_featured
+attributes -->

@@ -3,7 +3,7 @@
       <div class="col-12">
         <h3 class="title_page">Product</h3>
         <search-global nameUrl="product_create"></search-global>
-        <table-global  v-on:orderBy="orderBy" nameUrl="product_create" :headerField="headerField" :tablaDataList="influencersList" ></table-global>
+        <table-global  v-on:orderBy="orderBy" nameUrl="product_update" :headerField="headerField" :tablaDataList="productList" ></table-global>
       </div>
     </div>
 </template>
@@ -11,7 +11,7 @@
   import searchGlobal from '@/componentsGlobals/search'
   import tableGlobal from '@/componentsGlobals/table'
   export default {
-    name: 'influencers',
+    name: 'productList',
     components: {
       searchGlobal,
       tableGlobal
@@ -52,27 +52,30 @@
             type: 'boolean'
           }
         ],
-        influencersList: {},
-        params: {}
+        productList: {},
+        params: {
+
+        }
       }
     },
     created () {
       console.log('entro')
-      this.getInfluencers()
+      this.getProductClass()
     },
     methods: {
-      getInfluencers () {
+      getProductClass () {
         var self = this
-        this.axios.get('/product', {
+        self.params['fields'] = 'id,name,slug'
+        this.axios.get('/product/product/', {
           params: self.params
         }).then(response => {
-          self.influencersList = response.data
+          self.productList = response.data
         })
       },
       orderBy (order) {
         this.params = order
         this.$router.push({name: 'product', query: order})
-        this.getInfluencers()
+        this.getProductClass()
         console.log(order, 'order')
       }
     }

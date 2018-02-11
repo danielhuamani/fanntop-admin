@@ -28,10 +28,55 @@
                 </div>
               </div>
             </div>
-            <productAttrVariant v-if="product.attribute.length > 0" v-on:productAttributes='productAttributes' :is_variation="product.is_variation" :attribute_ids='product.attribute'>
-            </productAttrVariant v-if="product.family" :family_id="product.family">
-            <!-- <productVariant>
-            </productVariant> -->
+            <div class="col-12 material content variations">
+              <h5 class="material__title">Product Variante</h5>
+              <div class="row variations__header">
+                <div class="col-1">
+                </div>
+                <div class="col-3">
+                  <h4 class="variations__header__title">Name</h4>
+                </div>
+                <div class="col-2">
+                  <h4 class="variations__header__title">Precio</h4>
+                </div>
+                <div class="col-2">
+                  <h4 class="variations__header__title">SKU</h4>
+                </div>
+                <div class="col-2">
+                  <h4 class="variations__header__title">Inventario</h4>
+                </div>
+                <div class="col-2">
+                  <h4 class="variations__header__title">Favorito</h4>
+                </div>
+              </div>
+              <div class="row variations__body align-items-center" v-for='productVariant in product.product_class_products'>
+                <div class="col-1">
+                  <label class="custom-control custom-radio" >
+                    <span class="custom-control-indicator" :class="{ 'variations__body__active': productVariant.is_active }"></span>
+                  </label>
+                </div>
+                <div class="col-3">
+                  <router-link :to="{ name: 'product_variant_update', params: { id: product.id, id_variant_update: productVariant.id }}"  class="table__body__link">
+                    <h4 class="variations__body__title"  v-for="product in productVariant.attribute_option">{{product.name_attr}}: {{product.option}}</h4>
+                  </router-link>
+
+                </div>
+                <div class="col-2">
+                  <h4 class="variations__body__title">{{productVariant.price}}</h4>
+                </div>
+                <div class="col-2">
+                  <h4 class="variations__body__title">{{productVariant.sku}}</h4>
+                </div>
+                <div class="col-2">
+                  <h4 class="variations__body__title">{{productVariant.stock}}</h4>
+                </div>
+                <div class="col-2">
+                  <label class="custom-control custom-radio" >
+                    <span class="custom-control-indicator" :class="{ 'variations__body__active': productVariant.is_featured }"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
             <productInfo v-if="product.family" :family_id="product.family">
             </productInfo>
           </div>
@@ -85,7 +130,7 @@
 
               <div class="" v-for="variation in attributes_variations">
                 <label class="custom-control custom-checkbox">
-                  <input type="checkbox" :value="variation.id" class="custom-control-input" @change="updateAttributeId" v-model="product.attribute">
+                  <input type="checkbox" :value="variation.id" class="custom-control-input" v-model="product.attribute">
                   <span class="custom-control-indicator"></span>
                   {{variation.name}}
                 </label>
@@ -121,19 +166,16 @@
   </form>
 </template>
 <script>
-  import productAttrVariant from '@/components/product/productAttrVariant'
-  import productVariant from '@/components/product/productVariant'
-  import productInfo from '@/components/product/productInfo'
   import VueCkeditor from 'vueckeditor'
-  // import spanish from 'vee-validate/dist/locale/es'
+  import productMixin from '@/mixins/productMixin'
+  import productInfo from '@/components/product/productInfo'
   export default {
-    name: 'ProductCreate',
+    name: 'productUpdate',
     components: {
       VueCkeditor,
-      productAttrVariant,
-      productInfo,
-      productVariant
+      productInfo
     },
+    mixins: [productMixin],
     data () {
       return {
         product: {
@@ -151,74 +193,24 @@
           is_published: false,
           product_class_products: [],
           product_class_product_attr_value: []
-        },
-        categories: [],
-        influencers: [],
-        families: [],
-        attributes_variations: []
-
+        }
       }
     },
     created () {
       this.getInfluencers()
       this.getCategories()
       this.getFamilies()
-    },
-    mounted () {
-      this.product_class_product_attr_value = this.$store.getters.productClassAttrValue
+      this.getProduct()
     },
     methods: {
-      updateAttributeId () {
-        this.$store.dispatch('updateAttrAttributes', this.product.attribute)
-      },
-      getInfluencers () {
+      getProduct () {
         var self = this
-        this.axios.get('/influencer', {
-          params: {
-            fields: 'id,name'
-          }
+        this.axios({
+          method: 'get',
+          url: '/product/product/' + self.$route.params.id + '/'
         }).then(response => {
-          self.influencers = response.data
-        })
-      },
-      getCategories () {
-        var self = this
-        this.axios.get('/category', {
-          params: {
-            fields: 'id,name'
-          }
-        }).then(response => {
-          self.categories = response.data
-        })
-      },
-      getFamilies () {
-        var self = this
-        this.axios.get('/family/family/', {
-          params: {
-            fields: 'id,name'
-          }
-        }).then(response => {
-          self.families = response.data
-        })
-      },
-      saveProduct (scope) {
-        var self = this
-        console.log(this.fields)
-        self.$validator.validateAll().then((result) => {
-          if (result) {
-            self.product.product_class_product_attr_value = self.$store.getters.productClassAttrValue
-            self.axios({
-              method: 'post',
-              url: '/product/product/',
-              data: self.product
-            }).then(response => {
-              console.log(response, 'response')
-            }).catch(error => {
-              console.log('err', error)
-            })
-          } else {
-            console.log('error')
-          }
+          self.product = response.data
+          self.getAttributesVariation()
         })
       },
       getAttributesVariation () {
@@ -232,12 +224,32 @@
         }).then(response => {
           self.attributes_variations = response.data
         })
-      },
-      productAttributes (productAttributes) {
-        console.log(productAttributes, 'productAttributes')
-        this.product.product_class_products = productAttributes
       }
-
     }
   }
 </script>
+<style lang="scss">
+@import "~styles/abstract/variables";
+.variations{
+
+  &__body{
+    margin: 10px 0;
+    &__active{
+      background: $color-info;
+    }
+    &__title{
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+  &__header{
+    border-bottom: 1px solid $color-gray-cl;
+    margin: 0;
+    &__title{
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+
+}
+</style>

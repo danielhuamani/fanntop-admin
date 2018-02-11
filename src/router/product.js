@@ -1,5 +1,7 @@
 import productList from '@/pages/product/productList'
 import productCreate from '@/pages/product/productCreate'
+import productUpdate from '@/pages/product/productUpdate'
+import productVariantUpdate from '@/pages/product/productVariantUpdate'
 import middlewareAuth from '@/middleware/auth'
 
 const productRouter = [
@@ -13,6 +15,18 @@ const productRouter = [
     path: 'product/create',
     name: 'product_create',
     component: productCreate,
+    beforeEnter: middlewareAuth
+  },
+  {
+    path: 'product/:id/update',
+    name: 'product_update',
+    component: productUpdate,
+    beforeEnter: middlewareAuth
+  },
+  {
+    path: 'product/:id/:id_variant_update/update',
+    name: 'product_variant_update',
+    component: productVariantUpdate,
     beforeEnter: middlewareAuth
   }
 ]
