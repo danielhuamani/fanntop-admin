@@ -26,6 +26,10 @@
                   <label for="">Descripción</label>
                   <VueCkeditor height='140' language='es' v-model="product.description"></VueCkeditor>
                 </div>
+                <div class="col-12 content__field">
+                  <label for="">Caracteristicas</label>
+                  <VueCkeditor height='140' language='es' v-model="product.characteristics"></VueCkeditor>
+                </div>
               </div>
             </div>
             <productAttrVariant v-if="product.attribute.length > 0" v-on:productAttributes='productAttributes' :is_variation="product.is_variation" :attribute_ids='product.attribute'>
@@ -140,6 +144,7 @@
           id: null,
           name: '',
           description: '',
+          characteristics: '',
           title: '',
           meta_description: '',
           slug: '',
@@ -203,7 +208,6 @@
       },
       saveProduct (scope) {
         var self = this
-        console.log(this.fields)
         self.$validator.validateAll().then((result) => {
           if (result) {
             self.product.product_class_product_attr_value = self.$store.getters.productClassAttrValue

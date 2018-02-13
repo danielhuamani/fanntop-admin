@@ -66,18 +66,7 @@
       }
     }
   }
-  i[class*="icon"]{
-    font-size: 18px
-  }
-  .icon_edit{
-    color: $color-info;
-  }
-  .icon_delete{
-    color: $color-danger;
-  }
-  .icon_add{
-    color: $color-success;
-  }
+
   .status{
     width: 15px;
     height: 15px;

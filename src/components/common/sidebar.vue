@@ -29,7 +29,7 @@
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Producto')">
           <i class="fa fa-shopping-cart"></i>
           Productos</a>
-        <ul class="menu__nav__sub" v-if="isSubMenu('Producto')">
+        <ul class="menu__nav__sub" v-show="openMenu == 'Producto'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'product'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               Catalogo
@@ -56,7 +56,7 @@
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Pages')">
           <i class="fa fa-shopping-cart"></i>
           Pages</a>
-        <ul class="menu__nav__sub" v-if="isSubMenu('Pages')">
+        <ul class="menu__nav__sub" v-show="openMenu == 'Pages'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'home'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               Home
@@ -140,12 +140,17 @@
         subMenu: {
           Producto: false,
           Pages: false
-        }
+        },
+        openMenu: ''
       }
     },
     methods: {
       SubMenu (nameMenu) {
-        this.subMenu[nameMenu] = !this.subMenu[nameMenu]
+        if (this.openMenu === nameMenu) {
+          this.openMenu = ''
+        } else {
+          this.openMenu = nameMenu
+        }
       },
       isSubMenu (nameMenu) {
         return this.subMenu[nameMenu]

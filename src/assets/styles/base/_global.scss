@@ -16,7 +16,7 @@ html, body{
     text-transform: capitalize;
 }
 .material{
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 3px rgba(0,0,0,0.05);
     &__title{
         margin-bottom: 20px;
         border-bottom: 1px solid $color-gray-cl;
@@ -35,9 +35,9 @@ html, body{
 
 }
 .content{
-    margin-top: 40px;
+    margin-top: 30px;
     background: $color-white;
-    padding: 15px;
+    padding: 25px 10px;
     &--read-edit{
         position: relative;
         &__icon{
@@ -68,13 +68,25 @@ html, body{
 
     label{
         display: block;
+        color: #6b6b6b;
     }
     &__field{
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         &--one{
             margin-bottom: 0;
         }
+        &--check{
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            label{
+                margin-bottom: 0;
+            }
+        }
 
+    }
+    &__field:last-child{
+        margin-bottom: 0;
     }
 
     &__file{
@@ -119,4 +131,21 @@ html, body{
 .text_data{
     font-size: 16px;
     color: $color-info;
+}
+i[class*="icon"]{
+    font-size: 18px
+}
+.icon_edit{
+    color: $color-info;
+}
+.icon_delete{
+    color: $color-danger;
+}
+.icon_add{
+    color: $color-success;
+    border: none;
+    background: transparent;
+}
+input[type='color'] {
+    height: 38px;
 }

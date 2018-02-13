@@ -26,6 +26,16 @@ const AttributeData = {
           'value': 'COLOUR',
           'name': 'Color'
         }
+      ],
+      typeAttributesVariation: [
+        {
+          'value': 'SELECT_SINGLE',
+          'name': 'Selección'
+        },
+        {
+          'value': 'COLOUR',
+          'name': 'Color'
+        }
       ]
     }
   }

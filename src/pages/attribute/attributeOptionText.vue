@@ -1,15 +1,31 @@
 <template>
-  <div class="col-12 content__field">
-    <label for="">Opciones</label>
-    <div class="input-group">
-      <input type="text" class="form-control" v-model='optionValue'>
-      <div class="input-group-btn">
-        <a href="" class="btn btn-info" @click.prevent='addOption'>Agregar</a>
+  <div class="row material content">
+    <div class="col-12 content__field">
+      <h5 class="material__title">Opciones</h5>
+      <div class="row align-items-center">
+        <div class="col-10">
+          <span>Valor Atributo</span>
+        </div>
+        <div class="col-2">
+          <span>Agregar</span>
+        </div>
       </div>
-    </div>
-    <div class="options__value" v-for='option, index in getDataOptions'>
-      <p class="options__value__text">{{option.option}}</p>
-      <i class="fa fa-times options__value__close" @click="removeOption(index)"></i>
+      <div class="row">
+        <div class="col-10">
+          <input type="text" class="form-control" v-model='optionValue' :class="{'form-control--error': errorOptionValue }">
+        </div>
+        <div class="col-2">
+          <i class="fa fa-plus icon_add" @click.prevent='addOption'></i>
+        </div>
+      </div>
+      <div class="options__value row" v-for='option, index in getDataOptions'>
+        <div class="col-10">
+          <span class="options__value__text">{{option.option}}</span>
+        </div>
+        <div class="col-2">
+          <i class="fa fa-times icon_delete" @click="removeOption(index)"></i>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,12 +39,13 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #eee;
       padding: 0px;
-      margin: 10px 0;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      border-bottom: 2px solid #f7f9fd;
       &__text{
         margin: 0;
-        padding: 4px 8px;
+        padding: 4px 0px;
       }
       &__close{
         font-size: 18px;
@@ -48,7 +65,8 @@
     data () {
       return {
         dataOptions: [],
-        optionValue: ''
+        optionValue: '',
+        errorOptionValue: false
       }
     },
     mounted () {
@@ -58,6 +76,9 @@
         if (this.optionValue) {
           this.$emit('setDataOptions', {'position': 0, 'option': this.optionValue})
           this.optionValue = ''
+          this.errorOptionValue = false
+        } else {
+          this.errorOptionValue = true
         }
       },
       removeOption (index) {

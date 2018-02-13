@@ -31,8 +31,8 @@
 
               </div>
               <div class="row">
-                <div class="col-4" v-for="images in galeryImages">
-                  <img :src="images.image" alt="" width="225" height="225">
+                <div class="col-3" v-for="images in galeryImages">
+                  <img :src="images.image_crop" alt="" width="100%" >
                 </div>
 
               </div>
@@ -127,16 +127,16 @@
 
     created () {
       this.getProductVariant()
-      this.getGaleryImages()
+      this.getImages()
     },
     methods: {
-      getGaleryImages () {
+      getImages () {
         const self = this
         this.axios({
           method: 'get',
-          url: '/product/product-galery-image/',
+          url: '/product/product-image/',
           params: {
-            'product': self.$route.params.id_variant_update
+            'product_id': self.$route.params.id_variant_update
           }
         }).then(response => {
           self.galeryImages = response.data
@@ -185,6 +185,7 @@
           url: '/product/product-galery-image/',
           data: self.formData
         }).then(response => {
+          self.getImages()
           this.$emit('alert', 'success', {'Se guardo correctamente': []})
         }).catch(error => {
           let status = ''
