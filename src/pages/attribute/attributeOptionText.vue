@@ -22,11 +22,18 @@
         <div class="col-10">
           <span class="options__value__text">{{option.option}}</span>
         </div>
-        <div class="col-2">
-          <i class="fa fa-times icon_delete" @click="removeOption(index)"></i>
+        <div class="col-1" v-if="!option.id">
+          <i class="fa fa-times icon_delete" @click="removeOption(index)" ></i>
+        </div>
+        <div class="col-1" v-if="option.id">
+          <i class="fa fa-edit icon_edit" @click="modalData(option.id)" ></i>
         </div>
       </div>
     </div>
+    <attribute-modal v-if="showAttributeModal" :show="showAttributeModal"
+    @close="showAttributeModal = false" :idModalAttributeOption='idModalAttributeOption'
+    :urlAttributeOption='urlAttributeOption' @reloadAttributeOption='reloadAttributeOption'>
+    </attribute-modal>
   </div>
 </template>
 
@@ -59,14 +66,21 @@
 </style>
 
 <script>
+  import attributeModal from './attributeModal'
   export default {
     name: 'attributeOptionText',
     props: ['getDataOptions', 'typeAttribute'],
+    components: {
+      attributeModal
+    },
     data () {
       return {
         dataOptions: [],
         optionValue: '',
-        errorOptionValue: false
+        errorOptionValue: false,
+        idModalAttributeOption: '',
+        urlAttributeOption: '/attribute/attribute-option/',
+        showAttributeModal: false
       }
     },
     mounted () {
@@ -83,6 +97,14 @@
       },
       removeOption (index) {
         this.$emit('deleteDataOptions', index)
+      },
+      modalData (id) {
+        console.log(id, 'id')
+        this.showAttributeModal = true
+        this.idModalAttributeOption = id
+      },
+      reloadAttributeOption () {
+        this.$emit('reloadAttributeOption')
       }
     }
   }

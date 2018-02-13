@@ -6,7 +6,7 @@
                       <h4>{{attributeOption.option}}</h4>
                   </div>
                   <div class="modal-body d-flex">
-                    <div class="col-6 content__field">
+                    <div class="col-6 content__field" v-if="attributeOption.attr">
                       <label for="">Color</label>
                       <input type="color" class="form-control" v-model="attributeOption.attr">
                     </div>
