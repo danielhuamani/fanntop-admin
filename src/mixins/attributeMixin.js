@@ -18,10 +18,10 @@ const AttributeData = {
           'value': 'SELECT_SINGLE',
           'name': 'Selección'
         },
-        {
-          'value': 'SELECT_MULTIPLE',
-          'name': 'Selección Multiple'
-        },
+        // {
+        //   'value': 'SELECT_MULTIPLE',
+        //   'name': 'Selección Multiple'
+        // },
         {
           'value': 'COLOUR',
           'name': 'Color'

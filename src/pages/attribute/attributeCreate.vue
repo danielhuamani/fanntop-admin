@@ -15,14 +15,6 @@
       <div class="d-flex  ">
         <div class="col-4 ">
           <div class="row material content">
-            <div class="col-12 content__field">
-              <label for="">Nombre Atributo</label>
-              <input type="text" name="name" v-validate="'required|alpha_spaces'" :class="{'form-control--error': errors.has('name') }" v-model="attribute.name" class="form-control">
-            </div>
-            <div class="col-12 content__field">
-              <label for="">Nombre en la Tienda</label>
-              <input type="text" name="name_store" :class="{'form-control--error': errors.has('name_store') }" v-validate="'required|alpha_spaces'" v-model="attribute.name_store" class="form-control">
-            </div>
             <div class="col-12 content__field content__field--check">
               <label for="">Es Variación</label>
               <div class="slider-checkbox">
@@ -33,7 +25,16 @@
                 </label>
               </div>
             </div>
-            <div class="col-12 content__field content__field--check">
+            <div class="col-12 content__field">
+              <label for="">Nombre Atributo</label>
+              <input type="text" name="name" v-validate="'required|alpha_spaces'" :class="{'form-control--error': errors.has('name') }" v-model="attribute.name" class="form-control">
+            </div>
+         <!--    <div class="col-12 content__field">
+              <label for="">Nombre en la Tienda</label>
+              <input type="text" name="name_store" :class="{'form-control--error': errors.has('name_store') }" v-validate="'required|alpha_spaces'" v-model="attribute.name_store" class="form-control">
+            </div> -->
+
+          <!--   <div class="col-12 content__field content__field--check">
               <label for="">Uso en Filtros</label>
               <div class="slider-checkbox">
                 <input type="checkbox" id="1" v-model="attribute.is_filter" />
@@ -42,7 +43,7 @@
                   <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
                 </label>
               </div>
-            </div>
+            </div> -->
           </div>
 
         </div>
@@ -82,9 +83,7 @@
         attribute: {
           id: null,
           name: '',
-          name_store: '',
           is_variation: false,
-          is_filter: false,
           attribute_options: [],
           type_name: ''
         },

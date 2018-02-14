@@ -16,14 +16,6 @@
         <div class="col-4 ">
           <div class="row material content">
             <div class="col-12 content__field">
-              <label for="">Nombre Atributo</label>
-              <input type="text" v-model="attribute.name" class="form-control">
-            </div>
-            <div class="col-12 content__field">
-              <label for="">Nombre en la Tienda</label>
-              <input type="text" v-model="attribute.name_store" class="form-control">
-            </div>
-            <div class="col-12 content__field">
               <label for="">Es Variación</label>
               <div class="slider-checkbox">
                 <input type="checkbox" id="1" v-model="attribute.is_variation" disabled="disabled" />
@@ -34,6 +26,15 @@
               </div>
             </div>
             <div class="col-12 content__field">
+              <label for="">Nombre Atributo</label>
+              <input type="text" v-model="attribute.name" class="form-control">
+            </div>
+            <!-- <div class="col-12 content__field">
+              <label for="">Nombre en la Tienda</label>
+              <input type="text" v-model="attribute.name_store" class="form-control">
+            </div> -->
+
+         <!--    <div class="col-12 content__field">
               <label for="">Uso en Filtros</label>
               <div class="slider-checkbox">
                 <input type="checkbox" id="1" v-model="attribute.is_filter" />
@@ -42,7 +43,7 @@
                   <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
                 </label>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="col-8 second_element">
