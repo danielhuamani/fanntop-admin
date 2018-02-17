@@ -1,10 +1,10 @@
 <template lang="html">
-  <div class="col-12">
-    <div class="row">
-      <div class="col-12 material content">
-      <h5 class="material__title">Variantes</h5>
-      <div class="row">
+  <div class="row">
+    <div class="col-12 ">
+
+      <div class="row material content">
           <div class="col-12">
+            <h5 class="material__title">Variantes</h5>
             <div class="row">
               <div class="col-4">
                 Atributo
@@ -14,10 +14,10 @@
               </div>
             </div>
           </div>
-          <div class="col-12" v-for="attr in AttributesOption">
+          <div class="col-12" v-for="attr in attributesOption">
             <div class="row">
               <div class="col-4">
-                {{attr.name}}
+                <span>{{attr.name}}</span>
               </div>
               <div class="col-8">
                 <div class="row">
@@ -34,56 +34,59 @@
           </div>
       </div>
     </div>
-    <div class="col-12 material content variations">
-      <h5 class="material__title">Variaciones</h5>
-      <div class="row variations__header">
-        <div class="col-1">
-        </div>
-        <div class="col-3">
-          <h4 class="variations__header__title">Variación</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__header__title">Precio</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__header__title">SKU</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__header__title">Inventario</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__header__title">Favorito</h4>
-        </div>
-      </div>
-      <div class="row variations__body align-items-center" v-for='productVariant in mergeProduct'>
-        <div class="col-1">
-          <label class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant"   @change='selectVariation($event)' :value="isCheckedVariant(productVariant)">
-            <span class="custom-control-indicator"></span>
-          </label>
-        </div>
-        <div class="col-3">
-          <h4 class="variations__body__title" v-for="product in productVariant">{{product.name}}</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">-</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">-</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">-</h4>
-        </div>
-        <div class="col-2">
+    <div class="col-12  variations">
+      <div class="row material content">
+        <div class="col-12">
+          <h5 class="material__title">Variaciones</h5>
+          <div class="row variations__header">
+            <div class="col-1">
+            </div>
+            <div class="col-3">
+              <h4 class="variations__header__title">Variación</h4>
+            </div>
+            <div class="col-2">
+              <h4 class="variations__header__title">Precio</h4>
+            </div>
+            <div class="col-2">
+              <h4 class="variations__header__title">SKU</h4>
+            </div>
+            <div class="col-2">
+              <h4 class="variations__header__title">Inventario</h4>
+            </div>
+            <div class="col-2">
+              <h4 class="variations__header__title">Favorito</h4>
+            </div>
+          </div>
+          <div class="row variations__body align-items-center" v-for='productVariant in mergeProduct'>
+            <div class="col-1">
+              <label class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant"   @change='selectVariation($event)' :value="isCheckedVariant(productVariant)">
+                <span class="custom-control-indicator"></span>
+              </label>
+            </div>
+            <div class="col-3">
+              <h4 class="variations__body__title" v-for="product in productVariant">{{product.name}}</h4>
+            </div>
+            <div class="col-2">
+              <h4 class="variations__body__title">-</h4>
+            </div>
+            <div class="col-2">
+              <h4 class="variations__body__title">-</h4>
+            </div>
+            <div class="col-2">
+              <h4 class="variations__body__title">-</h4>
+            </div>
+            <div class="col-2">
 
-       <!--    <label class="custom-control custom-radio" >
-            <input type="radio" name="variation" class="custom-control-input" v-model='is_featured' @change='changeIsFeatured(productVariant)'
-             :value='getValueAttr(productVariant)'>
-            <span class="custom-control-indicator"></span>
-          </label> -->
+           <!--    <label class="custom-control custom-radio" >
+                <input type="radio" name="variation" class="custom-control-input" v-model='is_featured' @change='changeIsFeatured(productVariant)'
+                 :value='getValueAttr(productVariant)'>
+                <span class="custom-control-indicator"></span>
+              </label> -->
+            </div>
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -112,8 +115,8 @@
 </style>
 <script>
 export default {
-  name: 'productAttrVariant',
-  props: ['is_variation', 'attribute_ids'],
+  name: 'productNewAttrVariant',
+  props: ['attributesOption', 'excludeAttributeOption'],
   data () {
     return {
       attributes: [],
@@ -126,7 +129,6 @@ export default {
     }
   },
   created () {
-    console.log(this.attribute_ids, 'attribute_ids')
   },
   mounted () {
   },
@@ -151,6 +153,7 @@ export default {
           })
         }
       } else {
+        console.log('else', self.products_attributes[idParent], idParent, name, 'name', nameParent)
         self.products_attributes[idParent] = self.products_attributes[idParent].filter(dict => {
           return dict.attribute_id !== e.target.value
         })
@@ -176,18 +179,40 @@ export default {
       self.mergeProduct = []
       for (var one in levelOne) {
         self.mergeProduct.push([levelOne[one]])
-        console.log(levelOne[one])
       }
     },
     forTwoLevel (levelOne, levelTwo) {
       const self = this
+      console.log(levelOne, levelTwo)
       self.mergeProduct = []
       for (var one in levelOne) {
         for (var two in levelTwo) {
-          console.log(levelOne[one], levelTwo[two])
+          // for (var excludeAttr in this.excludeAttributeOption) {
+          //   var add = true
+          //   if (this.excludeAttributeOption[excludeAttr].indexOf(parseInt(levelOne[one]['attribute_id'])) === -1 && this.excludeAttributeOption[excludeAttr].indexOf(parseInt(levelTwo[two]['attribute_id'])) === -1) {
+          //     add = false
+          //   }
+          // }
+          // console.log(add, 'add')
+          // if (add) {
+          //   self.mergeProduct.push([levelOne[one], levelTwo[two]])
+          // }
           self.mergeProduct.push([levelOne[one], levelTwo[two]])
         }
       }
+
+      // self.mergeProduct = self.mergeProduct.map(function (index, elem) {
+      //       return something;
+      //     })
+      //     if (this.excludeAttributeOption.length > 0) {
+      //       for (var excludeAttr in this.excludeAttributeOption) {
+      //         if (excludeAttr.indexOf(levelOne[one]) === -1 && excludeAttr.indexOf(levelOne[two]) === -1) {
+      //           self.mergeProduct.push([levelOne[one], levelTwo[two]])
+      //         }
+      //       }
+      //     } else {
+      //       self.mergeProduct.push([levelOne[one], levelTwo[two]])
+      //     }
     },
     selectVariation (e) {
       const self = this
@@ -220,14 +245,14 @@ export default {
       })
       return attributes
     }
-  },
-  computed: {
-    AttributesOption () {
-      // this.selectAttrProduct = []
-      // this.$emit('productAttributes', this.selectAttrProduct)
-      return this.$store.getters.attrAttributes
-    }
   }
+  // computed: {
+  //   AttributesOption () {
+  //     // this.selectAttrProduct = []
+  //     // this.$emit('productAttributes', this.selectAttrProduct)
+  //     return this.$store.getters.attrAttributes
+  //   }
+  // }
 }
 </script>
 

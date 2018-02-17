@@ -119,7 +119,6 @@
               </select>
             </div>
             <div class="col-12 content__field">
-
               <label class="custom-control custom-checkbox">
                 <input type="checkbox" v-model="product.is_variation" class="custom-control-input">
                 <span class="custom-control-indicator"></span>
@@ -127,7 +126,6 @@
               </label>
             </div>
             <div class="col-12 content__field" v-if="product.is_variation">
-
               <div class="" v-for="variation in attributes_variations">
                 <label class="custom-control custom-checkbox">
                   <input type="checkbox" :value="variation.id" class="custom-control-input" v-model="product.attribute">
@@ -135,8 +133,6 @@
                   {{variation.name}}
                 </label>
               </div>
-
-
             </div>
           </div>
         </div>

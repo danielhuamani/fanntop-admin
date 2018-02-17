@@ -1,8 +1,7 @@
 <template>
   <div class="col-8 second_element">
     <div class="row  material content">
-      <family-group-add v-on:addGroupFamily="addGroupFamily">
-      </family-group-add>
+
       <div class="col-12 content__field attributes_info">
         <div class="row attributes_info__header">
           <div class="col-6">
@@ -12,123 +11,144 @@
             <h6>Obligatorio</h6>
           </div>
           <div class="col-1">
-
+            <i class="fa fa-plus icon_add" @click="modalAttrAddData()"></i>
           </div>
           <div class="col-1">
 
           </div>
         </div>
-        <div class="row attributes_group">
-          <div class="col-12" v-for='family_group in familyGroupList'>
-            <div class="row attributes_info__sub_header align-items-center">
-                <div class="col-9" >
-                    <h6 class="">{{family_group.name}}</h6>
-                </div>
-                <div class="col-1" >
-                    <i class="fa fa-plus icon_add" @click="modalAttrAddData(family_group.id)"></i>
-                </div>
-                <div class="col-1" >
-                    <i class="fa fa-edit icon_edit " @click="modalData(family_group.id)"
-                    >
-                    </i>
-                </div>
-                <div class="col-1" >
-                    <i class="fa fa-times icon_delete"></i>
-                </div>
+        <div class="row attributes_info__attr__item"  v-for="attr in familyAttributes">
+          <div class="col-6">
+            <p class=" attributes_info__attr__value">
+              {{attr.name_attr}}
+            </p>
+          </div>
+          <div class="col-4">
+            <div class="status" :class='{"status--active" : attr.is_required}'>
 
-            </div>
-
-            <div class="attributes_info__attr">
-              <div class="row attributes_info__attr__item" v-for="attr in family_group.familygroup_familygroupatribute">
-                <div class="col-6">
-                  <p class=" attributes_info__attr__value">
-                    {{attr.name_attr}}
-                  </p>
-                </div>
-                <div class="col-4">
-                  <div class="status" :class='{"status--active" : attr.is_required}'>
-
-                  </div>
-                </div>
-                <div class="col-1">
-                  <i class="fa fa-edit icon_edit"  ></i>
-                </div>
-                <div class="col-1">
-                  <i class="fa fa-times icon_delete"></i>
-                </div>
-              </div>
             </div>
           </div>
+          <div class="col-1">
+            <i class="fa fa-edit icon_edit" @click="modalAttrUpdateData(attr.attribute, attr.id)" ></i>
+          </div>
+          <!-- <div class="col-1">
+            <i class="fa fa-times icon_delete"></i>
+          </div> -->
         </div>
 
       </div>
     </div>
-    <family-group-modal v-if="showGroupFamilyModal" :show="showGroupFamilyModal"
+  <!--   <family-group-modal v-if="showGroupFamilyModal" :show="showGroupFamilyModal"
     @close="showGroupFamilyModal = false" :modalFamilyGroupId='modalFamilyGroupId'
     :urlFamilyGroup='urlFamilyGroup' @reloadFamilyGroup='reloadFamilyGroup'>
-    </family-group-modal>
-    <family-group-attr-add-modal v-if="showGroupFamilyAttrAddModal" :show="showGroupFamilyAttrAddModal"
-    @close="showGroupFamilyAttrAddModal = false" :modalFamilyGroupId='modalFamilyGroupId'
-    :urlListAttr='urlListAttr' :urlFamilyGroupAttr='urlFamilyGroupAttr' @reloadFamilyGroup='reloadFamilyGroup'>
+    </family-group-modal> -->
+    <family-group-attr-add-modal v-if="showFamilyAttrAddModal" :show="showFamilyAttrAddModal"
+    @close="showFamilyAttrAddModal = false"
+    :urlListAttr='urlListAttr' :urlFamilyAttr='urlFamilyAttr'
+    @reloadFamilyGroup='reloadFamilyGroup'>
   </family-group-attr-add-modal>
+  <family-group-attr-update-modal v-if="showGroupFamilyUpdateAddModal" :show="showGroupFamilyUpdateAddModal"
+    @close="showGroupFamilyUpdateAddModal = false" :modalFamilyGroupId='modalFamilyGroupId'
+    :urlListAttr='urlListAttr' :urlFamilyAttr='urlFamilyAttr' :modalAttrId='modalAttrId' :modalFamilyAttrId='modalFamilyAttrId'
+    @reloadFamilyGroup='reloadFamilyGroup'>
+  </family-group-attr-update-modal>
   </div>
 </template>
 
 <script>
+  import { EventBus } from '@/bus'
   import familyGroupModal from './familyGroupModal'
   import familyGroupAttrAddModal from './familyGroupAttrAddModal'
-  import familyGroupAdd from './familyGroupAdd'
+  import familyGroupAttrUpdateModal from './familyGroupAttrUpdateModal'
   export default {
     name: 'familyGroupRead',
     components: {
-      familyGroupAdd,
       familyGroupModal,
-      familyGroupAttrAddModal
+      familyGroupAttrAddModal,
+      familyGroupAttrUpdateModal
     },
     data () {
       return {
-        familyGroupList: [],
-        modalFamilyGroupId: '',
-        urlFamilyGroup: '/family/family-group/',
-        urlFamilyGroupAttr: '/family/family-group-attribute/',
+        familyAttributes: [],
+        urlFamilyAttr: '/family/family-attribute/',
         urlListAttr: '/family/family_attribute/',
         showGroupFamilyModal: false,
-        showGroupFamilyAttrAddModal: false
+        showFamilyAttrAddModal: false,
+        showGroupFamilyUpdateAddModal: false,
+        modalFamilyGroupId: '',
+        modalAttrId: '',
+        modalFamilyAttrId: '',
+        modalFamilyGroupUpdate: {
+          id: ''
+        },
+        groupFamily: {
+          name: '',
+          family: '',
+          position: ''
+        }
       }
     },
-    mounted () {
-      this.getFamilyGroup()
+
+    created () {
+      this.getFamilyAttr()
+      this.groupFamily.family = this.$route.params.id
     },
     methods: {
-      getFamilyGroup () {
+      getFamilyAttr () {
         var self = this
-        this.axios.get(self.urlFamilyGroup, {
+        this.axios.get(self.urlFamilyAttr, {
           params: {
-            'family': self.$route.params.id
+            'family_id': self.$route.params.id
           }
         }).then(response => {
-          self.familyGroupList = response.data
+          self.familyAttributes = response.data
         })
       },
-      addGroupFamily () {
-        this.getFamilyGroup()
-      },
       reloadFamilyGroup () {
-        this.getFamilyGroup()
+        this.getFamilyAttr()
       },
-
       clearModalData () {
-
       },
       modalData (id) {
         this.showGroupFamilyModal = true
         this.modalFamilyGroupId = id
         return this.modalFamilyGroupId
       },
-      modalAttrAddData (id) {
-        this.showGroupFamilyAttrAddModal = true
-        this.modalFamilyGroupId = id
+      modalAttrAddData () {
+        this.showFamilyAttrAddModal = true
         return this.modalFamilyGroupId
+      },
+      modalAttrUpdateData (attrId, idFamilyAttr) {
+        console.log(attrId, idFamilyAttr, 'idFamilyAttr')
+        this.showGroupFamilyUpdateAddModal = true
+        this.modalAttrId = attrId
+        this.modalFamilyAttrId = idFamilyAttr
+        return this.modalFamilyGroupId
+      },
+      addGroupFamily (scope) {
+        const self = this
+        this.$validator.validateAll(scope).then((result) => {
+          if (result) {
+            this.axios({
+              method: 'post',
+              url: '/family/family-group/',
+              data: self.groupFamily
+            }).then(response => {
+              EventBus.$emit('alert_bus', 'success', {'Se agrego correctamente': []})
+              self.groupFamily.name = ''
+              self.groupFamily.position = ''
+              self.getFamilyAttr()
+            }).catch(error => {
+              let status = ''
+              if (error.response.status >= 400 && error.response.status < 500) {
+                status = 'danger'
+              }
+              EventBus.$emit('alert_bus', status, error.response.data)
+            })
+            return
+          }
+          EventBus.$emit('alert_bus', 'danger', {'Verifique los campos resaltados': []})
+        })
       }
     }
   }

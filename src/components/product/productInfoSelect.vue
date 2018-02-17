@@ -1,14 +1,14 @@
 <template lang="html">
-  <select class="custom-select" @change="updateAttrValue($event.target.value)" :name='nameValidate' :class="{'form-control--error': errors.has(get_form_name()) }" v-validate="'required'" v-model="select">
+  <select class="custom-select" @change="updateAttrValue($event.target.value)" :name='nameValidate' :class="{'form-control--error': errors.has(get_form_name()) }" v-validate="'required'" >
     <option value="">Seleccione Grupo</option>
-    <option :value="option.id" v-for='option in options'>{{option.option}}</option>
+    <option :value="option.id" v-for='option in options' :selected='option.id === getValue()'>{{option.option}}</option>
   </select>
 </template>
 
 <script>
 export default {
   name: 'productoInfoSelect',
-  props: ['id_attr', 'nameValidate'],
+  props: ['id_attr', 'nameValidate', 'valueAttr', 'valueId'],
   data () {
     return {
       select: '',
@@ -17,6 +17,9 @@ export default {
   },
   created () {
     this.getAttributeOption()
+  },
+  mounted () {
+    this.select = this.valueAttr
   },
   methods: {
     getAttributeOption () {
@@ -37,9 +40,12 @@ export default {
       this.$store.dispatch('updateProductClassAttrValue', {
         attribute: this.id_attr,
         type: 'value_option',
-        value: value
+        value: value,
+        id: this.valueId
       })
-      console.log(value, this.id_attr)
+    },
+    getValue () {
+      return this.valueAttr
     }
   },
   computed: {

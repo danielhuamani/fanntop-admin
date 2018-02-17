@@ -9,7 +9,15 @@
 }
 
 .btn-create{
-    background: #09f;
+    background: $color-info;
+    color: $color-white;
+    &:hover{
+        color: $color-white;
+        background: darken( #09f, 5% );
+    }
+}
+.btn--info{
+    background: $color-info;
     color: $color-white;
     &:hover{
         color: $color-white;

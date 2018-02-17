@@ -31,32 +31,14 @@
             name: 'Variación',
             col: 'col-2',
             orderBy: false,
-            is_boolean: true,
-            type: 'text'
-          },
-          {
-            field: 'is_use_search',
-            name: 'Busqueda',
-            col: 'col-2',
-            orderBy: false,
-            is_boolean: true,
-            type: 'text'
-          },
-          {
-            field: 'is_filter',
-            name: 'Filtrable',
-            col: 'col-2',
-            orderBy: false,
-            is_boolean: true,
-            type: 'text'
-          },
-          {
-            field: 'is_active',
-            name: 'Activo',
-            col: 'col-2',
-            orderBy: false,
-            is_boolean: true,
             type: 'boolean'
+          },
+          {
+            field: 'type_name',
+            name: 'Tipo Atributo',
+            col: 'col-2',
+            orderBy: true,
+            type: 'text'
           }
         ],
         dataList: {},

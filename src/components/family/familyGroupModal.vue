@@ -45,12 +45,12 @@
       }
     },
     mounted () {
-      this.getFamilyGroup(this.modalFamilyGroupId)
+      this.getFamilyGroup()
     },
     methods: {
       getFamilyGroup (id) {
         var self = this
-        this.axios.get(self.urlFamilyGroup + id + '/', {
+        this.axios.get(self.urlFamilyGroup + self.modalFamilyGroupId + '/', {
         }).then(response => {
           self.familyGroup = response.data
         })

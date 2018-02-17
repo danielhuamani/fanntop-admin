@@ -6,7 +6,8 @@ const ModuleProduct = {
     attribute_ids: [],
     selected_attributes: [],
     product_class_product_attr_value: [],
-    familyGroupAttr: []
+    familyGroupAttr: [],
+    productVariant: []
 
   },
   getters: {
@@ -18,18 +19,33 @@ const ModuleProduct = {
     },
     familyGroupAttr: state => {
       return state.familyGroupAttr
+    },
+    productClassAttrValueUpdate: state => {
+      return state.product_class_product_attr_value.filter(function (val) {
+        if (val[val['type']]) {
+          return true
+        }
+        return false
+      })
+    },
+    getProductVariant: state => {
+      return state.productVariant
     }
   },
   mutations: {
     updateAttrAttributes (state, {data}) {
       state.attr_attributes = data
     },
+    setProductVariant (state, {data}) {
+      state.productVariant = data
+    },
     updateProductClassAttrValue (state, attrValue) {
-      console.log(attrValue)
       state.product_class_product_attr_value = state.product_class_product_attr_value.map(function (index, elem) {
-        console.log(index, 'index')
         if (index.attribute === attrValue.attribute) {
           index[attrValue.type] = attrValue.value
+          if (attrValue.id) {
+            index['id'] = attrValue.id
+          }
         }
         return index
       })
@@ -38,22 +54,22 @@ const ModuleProduct = {
       state.product_class_product_attr_value = []
       let typeAttr = ''
       let dataAttr = {}
-      for (let family of data) {
-        for (let attr of family.familygroup_familygroupatribute) {
-          switch (attr.type_name) {
-            case 'INPUT':
-              typeAttr = 'value_input'
-              break
-            case 'SELECT_SINGLE':
-              typeAttr = 'value_option'
-              break
-          }
-          if (!attr.is_variation) {
-            dataAttr = {}
-            dataAttr['attribute'] = attr.atribute
-            dataAttr[typeAttr] = ''
-            state.product_class_product_attr_value.push(dataAttr)
-          }
+      for (let attr of data) {
+        switch (attr.type_name) {
+          case 'INPUT':
+            typeAttr = 'value_input'
+            break
+          case 'SELECT_SINGLE':
+            typeAttr = 'value_option'
+            break
+        }
+        if (!attr.is_variation) {
+          dataAttr = {}
+          dataAttr['attribute'] = attr.attribute
+          dataAttr['id'] = 0
+          dataAttr[typeAttr] = ''
+          dataAttr['type'] = typeAttr
+          state.product_class_product_attr_value.push(dataAttr)
         }
       }
     },
@@ -75,10 +91,9 @@ const ModuleProduct = {
     updatefamilyGroupAttr ({commit}, familyId) {
       console.log(familyId, 'familyId')
       if (familyId) {
-        Vue.axios.get('/family/family-group/', {
+        Vue.axios.get('/family/family-attribute/', {
           params: {
-            fields: 'id,name,familygroup_familygroupatribute',
-            family: familyId
+            family_id: familyId
           }
         }).then(response => {
           commit('updatefamilyGroupAttr', response.data)
@@ -90,6 +105,14 @@ const ModuleProduct = {
     },
     updateProductClassAttrValue ({commit}, attrValue) {
       commit('updateProductClassAttrValue', attrValue)
+    },
+    setProductVariant ({commit}, productVariantId) {
+      Vue.axios({
+        method: 'get',
+        url: '/product/product-variant/' + productVariantId + '/'
+      }).then(response => {
+        commit('setProductVariantId', {data: response.data})
+      })
     }
   }
 }

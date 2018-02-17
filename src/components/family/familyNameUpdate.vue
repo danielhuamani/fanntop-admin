@@ -6,7 +6,6 @@
           <label for="">Nombre Grupo Atributo</label>
           <input name="name" type="text" v-model='family.name' v-validate="'required|alpha'" class="form-control"  :class="{'input': true, 'form-control--error': errors.has('form-1.name') }"   >
           <span v-show="errors.has('form-1.name')" class="help error_text">{{ errors.first('form-1.name') }}</span>
-          <button class="fa fa-save content--read-edit__save content--read-edit__icon" ></button>
         </form>
       </div>
     </div>

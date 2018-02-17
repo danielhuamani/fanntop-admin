@@ -64,7 +64,7 @@
       getData () {
         var self = this
         self.params['category'] = 'category'
-        this.axios.get('/category', {
+        this.axios.get('/category/category/', {
           params: self.params
         }).then(response => {
           self.dataList = response.data

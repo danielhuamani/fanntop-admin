@@ -29,10 +29,10 @@
               <label for="">Nombre Atributo</label>
               <input type="text" v-model="attribute.name" class="form-control">
             </div>
-            <!-- <div class="col-12 content__field">
+            <div class="col-12 content__field">
               <label for="">Nombre en la Tienda</label>
               <input type="text" v-model="attribute.name_store" class="form-control">
-            </div> -->
+            </div>
 
          <!--    <div class="col-12 content__field">
               <label for="">Uso en Filtros</label>

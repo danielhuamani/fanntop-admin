@@ -14,6 +14,10 @@
                       <label for="">Valor Atributo</label>
                       <input class="form-control" v-model="attributeOption.option">
                     </div>
+                    <div class="col-6 content__field">
+                      <label for="">Posición</label>
+                      <input class="form-control" v-model="attributeOption.position">
+                    </div>
                   </div>
                   <div class="modal-footer text-right">
                       <button class="btn btn-info" @click="savePost()">
@@ -41,7 +45,8 @@
         attributeOption: {
           id: '',
           attr: '',
-          option: ''
+          option: '',
+          position: 0
         }
       }
     },

@@ -36,16 +36,13 @@
         </div>
         <div class="col-4 second_element">
           <div class="row  material content">
-            <div class="col-12 content__field">
+            <div class="col-12 content__field content__field--check">
               <label for="">¿Activo?</label>
-              <div class="checkbox">
-                <label class="label">
-                  <input  class="label__checkbox" v-model="category.is_active" type="checkbox" />
-                  <span class="label__text">
-                    <span class="label__check">
-                      <i class="fa fa-check icon"></i>
-                    </span>
-                  </span>
+              <div class="slider-checkbox">
+                <input type="checkbox" id="1" v-model="category.is_active" />
+                <label class="label" for="1">
+                  <span class="fa fa-times slider-checkbox__status--inactive slider-checkbox__status"></span>
+                  <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
                 </label>
               </div>
             </div>
@@ -54,10 +51,30 @@
               <input type="text" v-model="category.position" class="form-control">
             </div>
             <div class="col-12 content__field">
-              <select v-model="category.category" class="custom-select"  >
-                  <option value="null"  >Seleccione Categoria</option>
-                  <option v-for="cat in categories" :value="cat.id">{{cat.name}}</option>
-              </select>
+              <label for="">Categoria</label>
+              <div class="category_content">
+                <label class="custom-control custom-radio">
+                  <input type="radio" class="custom-control-input" name="category" v-model="category.category" value="">
+                  <span class="custom-control-indicator"></span>
+                  <h6>Default</h6>
+                </label>
+                <div class="category_content__first" v-for="category_first in categories">
+                  <label class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" name="category"  v-model="category.category" :value="category_first.id">
+                    <span class="custom-control-indicator"></span>
+                    <h6>{{category_first.name}}</h6>
+                  </label>
+                  <div class="category_content__second" v-for="category_second in category_first.category_categories">
+                    <label class="custom-control custom-radio">
+                      <input type="radio" class="custom-control-input" disabled>
+                      <span class="custom-control-indicator"></span>
+                      <h6>{{category_second.name}}</h6>
+                    </label>
+                  </div>
+
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -86,14 +103,22 @@
     </div>
   </div>
 </template>
+<style lang="scss">
+  .category_content{
+    &__first{
+      margin-left:15px;
+    }
+    &__second{
+      margin-left:30px;
+    }
+  }
+</style>
 <script>
   import VueCkeditor from 'vueckeditor'
-  import categorySelectUpdate from './categorySelectUpdate'
   export default {
     name: 'categoryUpdate',
     components: {
-      VueCkeditor,
-      categorySelectUpdate
+      VueCkeditor
     },
     data () {
       return {
@@ -107,15 +132,9 @@
           slug: '',
           category: null
         },
-        categoryName: '',
         fileImage: '',
         formData: new FormData(),
-        categories: [],
-        category_initial: [],
-        category_value_initial: null,
-        levels_category: [],
-        list_category: {},
-        position: 2
+        categories: []
       }
     },
     created () {
@@ -159,7 +178,7 @@
         console.log(self.formData)
         this.axios({
           method: 'PATCH',
-          url: '/category/' + this.$route.params.id + '/',
+          url: '/category/category/' + this.$route.params.id + '/',
           data: self.formData
         }).then(response => {
           this.$emit('alert', 'success', {'Se guardo correctamente': []})
@@ -178,8 +197,7 @@
           method: 'get',
           url: '/category/category_list/',
           params: {
-            fields: 'id,name',
-            category: self.$route.params.id
+            fields: 'id,name,category_categories'
           }
         }).then(response => {
           self.categories = response.data
@@ -189,79 +207,15 @@
         var self = this
         this.axios({
           method: 'get',
-          url: '/category/' + self.$route.params.id + '/'
+          url: '/category/category/' + self.$route.params.id + '/'
 
         }).then(response => {
           self.category = response.data
           self.fileImage = response.data.image
-          self.levels_category = response.data.levels_category
-          self.loadCategoryInitial()
           // self.initialGetCategory(2, response.data)
         })
-      },
-      deleteCategory (pos, nivelCategory) {
-        nivelCategory = parseInt(nivelCategory)
-        var totalDelete = pos - nivelCategory
-        for (var i = 1; i <= totalDelete; i++) {
-          this.$delete(this.list_category, i + nivelCategory)
-        }
-        this.position = nivelCategory
-      },
-      loadCategoryInitial () {
-        var self = this
-        console.log(self.levels_category.length, '232')
-        if (self.levels_category.length > 0) {
-          self.levels_category.forEach(function (val) {
-            self.position = self.position + 1
-            var pos = self.position
-            self.axios.get('/category/category_list/', {
-              params: {
-                category: val,
-                fields: 'id,name'
-              }
-            })
-            .then((res) => {
-              if (res.data.length > 0) {
-                self.initialGetCategory(pos, res.data)
-              }
-            })
-          })
-        }
-      },
-      initialGetCategory (pos, data) {
-        this.$set(this.list_category, pos, data)
-      },
-      updateCategory (pos, nivelCategory, data) {
-        nivelCategory = parseInt(nivelCategory)
-        var totalDelete = pos - nivelCategory
-        for (var i = 1; i <= totalDelete; i++) {
-          this.$delete(this.list_category, i + nivelCategory)
-        }
-        this.position = nivelCategory + 1
-        this.$set(this.list_category, this.position, data)
-      },
-      loadCategory (value, nivelCategory, model) {
-        var self = this
-        self.category.category = model
-        if (value) {
-          this.category_value_initial = value
-          this.axios.get('/category/category_list/', {
-            params: {
-              category: value
-            }
-          })
-          .then(res => {
-            if (res.data.length > 0) {
-              self.updateCategory(self.position, nivelCategory, res.data)
-            } else {
-              this.deleteCategory(self.position, nivelCategory)
-            }
-          })
-        } else {
-          this.category_value_initial = value
-          this.deleteCategory(self.position, nivelCategory)
-        }
       }
+
     },
     computed: {
       categoryData () {

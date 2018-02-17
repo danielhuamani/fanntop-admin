@@ -24,20 +24,25 @@
                 </div>
                 <div class="col-12 content__field">
                   <label for="">Descripción</label>
-                  <VueCkeditor height='140' language='es' v-model="product.description"></VueCkeditor>
+                  <VueCkeditor height='100' language='es' v-model="product.description"></VueCkeditor>
                 </div>
-                <div class="col-12 content__field">
-                  <label for="">Caracteristicas</label>
-                  <VueCkeditor height='140' language='es' v-model="product.characteristics"></VueCkeditor>
-                </div>
+
               </div>
             </div>
-            <productAttrVariant v-if="product.attribute.length > 0" v-on:productAttributes='productAttributes' :is_variation="product.is_variation" :attribute_ids='product.attribute'>
+            <productAttrVariant v-if="product.attribute.length > 0 && product.is_variation" v-on:productAttributes='productAttributes' :is_variation="product.is_variation" :attribute_ids='product.attribute'>
             </productAttrVariant v-if="product.family" :family_id="product.family">
             <!-- <productVariant>
             </productVariant> -->
             <productInfo v-if="product.family" :family_id="product.family">
             </productInfo>
+            <div class="col-12 material content">
+              <h5 class="material__title">Caracteristicas</h5>
+              <div class="row">
+                <div class="col-12 content__field">
+                  <VueCkeditor height='100' language='es' v-model="product.characteristics"></VueCkeditor>
+                </div>
+              </div>
+            </div>
           </div>
 
         </div>
@@ -65,10 +70,22 @@
             </div>
             <div class="col-12 content__field">
               <label for="">Categoria</label>
-              <select name="category" v-validate="'required'" :class="{'input': true, 'form-control--error': errors.has('category') }" class="custom-select" v-model='product.category' multiple>
-                <option value=""  >Seleccione Categoria</option>
-                <option v-for="category in categories" :value="category.id">{{category.name}}</option>
-              </select>
+              <div class="product_category" :class="{'product_category--error': errors.has('category') }">
+                <div class="product_category__first"  v-for="category_first in categories">
+                  <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="category"  v-model="product.category" :value="category_first.id">
+                    <span class="custom-control-indicator"></span>
+                    <h6>{{category_first.name}}</h6>
+                  </label>
+                  <div class="product_category__second" v-for="category_second in category_first.category_categories">
+                    <label class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" @change="addCategoryParent($event, category_first.id)"  v-model="product.category" :value="category_second.id">
+                      <span class="custom-control-indicator"></span>
+                      <h6>{{category_second.name}}</h6>
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="col-12 content__field">
               <label for="">Grupo de Atributo</label>
@@ -77,13 +94,15 @@
                 <option v-for="family in families" :value="family.id">{{family.name}}</option>
               </select>
             </div>
-            <div class="col-12 content__field">
-
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" v-model="product.is_variation" class="custom-control-input">
-                <span class="custom-control-indicator"></span>
-                ¿Variacion?
-              </label>
+            <div class="col-12 content__field content__field--check" v-if="attributes_variations.length > 0">
+              <label for="">¿Variacion?</label>
+              <div class="slider-checkbox">
+                <input type="checkbox" id="1"  v-model="product.is_variation" @change="changeVariation($event)" />
+                <label class="label" for="1">
+                  <span class="fa fa-times slider-checkbox__status--inactive slider-checkbox__status"></span>
+                  <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
+                </label>
+              </div>
             </div>
             <div class="col-12 content__field" v-if="product.is_variation">
 
@@ -124,7 +143,26 @@
     </div>
   </form>
 </template>
+<style lang="scss">
+  .product_category{
+    border: 1px solid #ced4da;
+    padding: 10px 0;
+    border-radius: 5px;
+    height: 220px;
+    overflow-y: scroll;
+    &--error{
+      border: 1px solid #d9534f;
+    }
+    &__first{
+      margin-left:15px;
+    }
+    &__second{
+      margin-left: 30px;
+    }
+  }
+</style>
 <script>
+  import { EventBus } from '@/bus'
   import productAttrVariant from '@/components/product/productAttrVariant'
   import productVariant from '@/components/product/productVariant'
   import productInfo from '@/components/product/productInfo'
@@ -188,9 +226,10 @@
       },
       getCategories () {
         var self = this
-        this.axios.get('/category', {
+        this.axios.get('/category/category/', {
           params: {
-            fields: 'id,name'
+            fields: 'id,name,category_categories',
+            category: true
           }
         }).then(response => {
           self.categories = response.data
@@ -216,7 +255,8 @@
               url: '/product/product/',
               data: self.product
             }).then(response => {
-              console.log(response, 'response')
+              EventBus.$emit('alert', 'success', {'Se guardo correctamente': []})
+              self.$router.push({name: 'product_update', params: { id: response.data.id }})
             }).catch(error => {
               console.log('err', error)
             })
@@ -234,12 +274,26 @@
             family: self.product.family
           }
         }).then(response => {
+          self.product.is_variation = false
+          self.product.attribute = []
           self.attributes_variations = response.data
         })
       },
       productAttributes (productAttributes) {
-        console.log(productAttributes, 'productAttributes')
         this.product.product_class_products = productAttributes
+      },
+      changeVariation (e) {
+        if (!e.target.checked) {
+          this.product.attribute = []
+          this.$store.dispatch('updateAttrAttributes', this.product.attribute)
+        }
+      },
+      addCategoryParent (e, idCategoryParent) {
+        if (e.target.checked) {
+          if (this.product.category.indexOf(idCategoryParent) === -1) {
+            this.product.category.push(idCategoryParent)
+          }
+        }
       }
 
     }
