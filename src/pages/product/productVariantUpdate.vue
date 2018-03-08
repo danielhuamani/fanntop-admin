@@ -5,7 +5,7 @@
       <div class="page__header material d-flex  justify-content-between align-items-center">
         <div class="
         ">
-          <span class="" v-for='attrOption in productVariant.attribute_option'> {{attrOption.name_attr}}: {{attrOption.option}} </span>
+          <span class="" v-for='attrOption in productVariant.product_attribute_option'> {{attrOption.name_attr}}: {{attrOption.option}} </span>
         </div>
         <div class="buttons">
           <a href="" @click.prevent="$router.go(-1)" class="btn btn-secondary btn-cancel"><i class="fa fa-undo-alt"></i> Cancelar</a>
