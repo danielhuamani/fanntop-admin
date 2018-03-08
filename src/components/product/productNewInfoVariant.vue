@@ -86,7 +86,6 @@
 <script>
   import Dropzone from 'vue2-dropzone'
   export default {
-    props: ['productId'],
     name: 'ProductNewInfoVariant',
     data () {
       return {
@@ -100,7 +99,9 @@
     components: {
       Dropzone
     },
-
+    mounted () {
+      console.log(this.$route.params.id_variant, '-----')
+    },
     created () {
       this.getProductVariant()
       this.getImages()
@@ -112,7 +113,7 @@
           method: 'get',
           url: '/product/product-image/',
           params: {
-            'product_id': self.productId
+            'product_id': self.$route.params.id_variant
           }
         }).then(response => {
           self.galeryImages = response.data
@@ -122,7 +123,7 @@
         var self = this
         this.axios({
           method: 'get',
-          url: '/product/product-variant/' + self.productVariantId + '/'
+          url: '/product/product-variant/' + self.$route.params.id_variant + '/'
         }).then(response => {
           self.productVariant = response.data
         })
@@ -151,7 +152,7 @@
         reader.readAsDataURL(file)
         this.formData.append('image', file)
         this.formData.append('product_class', this.$route.params.id)
-        this.formData.append('product', this.productId)
+        this.formData.append('product', this.$route.params.id_variant)
         this.saveProductImage()
       },
       saveProductImage () {
@@ -170,11 +171,6 @@
           }
           this.$emit('alert', status, error.response.data)
         })
-      }
-    },
-    computed: {
-      getProductVariant () {
-        return this.$store.getters.getProductVariant
       }
     }
   }

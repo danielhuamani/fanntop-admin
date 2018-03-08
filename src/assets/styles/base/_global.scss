@@ -88,7 +88,9 @@ html, body{
     &__field:last-child{
         margin-bottom: 0;
     }
-
+    &__image{
+        margin-bottom: 15px;
+    }
     &__file{
         height: 250px;
         width: 100%;

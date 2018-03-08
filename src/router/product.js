@@ -3,6 +3,7 @@ import productCreate from '@/pages/product/productCreate'
 // import productUpdate from '@/pages/product/productUpdate'
 import productNewUpdate from '@/pages/product/productNewUpdate'
 import productVariantUpdate from '@/pages/product/productVariantUpdate'
+import productNewInfoVariant from '@/components/product/productNewInfoVariant'
 import middlewareAuth from '@/middleware/auth'
 
 const productRouter = [
@@ -22,7 +23,15 @@ const productRouter = [
     path: 'product/:id/update',
     name: 'product_update',
     component: productNewUpdate,
-    beforeEnter: middlewareAuth
+    beforeEnter: middlewareAuth,
+    children: [
+      {
+        path: ':id_variant',
+        name: 'product_new_variant_update',
+        component: productNewInfoVariant,
+        beforeEnter: middlewareAuth
+      }
+    ]
   },
   {
     path: 'product/:id/:id_variant_update/update',

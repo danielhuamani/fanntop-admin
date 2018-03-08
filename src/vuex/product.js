@@ -7,7 +7,7 @@ const ModuleProduct = {
     selected_attributes: [],
     product_class_product_attr_value: [],
     familyGroupAttr: [],
-    productVariant: []
+    productVariantId: null
 
   },
   getters: {
@@ -28,16 +28,16 @@ const ModuleProduct = {
         return false
       })
     },
-    getProductVariant: state => {
-      return state.productVariant
+    getProductVariantId: state => {
+      return state.productVariantId
     }
   },
   mutations: {
     updateAttrAttributes (state, {data}) {
       state.attr_attributes = data
     },
-    setProductVariant (state, {data}) {
-      state.productVariant = data
+    setProductVariantId (state, productVariantId) {
+      state.productVariantId = productVariantId
     },
     updateProductClassAttrValue (state, attrValue) {
       state.product_class_product_attr_value = state.product_class_product_attr_value.map(function (index, elem) {
@@ -106,13 +106,8 @@ const ModuleProduct = {
     updateProductClassAttrValue ({commit}, attrValue) {
       commit('updateProductClassAttrValue', attrValue)
     },
-    setProductVariant ({commit}, productVariantId) {
-      Vue.axios({
-        method: 'get',
-        url: '/product/product-variant/' + productVariantId + '/'
-      }).then(response => {
-        commit('setProductVariantId', {data: response.data})
-      })
+    setProductVariantId  ({commit}, productVariantId) {
+      commit('setProductVariantId', productVariantId)
     }
   }
 }

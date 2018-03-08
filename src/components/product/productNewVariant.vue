@@ -31,10 +31,16 @@
                       <span class="custom-control-indicator" :class="{ 'variations__body__active': productVariant.is_active }"></span>
                     </label>
                   </div>
-                  <div class="col-3">
-                    <a href="" @click.prevent='setProductVariant(productVariant.id)'>
-                      <h4 class="variations__body__title"   v-for="product in productVariant.attribute_option">{{product.name_attr}}: {{product.option}}</h4>
-                    </a>
+                  <div class="col-3" v-if='productVariant.product_attribute_option.length > 0'>
+                    <router-link  :to="{ name: 'product_variant_update', params: { id: $route.params.id, id_variant_update: productVariant.id }}" >
+                      <h4 class="variations__body__title" v-for="product in productVariant.product_attribute_option"   >{{product.name_attr}}: {{product.option}}</h4>
+                      <h4 class="variations__body__title" >Product</h4>
+                    </router-link>
+                  </div>
+                  <div class="col-3" v-else>
+                    <router-link  :to="{ name: 'product_variant_update', params: { id: $route.params.id, id_variant_update: productVariant.id }}" >
+                      <h4 class="variations__body__title">Product</h4>
+                    </router-link>
                   </div>
                   <div class="col-2">
                     <h4 class="variations__body__title">{{productVariant.price}}</h4>
@@ -73,8 +79,11 @@
             </div>
           </div>
         </div>
-        <productNewInfoVariant :productId='productId'  v-if='productId'>
-        </productNewInfoVariant>
+        <transition name="fade" mode="out-in"  appear>
+          <router-view ></router-view>
+        </transition>
+        <!-- <productNewInfoVariant :productId='productId'  v-if='productId'>
+        </productNewInfoVariant> -->
       </div>
     </div>
 </template>

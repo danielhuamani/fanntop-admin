@@ -72,6 +72,16 @@
         </div>
         <div class="col-4 second_element">
           <div class="row  material content">
+            <div class="col-12 content__field content__field--check" >
+              <label for="">Publicar?</label>
+              <div class="slider-checkbox">
+                <input type="checkbox" id="2"  v-model="product.is_published" />
+                <label class="label" for="2">
+                  <span class="fa fa-times slider-checkbox__status--inactive slider-checkbox__status"></span>
+                  <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
+                </label>
+              </div>
+            </div>
             <div class="col-12 content__field">
               <label for="">Influenciador</label>
               <select  name="influencer"  v-validate="'required'" class="custom-select" :class="{'input': true, 'form-control--error': errors.has('influencer') }" v-model='product.influencer'>
@@ -134,7 +144,8 @@
           category: [],
           influencer: '',
           product_class_product_attr_value: [],
-          family_name: ''
+          family_name: '',
+          is_published: false
         },
         categories: [],
         influencers: [],
@@ -168,6 +179,7 @@
           self.product.influencer = data.influencer
           self.product.product_class_product_attr_value = data.product_class_product_attr_value
           self.product.family_name = data.family_name
+          self.product.is_published = data.is_published
           self.$store.dispatch('updatefamilyGroupAttr', data.family)
         })
       },

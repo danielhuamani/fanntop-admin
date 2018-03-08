@@ -1,16 +1,19 @@
 <template>
   <form @submit.prevent="saveProduct()" action=""  class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Nuevo Producto</h3>
-      <div class="page__header material d-flex  justify-content-end">
-        <router-link :to="{ name: 'category'}" class="btn btn-secondary btn-cancel">
-          <i class="fa fa-undo-alt"></i>
-          Cancelar
-        </router-link>
-        <button class="btn btn-success btn-save">
-          <i class="fa fa-save"></i>
-          Guardar
-        </button>
+
+      <div class="page__header material d-flex  justify-content-between align-items-center">
+        <div class="
+        ">
+          <span class="" v-for='attrOption in productVariant.attribute_option'> {{attrOption.name_attr}}: {{attrOption.option}} </span>
+        </div>
+        <div class="buttons">
+          <a href="" @click.prevent="$router.go(-1)" class="btn btn-secondary btn-cancel"><i class="fa fa-undo-alt"></i> Cancelar</a>
+          <button class="btn btn-success btn-save">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
       </div>
       <div class="d-flex  ">
         <div class="col-8 ">
@@ -42,42 +45,23 @@
         </div>
         <div class="col-4 second_element">
           <div class="row  material content">
-           <!--  <div class="col-12 content__field">
+            <div class="col-12  content__field content__field--check">
               <label for="">¿Activo?</label>
-              <div class="checkbox">
-                <label class="label">
-                  <input  class="label__checkbox" v-model="product.is_active" type="checkbox" />
-                  <span class="label__text">
-                    <span class="label__check">
-                      <i class="fa fa-check icon"></i>
-                    </span>
-                  </span>
-                </label>
-              </div>
-            </div> -->
-            <div class="col-12 content__field">
-              <label for="">¿Activo?</label>
-              <div class="checkbox">
-                <label class="label">
-                  <input  class="label__checkbox" v-model="productVariant.is_active" type="checkbox" />
-                  <span class="label__text">
-                    <span class="label__check">
-                      <i class="fa fa-check icon"></i>
-                    </span>
-                  </span>
+              <div class="slider-checkbox">
+                <input type="checkbox" id="1" v-model="productVariant.is_active"/>
+                <label class="label" for="1">
+                  <span class="fa fa-times slider-checkbox__status--inactive slider-checkbox__status"></span>
+                  <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
                 </label>
               </div>
             </div>
-            <div class="col-12 content__field">
+            <div class="col-12  content__field content__field--check">
               <label for="">Elegido a Mostrar</label>
-              <div class="checkbox">
-                <label class="label">
-                  <input  class="label__checkbox" v-model="productVariant.is_featured" type="checkbox" />
-                  <span class="label__text">
-                    <span class="label__check">
-                      <i class="fa fa-check icon"></i>
-                    </span>
-                  </span>
+              <div class="slider-checkbox">
+                <input type="checkbox" id="1" v-model="productVariant.is_featured" />
+                <label class="label" for="1">
+                  <span class="fa fa-times slider-checkbox__status--inactive slider-checkbox__status"></span>
+                  <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
                 </label>
               </div>
             </div>
@@ -176,9 +160,25 @@
         this.formData.append('image', file)
         this.formData.append('product_class', this.$route.params.id)
         this.formData.append('product', this.$route.params.id_variant_update)
-        this.saveInfluencer()
+        this.saveGaleryImage()
       },
-      saveInfluencer () {
+      saveProduct () {
+        var self = this
+        this.axios({
+          method: 'put',
+          url: '/product/product-variant/' + self.$route.params.id_variant_update + '/',
+          data: self.productVariant
+        }).then(response => {
+          this.$emit('alert', 'success', {'Se guardo correctamente': []})
+        }).catch(error => {
+          let status = ''
+          if (error.response.status >= 400 && error.response.status < 500) {
+            status = 'danger'
+          }
+          this.$emit('alert', status, error.response.data)
+        })
+      },
+      saveGaleryImage () {
         var self = this
         this.axios({
           method: 'post',
