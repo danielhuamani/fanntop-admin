@@ -1,9 +1,9 @@
 <template>
     <div class="row">
       <div class="col-12">
-        <h3 class="title_page">Clientes</h3>
+        <h3 class="title_page">Ordenes</h3>
         <search-global ></search-global>
-        <table-global  v-on:orderBy="orderBy" nameUrl="client_read" :headerField="headerField" :tablaDataList="dataList" ></table-global>
+        <table-global  v-on:orderBy="orderBy" nameUrl="order_read_update" :headerField="headerField" :tablaDataList="dataList" ></table-global>
       </div>
     </div>
 </template>
@@ -11,7 +11,7 @@
   import searchGlobal from '@/componentsGlobals/search'
   import tableGlobal from '@/componentsGlobals/table'
   export default {
-    name: 'clients',
+    name: 'orders',
     components: {
       searchGlobal,
       tableGlobal
@@ -20,15 +20,15 @@
       return {
         headerField: [
           {
-            field: 'user.first_name',
+            field: 'order_order_customer.first_name',
             name: 'Nombre',
-            col: 'col-3',
+            col: 'col-2',
             orderBy: true,
             is_boolean: false,
             type: 'text'
           },
           {
-            field: 'user.last_name',
+            field: 'order_order_customer.last_name',
             name: 'Apellidos',
             col: 'col-3',
             orderBy: true,
@@ -36,19 +36,25 @@
             type: 'text'
           },
           {
-            field: 'user.email',
+            field: 'order_order_customer.email',
             name: 'Email',
             col: 'col-3',
             orderBy: false,
             type: 'text'
           },
           {
-            field: 'user.is_active',
-            name: 'Activo',
+            field: 'status',
+            name: 'Estado',
+            col: 'col-2',
+            orderBy: true,
+            type: 'text'
+          },
+          {
+            field: 'total',
+            name: 'Total',
             col: 'col-1',
             orderBy: false,
-            is_boolean: false,
-            type: 'boolean'
+            type: 'text'
           }
         ],
         dataList: {},
@@ -56,13 +62,15 @@
       }
     },
     created () {
-      this.getClient()
+      this.getOrder()
     },
     methods: {
-      getClient () {
+      getOrder () {
         var self = this
-        this.axios.get('/customers/customers/', {
-          params: self.params
+        this.axios.get('/order/order/', {
+          params: {
+            '!fields': 'order_orderdetail,order_ordershipping'
+          }
         }).then(response => {
           self.dataList = response.data
         })
@@ -70,7 +78,7 @@
       orderBy (order) {
         this.params = order
         this.$router.push({name: 'client', query: order})
-        this.getClient()
+        this.getOrder()
         console.log(order, 'order')
       }
     }

@@ -53,6 +53,12 @@
         </ul>
       </li>
       <li class="menu__nav__option">
+        <router-link :to="{ name: 'order'}" class="menu__nav__link" active-class="menu__nav__link--active">
+          <i class="fa fa-child"></i>
+          Pedidos
+        </router-link>
+      </li>
+      <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Pages')">
           <i class="fa fa-shopping-cart"></i>
           Pages</a>

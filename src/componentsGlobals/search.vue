@@ -7,7 +7,7 @@
           <input type="search" placeholder="Buscar" class="form-control">
 
         </div>
-        <router-link :to="{ name: nameUrl}" class="btn btn-create search_component__create">
+        <router-link v-if='nameUrl' :to="{ name: nameUrl}" class="btn btn-create search_component__create">
         <i class="fa fa-plus-circle"></i>
        Crear</router-link>
 

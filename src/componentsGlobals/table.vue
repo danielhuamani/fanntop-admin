@@ -122,7 +122,12 @@
 
       },
       getFieldData (influencer, field) {
-        return influencer[field.field]
+        if (field.field.split('.').length > 1) {
+          let newField = field.field.split('.')
+          return influencer[newField[0]][newField[1]]
+        } else {
+          return influencer[field.field]
+        }
       },
       isActiveOrderBy (fieldName, order) {
         if (this.order_by.field === fieldName && this.order_by.orderBy === order) {
