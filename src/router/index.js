@@ -11,6 +11,7 @@ import productRouter from './product'
 import familyRouter from './family'
 import orderRouter from './order'
 import homeRouter from './home'
+import pagesRouter from './pages'
 Vue.use(Router)
 const routerChildren = [
   ...dashboardRouter,
@@ -21,7 +22,8 @@ const routerChildren = [
   ...productRouter,
   ...familyRouter,
   ...homeRouter,
-  ...orderRouter]
+  ...orderRouter,
+  ...pagesRouter]
 
 export default new Router({
   mode: 'history',

@@ -30,6 +30,16 @@
                     <p>{{order.status}}</p>
                   </div>
                 </div>
+                <div class="col-12 content__field content__field--check">
+                  <label for="">Estado Envio</label>
+                  <div class="">
+                    <select name="" id="" class="form-control" v-model='order.type_status_shipping'>
+                      <option :value="shipping.val" v-for='shipping in status_shipping'>
+                        {{shipping.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
 
                 <div class="col-12 content__field content__field--check">
                   <label for="">Código de Orden</label>
@@ -38,6 +48,14 @@
                 <div class="col-12 content__field content__field--check">
                   <strong>{{order.code}}</strong>
                 </div>
+                <div class="col-12 content__field content__field--check">
+                  <label for="">Código de Culqui</label>
+
+                </div>
+                <div class="col-12 content__field content__field--check">
+                  <strong>{{order.extra_data.id_charge}}</strong>
+                </div>
+
 
               </div>
               <div class="row material content">
@@ -45,40 +63,40 @@
                 <div class="col-12 ">
                   <h5 class='material__title'>Información Cliente</h5>
                   <div class="row">
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Nombres:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_order_customer.first_name}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Apellidos:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_order_customer.last_name}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Email:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_order_customer.email}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Celular:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_order_customer.phone}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">T Documento:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_order_customer.type_document}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Documento:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_order_customer.document}}</strong>
                     </div>
                   </div>
@@ -89,58 +107,58 @@
                 <div class="col-12 ">
                   <h5 class='material__title'>Información Envio</h5>
                   <div class="row">
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Nombres:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.first_name}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Apellidos:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.last_name}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Email:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.email}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Celular:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.phone}}</strong>
                     </div>
-                    <div class="col-5 content__field">
-                      <label for="">T Documento:</label>
+                    <div class="col-4 content__field">
+                      <label for="">T Docu:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.type_document}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Documento:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.document}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Dirección:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.address}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Referencia:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.reference}}</strong>
                     </div>
-                    <div class="col-5 content__field">
+                    <div class="col-4 content__field">
                       <label for="">Lugar:</label>
                     </div>
-                    <div class="col-7 content__field">
+                    <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.ubigeo_full}}</strong>
                     </div>
                   </div>
@@ -234,7 +252,21 @@
           'order_order_customer': {
             'first_name': ''
           }
-        }
+        },
+        status_shipping: [
+          {
+            val: 'AL',
+            name: 'En Almacén'
+          },
+          {
+            val: 'DS',
+            name: 'En Despacho'
+          },
+          {
+            val: 'EG',
+            name: 'Entregado'
+          }
+        ]
       }
     },
     created () {

@@ -14,6 +14,24 @@
         </router-link>
       </li>
       <li class="menu__nav__option">
+        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Producto')">
+          <i class="fa fa-cog"></i>
+          Configuración</a>
+        <ul class="menu__nav__sub" v-show="openMenu == 'Producto'">
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'product'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Configuración
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'category'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Costos de envio
+            </router-link>
+          </li>
+
+        </ul>
+      </li>
+      <li class="menu__nav__option">
         <router-link :to="{ name: 'client'}" class="menu__nav__link" active-class="menu__nav__link--active">
           <i class="fa fa-users"></i>
           Clientes
@@ -60,12 +78,17 @@
       </li>
       <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Pages')">
-          <i class="fa fa-shopping-cart"></i>
+          <i class="fa fa-list-alt"></i>
           Pages</a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Pages'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'home'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               Home
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'question'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Preguntas Frecuentes
             </router-link>
           </li>
         </ul>
