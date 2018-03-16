@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Preguntas Frecuentes</h3>
+      <h3 class="title_page">Formas de Pago</h3>
       <div class="page__header material d-flex  justify-content-end">
 
         <a href="" class="btn btn-success btn-save" @click.prevent="saveData()">
@@ -14,11 +14,9 @@
           <div class="row">
             <div class="col-12 content__field">
               <label for="">Descripción</label>
-              <VueCkeditor language='es' v-model="question.content"></VueCkeditor>
+              <VueCkeditor language='es' v-model="paymentMethods.content"></VueCkeditor>
             </div>
-
           </div>
-
         </div>
       </div>
 
@@ -28,13 +26,13 @@
 <script>
   import VueCkeditor from 'vueckeditor'
   export default {
-    name: 'question',
+    name: 'paymentMethods',
     components: {
       VueCkeditor
     },
     data () {
       return {
-        question: {
+        paymentMethods: {
           content: ''
         },
         influencerName: '',
@@ -52,45 +50,17 @@
     methods: {
       getQuestion () {
         var self = this
-        this.axios.get('/pages/question/', {
+        this.axios.get('/pages/payment-methods/', {
         }).then(response => {
-          self.question = response.data
+          self.paymentMethods = response.data
         })
-      },
-      fileUpload (e, typeImage) {
-        console.log(typeImage, 'typeImage')
-        var files = e.target.files || e.dataTransfer.files
-        if (!files.length) {
-          return
-        }
-        // console.log(files[0])
-        // var x = files[0]
-        return this.createImage(files[0], typeImage)
-      // return new Buffer(x)
-      },
-      createImage (file, typeImage) {
-      // var image = new Image()
-        var reader = new FileReader()
-        var vm = this
-
-        reader.onload = (e) => {
-          // vm.image = e.target.result
-          if (typeImage === 'image') {
-            vm.fileImage = reader.result
-          }
-          if (typeImage === 'banner') {
-            vm.fileImageBanner = reader.result
-          }
-        }
-        reader.readAsDataURL(file)
-        this.formData.append(typeImage, file)
       },
       saveData () {
         var self = this
         this.axios({
           method: 'post',
-          url: '/pages/question/',
-          data: self.question
+          url: '/pages/payment-methods/',
+          data: self.paymentMethods
         }).then(response => {
           this.$emit('alert', 'success', {'Se guardo correctamente': []})
         }).catch(error => {

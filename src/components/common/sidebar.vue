@@ -14,7 +14,7 @@
         </router-link>
       </li>
       <li class="menu__nav__option">
-        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Producto')">
+        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Config')">
           <i class="fa fa-cog"></i>
           Configuración</a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Producto'">
@@ -87,10 +87,25 @@
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'pages'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Pages
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'question'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               Preguntas Frecuentes
             </router-link>
           </li>
+<!--           <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'terms_conditions'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Terminos Y Condiciones
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'payment_methods'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Formas de Pago
+            </router-link>
+          </li> -->
         </ul>
       </li>
 
