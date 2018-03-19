@@ -3,10 +3,10 @@
     <div class="col-12 page">
       <h3 class="title_page">Nueva Categoria</h3>
       <div class="page__header material d-flex  justify-content-end">
-        <router-link :to="{ name: 'category'}" class="btn btn-secondary btn-cancel">
+        <a href="" class="btn btn-secondary btn-cancel" @click.prevent="goBack">
           <i class="fa fa-undo-alt"></i>
-          Cancelar
-        </router-link>
+          Regresar
+        </a>
         <a href="" class="btn btn-success btn-save" @click.prevent="saveCategory">
           <i class="fa fa-save"></i>
           Guardar
@@ -92,6 +92,9 @@
 
     },
     methods: {
+      goBack () {
+        this.$router.go(-1)
+      },
       fileUpload (e) {
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {

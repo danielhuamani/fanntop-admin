@@ -138,6 +138,8 @@
       margin: 0;
       margin-top: 20px;
       padding: 0;
+      height: calc(100% - 200px);
+      overflow-y: scroll;
       &__sub{
         margin: 0;
         padding: 0;

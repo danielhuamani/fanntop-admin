@@ -12,6 +12,18 @@
           Guardar
         </button>
       </div>
+      <div class="row row-status">
+        <div class="col-4">
+          <h5 @click='changeStatus("AL")' :class="[activeShipping('AL', 'DS', 'EG', order.type_status_shipping) ? 'active' : '']">En Almacén</h5>
+        </div>
+        <div class="col-4">
+          <h5 @click='changeStatus("DS")' :class="[activeShipping('', 'DS', 'EG', order.type_status_shipping) ? 'active' : '']">En Despacho</h5>
+        </div>
+        <div class="col-4">
+          <h5 @click='changeStatus("EG")' :class="[activeShipping('', '', 'EG', order.type_status_shipping) ? 'active' : '']">Entregado</h5>
+        </div>
+      </div>
+
       <div class="col-12 page">
           <div class="row">
             <div class="col-4">
@@ -31,17 +43,6 @@
                   </div>
                 </div>
                 <div class="col-12 content__field content__field--check">
-                  <label for="">Estado Envio</label>
-                  <div class="">
-                    <select name="" id="" class="form-control" v-model='order.type_status_shipping'>
-                      <option :value="shipping.val" v-for='shipping in status_shipping'>
-                        {{shipping.name}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-12 content__field content__field--check">
                   <label for="">Código de Orden</label>
 
                 </div>
@@ -52,7 +53,8 @@
                   <label for="">Código de Culqui</label>
 
                 </div>
-                <div class="col-12 content__field content__field--check">
+
+                <div class="col-12 content__field content__field--check" v-if='order.extra_data'>
                   <strong>{{order.extra_data.id_charge}}</strong>
                 </div>
 
@@ -249,8 +251,11 @@
       return {
         order: {
           'is_send_email': false,
-          'order_order_customer': {
-            'first_name': ''
+          order_order_customer: {
+            first_name: ''
+          },
+          order_ordershipping: {
+            first_name: ''
           }
         },
         status_shipping: [
@@ -273,6 +278,16 @@
       this.getOrder()
     },
     methods: {
+      activeShipping (almance, despacho, entregado, status) {
+        let arrayStatus = [almance, despacho, entregado]
+        if (arrayStatus.indexOf(status) !== -1) {
+          return 'active'
+        }
+        return ''
+      },
+      changeStatus (status) {
+        this.order.type_status_shipping = status
+      },
       saveProduct () {
         var self = this
         this.axios({
@@ -307,6 +322,34 @@
   .material{
     &__card{
       border: 1px black dashed;
+    }
+  }
+  .row-status{
+    margin-top:40px;
+    text-align: center;
+    position: relative;
+    &:after{
+      content:'';
+      width: 100%;
+      height: 2px;
+      position: absolute;
+      left: 0;
+      top:45%;
+      background: #2e3c4f;
+    }
+    h5{
+      display: inline-block;
+      background: #2e3c4f;
+      padding: 18px 15px;
+      color:white;
+      cursor: pointer;
+      border-radius:8px;
+      font-size: 16px;
+      position: relative;
+      z-index: 100;
+    }
+    h5.active{
+      background: #28a745;
     }
   }
 </style>
