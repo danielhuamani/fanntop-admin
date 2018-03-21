@@ -14,6 +14,7 @@ Vue.use(VueAxios, axios)
 Vue.use(VeeValidate, {locale: spanish})
 Vue.config.productionTip = false
 Vue.axios.defaults.baseURL = config.baseURL
+
 /* eslint-disable no-new */
 setupAxios()
 setupFilters()

@@ -12,7 +12,7 @@
           Guardar
         </button>
       </div>
-      <div class="row row-status">
+      <div class="row row-status" v-if='order.type_status == "PG"'>
         <div class="col-4">
           <h5 @click='changeStatus("AL")' :class="[activeShipping('AL', 'DS', 'EG', order.type_status_shipping) ? 'active' : '']">En Almacén</h5>
         </div>
@@ -39,12 +39,16 @@
                 <div class="col-12 content__field content__field--check">
                   <label for="">Estado</label>
                   <div class="slider-checkbox">
-                    <p>{{order.status}}</p>
+                    <select name="" id="" class='form-control' v-model='order.type_status'>
+                      <option value="PR_1">Pendiente</option>
+                      <option value="RC">Rechazado</option>
+                      <option value="PG">Pagado</option>
+                      <option value="RE">Reembolso</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-12 content__field content__field--check">
                   <label for="">Código de Orden</label>
-
                 </div>
                 <div class="col-12 content__field content__field--check">
                   <strong>{{order.code}}</strong>

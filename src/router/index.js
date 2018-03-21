@@ -12,6 +12,8 @@ import familyRouter from './family'
 import orderRouter from './order'
 import homeRouter from './home'
 import pagesRouter from './pages'
+import configurationRouter from './configuration'
+
 Vue.use(Router)
 const routerChildren = [
   ...dashboardRouter,
@@ -23,6 +25,7 @@ const routerChildren = [
   ...familyRouter,
   ...homeRouter,
   ...orderRouter,
+  ...configurationRouter,
   ...pagesRouter]
 
 export default new Router({

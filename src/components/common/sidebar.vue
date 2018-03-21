@@ -17,9 +17,9 @@
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Config')">
           <i class="fa fa-cog"></i>
           Configuración</a>
-        <ul class="menu__nav__sub" v-show="openMenu == 'Producto'">
+        <ul class="menu__nav__sub" v-show="openMenu == 'Config'">
           <li class="menu__nav__sub__option">
-            <router-link :to="{ name: 'product'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+            <router-link :to="{ name: 'configuration'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               Configuración
             </router-link>
           </li>
