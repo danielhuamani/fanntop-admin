@@ -12,6 +12,7 @@ import familyRouter from './family'
 import orderRouter from './order'
 import homeRouter from './home'
 import pagesRouter from './pages'
+import formRouter from './form'
 import configurationRouter from './configuration'
 
 Vue.use(Router)
@@ -26,7 +27,8 @@ const routerChildren = [
   ...homeRouter,
   ...orderRouter,
   ...configurationRouter,
-  ...pagesRouter]
+  ...pagesRouter,
+  ...formRouter]
 
 export default new Router({
   mode: 'history',

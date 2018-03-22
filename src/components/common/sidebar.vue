@@ -72,7 +72,7 @@
       </li>
       <li class="menu__nav__option">
         <router-link :to="{ name: 'order'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="fa fa-child"></i>
+          <i class="fa fa-truck"></i>
           Pedidos
         </router-link>
       </li>
@@ -108,7 +108,28 @@
           </li> -->
         </ul>
       </li>
-
+      <li class="menu__nav__option">
+        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Forms')">
+          <i class="fa fa-table"></i>
+          Formularios</a>
+        <ul class="menu__nav__sub" v-show="openMenu == 'Forms'">
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'suscription'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Suscripción
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'pages'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Contacto
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'question'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              Libro de Reclamaciones
+            </router-link>
+          </li>
+        </ul>
+      </li>
     </ul>
   </div>
 </template>
