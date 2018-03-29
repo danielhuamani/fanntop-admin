@@ -24,7 +24,7 @@
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
-            <router-link :to="{ name: 'category'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+            <router-link :to="{ name: 'shipping_cost'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               Costos de envio
             </router-link>
           </li>
