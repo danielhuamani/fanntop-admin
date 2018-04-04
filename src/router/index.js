@@ -12,6 +12,7 @@ import familyRouter from './family'
 import orderRouter from './order'
 import homeRouter from './home'
 import pagesRouter from './pages'
+import couponRouter from './coupon'
 import formRouter from './form'
 import configurationRouter from './configuration'
 
@@ -28,7 +29,8 @@ const routerChildren = [
   ...orderRouter,
   ...configurationRouter,
   ...pagesRouter,
-  ...formRouter]
+  ...formRouter,
+  ...couponRouter]
 
 export default new Router({
   mode: 'history',

@@ -71,6 +71,12 @@
         </ul>
       </li>
       <li class="menu__nav__option">
+        <router-link :to="{ name: 'coupon'}" class="menu__nav__link" active-class="menu__nav__link--active">
+          <i class="fa fa-users"></i>
+          Cupones
+        </router-link>
+      </li>
+      <li class="menu__nav__option">
         <router-link :to="{ name: 'order'}" class="menu__nav__link" active-class="menu__nav__link--active">
           <i class="fa fa-truck"></i>
           Pedidos
