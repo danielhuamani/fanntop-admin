@@ -227,7 +227,16 @@
                         <label for="">Envio</label>
                       </div>
                       <div class="col-2">
-                        <strong>0</strong>
+                        <strong>{{order.shipping_price}}</strong>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-8"></div>
+                      <div class="col-2">
+                        <label for="">Descuento </strong> </label>
+                      </div>
+                      <div class="col-2">
+                        <strong>{{order.discount}}</strong>
                       </div>
                     </div>
                     <div class="row">
