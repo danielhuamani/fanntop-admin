@@ -98,7 +98,7 @@
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
-            <router-link :to="{ name: 'question'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+            <router-link :to="{ name: 'frecuent_question'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               Preguntas Frecuentes
             </router-link>
           </li>

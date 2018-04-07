@@ -3,6 +3,9 @@ import pagesCreate from '@/pages/pages/pagesCreate'
 import pagesUpdate from '@/pages/pages/pagesUpdate'
 import termsConditions from '@/pages/pages/termsConditions'
 import paymentMethods from '@/pages/pages/paymentMethods'
+import questionResponseList from '@/pages/pages/questionResponseList'
+import frecuentQuestionCreate from '@/pages/pages/frecuentQuestionCreate'
+import frecuentQuestionUpdate from '@/pages/pages/frecuentQuestionUpdate'
 import question from '@/pages/pages/question'
 import middlewareAuth from '@/middleware/auth'
 
@@ -41,6 +44,24 @@ const pagesRouter = [
     path: 'pages/:id/update',
     name: 'pages_update',
     component: pagesUpdate,
+    beforeEnter: middlewareAuth
+  },
+  {
+    path: 'frecuent-question',
+    name: 'frecuent_question',
+    component: questionResponseList,
+    beforeEnter: middlewareAuth
+  },
+  {
+    path: 'frecuent-question/create',
+    name: 'frecuent_question_create',
+    component: frecuentQuestionCreate,
+    beforeEnter: middlewareAuth
+  },
+  {
+    path: 'frecuent-question/:id/update',
+    name: 'frecuent_question_update',
+    component: frecuentQuestionUpdate,
     beforeEnter: middlewareAuth
   }
 ]
