@@ -1,7 +1,7 @@
 <template>
-    <header class="header row justify-content-between align-items-center">
+    <header class="header row justify-content-between align-items-center" v-bind:class="{ header_active: getMenuActive }">
         <div class="header__link_menu col-3">
-            <i class="fa fa-bars"></i>
+            <i class="fa fa-bars" @click.prevent='changeMenu'></i>
         </div>
         <div class="header__content_user col-9 text-right">
             <div class="btn-group">
@@ -38,6 +38,7 @@
         left: 0;
         right: 0;
         margin-left: 250px;
+        transition: 0.3s ease all;
         &__link_menu{
             font-size: 24px;
             cursor: pointer;
@@ -53,8 +54,13 @@
             }
         }
     }
+    .header_active{
+      width:100%;
+      margin-left:0;
+    }
 </style>
 <script>
+  import { mapGetters } from 'vuex'
   import {authLogout, getEmail} from '@/utils/auth'
   export default {
     name: 'headerMenu',
@@ -69,7 +75,15 @@
       logout () {
         authLogout()
         this.$router.push({name: 'login'})
+      },
+      changeMenu () {
+        this.$store.dispatch('setMenuActive')
       }
+    },
+    computed: {
+      ...mapGetters([
+        'getMenuActive'
+      ])
     }
   }
 </script>

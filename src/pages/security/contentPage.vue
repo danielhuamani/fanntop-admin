@@ -2,7 +2,7 @@
   <div class="d-flex full-width">
     <loading :loading="is_loading"></loading>
     <sidebar></sidebar>
-    <div class="row_wrapper container-fluid">
+    <div class="row_wrapper container-fluid"  v-bind:class="{ row_wrapper_active: getMenuActive }" >
       <menu-header></menu-header>
       <alert :data_alert="alert" v-on:clearAlert="clearAlert"></alert>
       <div class="content-page">
@@ -23,6 +23,7 @@
   .row_wrapper{
     width: calc( 100% - 250px);
     margin-left: 250px;
+    transition: 0.3s ease all;
   }
   .fade-enter-active, .fade-leave-active {
     transition: opacity 0.2s
@@ -35,8 +36,13 @@
     margin-top: 90px;
     padding-bottom: 30px;
   }
+  .row_wrapper_active{
+    width:100%;
+    margin-left:0;
+  }
 </style>
 <script>
+  import { mapGetters } from 'vuex'
   import sidebar from '@/components/common/sidebar'
   import menuHeader from '@/components/common/headerMenu'
   import loading from '@/components/common/loading'
@@ -68,6 +74,11 @@
       clearAlert () {
         this.alert = {status: '', message: []}
       }
+    },
+    computed: {
+      ...mapGetters([
+        'getMenuActive'
+      ])
     }
   }
 </script>

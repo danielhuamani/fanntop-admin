@@ -7,7 +7,8 @@ const ModuleProduct = {
     selected_attributes: [],
     product_class_product_attr_value: [],
     familyGroupAttr: [],
-    productVariantId: null
+    productVariantId: null,
+    menuActive: false
 
   },
   getters: {
@@ -30,6 +31,9 @@ const ModuleProduct = {
     },
     getProductVariantId: state => {
       return state.productVariantId
+    },
+    getMenuActive: state => {
+      return state.menuActive
     }
   },
   mutations: {
@@ -75,6 +79,9 @@ const ModuleProduct = {
     },
     updatefamilyGroupAttr (state, data) {
       state.familyGroupAttr = data
+    },
+    setMenuActive (state) {
+      state.menuActive = !state.menuActive
     }
   },
   actions: {
@@ -108,6 +115,9 @@ const ModuleProduct = {
     },
     setProductVariantId  ({commit}, productVariantId) {
       commit('setProductVariantId', productVariantId)
+    },
+    setMenuActive  ({commit}) {
+      commit('setMenuActive')
     }
   }
 }

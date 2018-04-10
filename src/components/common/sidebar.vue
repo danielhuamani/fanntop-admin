@@ -1,5 +1,5 @@
 <template>
-  <div class="menu">
+  <div class="menu" v-bind:class="{ menu_active: getMenuActive }" >
     <div class="menu__container_logo ">
         <img src="../../assets/img/fanntop.svg"  width="60" height="60" class="rounded img-responsive">
     </div>
@@ -10,22 +10,23 @@
       <li class="menu__nav__option">
         <router-link :to="{ name: 'dashboard'}" class="menu__nav__link" active-class="menu__nav__link--active">
           <i class="fa fa-home"></i>
-          Dashboard
+          <span class='menu__name'>Dashboard</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Config')">
           <i class="fa fa-cog"></i>
-          Configuración</a>
+          <span class='menu__name'>Configuración</span>
+        </a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Config'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'configuration'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Configuración
+              <span class='menu__name'>Configuración</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'shipping_cost'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Costos de envio
+              <span class='menu__name'>Costos de envio</span>
             </router-link>
           </li>
 
@@ -34,38 +35,38 @@
       <li class="menu__nav__option">
         <router-link :to="{ name: 'client'}" class="menu__nav__link" active-class="menu__nav__link--active">
           <i class="fa fa-users"></i>
-          Clientes
+          <span class='menu__name'>Clientes</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
         <router-link :to="{ name: 'influencer'}" class="menu__nav__link" active-class="menu__nav__link--active">
           <i class="fa fa-child"></i>
-          Influenciadores
+          <span class='menu__name'>Influenciadores</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Producto')">
           <i class="fa fa-shopping-cart"></i>
-          Productos</a>
+          <span class='menu__name'>Productos</span></a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Producto'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'product'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Catalogo
+              <span class='menu__name'>Catalogo</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'category'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Categoria
+              <span class='menu__name'>Categoria</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'family'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Grupo Atributos
+              <span class='menu__name'>Grupo Atributos</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'attribute'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Atributos
+              <span class='menu__name'>Atributos</span>
             </router-link>
           </li>
         </ul>
@@ -73,33 +74,33 @@
       <li class="menu__nav__option">
         <router-link :to="{ name: 'coupon'}" class="menu__nav__link" active-class="menu__nav__link--active">
           <i class="fa fa-users"></i>
-          Cupones
+          <span class='menu__name'>Cupones</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
         <router-link :to="{ name: 'order'}" class="menu__nav__link" active-class="menu__nav__link--active">
           <i class="fa fa-truck"></i>
-          Pedidos
+          <span class='menu__name'>Pedidos</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Pages')">
           <i class="fa fa-list-alt"></i>
-          Pages</a>
+          <span class='menu__name'>Pages</span></a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Pages'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'home'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Home
+              <span class='menu__name'>Home</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'pages'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Pages
+              <span class='menu__name'>Pages</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'frecuent_question'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Preguntas Frecuentes
+              <span class='menu__name'>Preguntas Frecuentes</span>
             </router-link>
           </li>
 <!--           <li class="menu__nav__sub__option">
@@ -117,21 +118,21 @@
       <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Forms')">
           <i class="fa fa-table"></i>
-          Formularios</a>
+          <span class='menu__name'>Formularios</span></a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Forms'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'suscription'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Suscripción
+              <span class='menu__name'>Suscripción</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'contact'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Contacto
+              <span class='menu__name'>Contacto</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'complaints_book'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Libro de Reclamaciones
+              <span class='menu__name'>Libro de Reclamaciones</span>
             </router-link>
           </li>
         </ul>
@@ -141,6 +142,7 @@
 </template>
 
 <style lang="scss">
+
   @import "~styles/abstract/variables";
 
   .menu {
@@ -151,6 +153,10 @@
     position: fixed;
     top: 0;
     left: 0;
+    transition: 0.3s ease all;
+    &__name{
+      display: inline;
+    }
     &__container_logo{
       padding: 20px 10px;
       display: flex;
@@ -203,9 +209,14 @@
       }
     }
   }
+  .menu_active{
+    width: 0px;
+    overflow: hidden;
+  }
 </style>
 
 <script>
+  import { mapGetters } from 'vuex'
   export default {
     name: 'sidebar',
     data () {
@@ -228,6 +239,11 @@
       isSubMenu (nameMenu) {
         return this.subMenu[nameMenu]
       }
+    },
+    computed: {
+      ...mapGetters([
+        'getMenuActive'
+      ])
     }
   }
 </script>
