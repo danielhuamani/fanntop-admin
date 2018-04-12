@@ -13,7 +13,7 @@
         </button>
       </div>
       <div class="d-flex  ">
-        <div class="col-4 ">
+        <div class="col-12 ">
           <div class="row material content">
             <div class="col-12 ">
               <h5 class="material__title">Informacion Basica</h5>
@@ -49,8 +49,8 @@
                   <input type="text" name="quantity_customer"  v-validate="'required'" :class="{'form-control--error': errors.has('quantity_customer') }" v-model="coupon.quantity_customer" class="form-control">
                 </div>
                 <div class="col-12 content__field">
-                  <label for="">Prefijo</label>
-                  <input type="text" name="prefix" v-validate="'required|alpha_spaces'" :class="{'form-control--error': errors.has('prefix') }" v-model="coupon.prefix" class="form-control">
+                  <label for="">Codigo</label>
+                  <input type="text" name="prefix" v-validate="'required'" :class="{'form-control--error': errors.has('prefix') }" v-model="coupon.prefix" class="form-control">
                 </div>
                 <div class="col-12 content__field">
                   <label for="">Influenciador</label>
@@ -82,7 +82,7 @@
           </div>
 
         </div>
-        <div class="col-8 second_element">
+       <!--  <div class="col-8 second_element">
           <div class="row material content">
             <div class="col-12 ">
               <div class="row">
@@ -130,7 +130,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </div>
@@ -237,15 +237,16 @@
       },
       saveData () {
         var self = this
+        var id = this.$route.params.id
         self.$validator.validateAll().then((result) => {
           if (result) {
             self.axios({
-              method: 'post',
-              url: '/promotion/coupon/',
+              method: 'put',
+              url: '/promotion/coupon/' + id + '/',
               data: self.coupon
             }).then(response => {
               EventBus.$emit('alert', 'success', {'Se guardo correctamente': []})
-              self.$router.push({name: 'product_update', params: { id: response.data.id }})
+              self.$router.push({name: 'coupon_update', params: { id: response.data.id }})
             }).catch(error => {
               console.log('err', error)
             })
