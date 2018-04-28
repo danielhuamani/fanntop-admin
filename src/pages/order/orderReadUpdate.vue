@@ -94,7 +94,7 @@
                       <strong>{{order.order_order_customer.phone}}</strong>
                     </div>
                     <div class="col-4 content__field">
-                      <label for="">T Documento:</label>
+                      <label for="">T Doc:</label>
                     </div>
                     <div class="col-8 content__field">
                       <strong>{{order.order_order_customer.type_document}}</strong>
@@ -138,7 +138,7 @@
                       <strong>{{order.order_ordershipping.phone}}</strong>
                     </div>
                     <div class="col-4 content__field">
-                      <label for="">T Docu:</label>
+                      <label for="">T Doc:</label>
                     </div>
                     <div class="col-8 content__field">
                       <strong>{{order.order_ordershipping.type_document}}</strong>

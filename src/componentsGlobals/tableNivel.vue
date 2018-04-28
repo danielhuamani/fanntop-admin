@@ -66,7 +66,7 @@
         </div>
     </div>
 </template>
-<style lang="scss">
+<style lang="scss" scope>
   @import "~styles/abstract/variables";
 
   .table{

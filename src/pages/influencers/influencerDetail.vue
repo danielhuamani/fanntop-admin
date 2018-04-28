@@ -187,12 +187,12 @@
           data: self.formData
         }).then(response => {
           self.$emit('loading', false)
-          this.$emit('alert', 'success', {'Se guardo correctamente': []})
+          self.$emit('alert', 'success', {'Se guardo correctamente': []})
           self.$router.push({name: 'influencer_detail', params: { id: response.data.id }})
           console.log('response', response)
         }).catch(error => {
           self.$emit('loading', false)
-          console.log('error', error)
+          self.$emit('alert', status, error.response.data)
         })
       }
     }

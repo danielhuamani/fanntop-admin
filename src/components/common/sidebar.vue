@@ -45,6 +45,12 @@
         </router-link>
       </li>
       <li class="menu__nav__option">
+        <router-link :to="{ name: 'user'}" class="menu__nav__link" active-class="menu__nav__link--active">
+          <i class="fa fa-users"></i>
+          <span class='menu__name'>Usuarios</span>
+        </router-link>
+      </li>
+      <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Producto')">
           <i class="fa fa-shopping-cart"></i>
           <span class='menu__name'>Productos</span></a>
@@ -171,8 +177,33 @@
       margin: 0;
       margin-top: 20px;
       padding: 0;
-      height: calc(100% - 200px);
+      height: calc(100% - 250px);
       overflow-y: scroll;
+      &::-webkit-scrollbar {
+          width: 10px;
+      }
+      /* Track */
+      &::-webkit-scrollbar-track {
+          // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+          -webkit-border-radius: 10px;
+          border-radius: 10px;
+          background:rgba(0,0,0,0.1);
+      }
+
+      /* Handle */
+      &::-webkit-scrollbar-thumb {
+          -webkit-border-radius: 10px;
+          border-radius: 10px;
+          // background: rgba($color-gray-cl, 0.7);
+          // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+          background:rgba(0,0,0,0.2);
+      }
+      &::-webkit-scrollbar-thumb:window-inactive {
+        background:rgba(0,0,0,0.2);
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background:rgba(0,0,0,0.4);
+      }
       &__sub{
         margin: 0;
         padding: 0;

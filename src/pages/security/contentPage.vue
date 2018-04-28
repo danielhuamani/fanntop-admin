@@ -37,8 +37,8 @@
     padding-bottom: 30px;
   }
   .row_wrapper_active{
-    width:100%;
-    margin-left:0;
+    width:100% !important;
+    margin-left:0 !important;
   }
 </style>
 <script>
