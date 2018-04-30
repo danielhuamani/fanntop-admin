@@ -34,15 +34,15 @@
                 </div>
                 <div class="col-12 content__field">
                   <label for="">Apellidos</label>
-                  <input type="text"name="user_email" v-validate="'required'" :class="{'form-control--error': errors.has('user_last_name') }" v-model="user.last_name" class="form-control">
+                  <input type="text" name="user_last_name" v-validate="'required'" :class="{'form-control--error': errors.has('user_last_name') }" v-model="user.last_name" class="form-control">
                 </div>
                 <div class="col-12 content__field">
                   <label for="">Email</label>
-                  <input type="text"name="user_email" v-validate="'required'" :class="{'form-control--error': errors.has('user_email') }" v-model="user.email" class="form-control">
+                  <input type="text" name="user_email" v-validate="'required'" :class="{'form-control--error': errors.has('user_email') }" v-model="user.email" class="form-control">
                 </div>
                 <div class="col-12 content__field">
                   <label for="">Password</label>
-                  <input type="password"name="user_password" v-validate="'required'" :class="{'form-control--error': errors.has('user_password') }" v-model="user.password" class="form-control">
+                  <input type="password" name="user_password" v-validate="'required'" :class="{'form-control--error': errors.has('user_password') }" v-model="user.password" class="form-control">
                 </div>
                 <div class="col-12 content__field">
                   <label for="">Tipo de influenciador</label>
@@ -53,6 +53,7 @@
                 <div class="col-12 content__field" v-if='show_type_user == "INFLUENCIADOR"'>
                   <label for="">Influenciador</label>
                   <select  name="influencer"    class="custom-select"  v-model='user.influencer'>
+                    <option value="">Seleccione Influenciador</option>
                     <option v-for="influencer in influencers" :value="influencer.id" >{{influencer.name}}</option>
                   </select>
                 </div>

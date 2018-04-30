@@ -248,6 +248,18 @@
                         <strong>{{order.total}}</strong>
                       </div>
                     </div>
+                    <br>
+                    <hr>
+                    <div class="row">
+                      <div class="col-12">
+                        <h5>Descuento Influencer</h5>
+                        <div class="row" v-for='value, index in order.shipping_influencer'>
+                          <div class="col-4">{{value.name}}</div>
+                          <div class="col-4">Porcentaje: {{value.percentage}}%</div>
+                          <div class="col-4">Descuento: S/ {{value.total}}</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>

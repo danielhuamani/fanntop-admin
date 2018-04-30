@@ -39,7 +39,7 @@
             field: 'email',
             name: 'Email',
             col: 'col-3',
-            orderBy: false,
+            orderBy: true,
             type: 'text'
           },
           {

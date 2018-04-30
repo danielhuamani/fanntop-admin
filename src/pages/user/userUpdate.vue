@@ -3,9 +3,13 @@
     <div class="col-12 page">
       <h3 class="title_page">Actualizar Usuario</h3>
       <div class="page__header material d-flex  justify-content-end">
-        <router-link :to="{ name: 'user'}" class="btn btn-secondary btn-cancel">
+        <router-link :to="{ name: 'user'}" class="btn btn-secondary ">
           <i class="fa fa-undo-alt"></i>
           Cancelar
+        </router-link>
+        <router-link :to="{ name: 'user_change_pass', params: { id: $route.params.id }}" class="btn btn-info btn-cancel">
+          <i class="fa fa-change"></i>
+          Cambiar Contraseña
         </router-link>
         <button class="btn btn-success btn-save">
           <i class="fa fa-save"></i>
@@ -34,16 +38,16 @@
                 </div>
                 <div class="col-12 content__field">
                   <label for="">Apellidos</label>
-                  <input type="text"name="user_email" v-validate="'required'" :class="{'form-control--error': errors.has('user_last_name') }" v-model="user.last_name" class="form-control">
+                  <input type="text" name="user_last_name" v-validate="'required'" :class="{'form-control--error': errors.has('user_last_name') }" v-model="user.last_name" class="form-control">
                 </div>
                 <div class="col-12 content__field">
                   <label for="">Email</label>
-                  <input type="text"name="user_email" v-validate="'required'" :class="{'form-control--error': errors.has('user_email') }" v-model="user.email" class="form-control">
+                  <input type="email" name="user_email" v-validate="'required'" :class="{'form-control--error': errors.has('user_email') }" v-model="user.email" class="form-control">
                 </div>
-                <div class="col-12 content__field">
+            <!--     <div class="col-12 content__field">
                   <label for="">Password</label>
                   <input type="password" name="upassword" v-validate="'required'" :class="{'form-control--error': errors.has('user_password') }" v-model="user.password" class="form-control">
-                </div>
+                </div> -->
                 <div class="col-12 content__field">
                   <label for="">Tipo de influenciador</label>
                   <select  name="influencer"   v-validate="'required'" class="custom-select" :class="{'input': true, 'form-control--error': errors.has('influencer') }" v-model='show_type_user'>
@@ -125,7 +129,9 @@
       saveData () {
         var self = this
         var id = this.$route.params.id
+        console.log(id, 'id')
         self.$validator.validateAll().then((result) => {
+          console.log(result, 'result')
           if (result) {
             self.axios({
               method: 'put',
@@ -133,9 +139,9 @@
               data: self.user
             }).then(response => {
               EventBus.$emit('alert_bus', 'success', {'Se guardo correctamente': []})
-              self.$router.push({name: 'user_update', params: { id: response.data.id }})
+              self.$router.push({name: 'user_update', params: { id: id }})
             }).catch(error => {
-              console.log('err', error)
+              EventBus.$emit('alert_bus', 'danger', error.response.data)
             })
           } else {
             console.log('error')
