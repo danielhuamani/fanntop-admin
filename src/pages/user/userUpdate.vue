@@ -129,7 +129,7 @@
       saveData () {
         var self = this
         var id = this.$route.params.id
-        console.log(id, 'id')
+        console.log(self.user, 'id')
         self.$validator.validateAll().then((result) => {
           console.log(result, 'result')
           if (result) {

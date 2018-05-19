@@ -118,10 +118,11 @@
         this.$router.go(-1)
       },
       saveData () {
-        var self = this
+        const self = this
+        const id = this.$route.params.id
         this.axios({
-          method: 'post',
-          url: '/pages/pages/',
+          method: 'put',
+          url: '/pages/pages/' + id + '/',
           data: self.pages
         }).then(response => {
           this.$emit('alert', 'success', {'Se guardo correctamente': []})

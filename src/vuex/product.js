@@ -96,7 +96,6 @@ const ModuleProduct = {
       })
     },
     updatefamilyGroupAttr ({commit}, familyId) {
-      console.log(familyId, 'familyId')
       if (familyId) {
         Vue.axios.get('/family/family-attribute/', {
           params: {
