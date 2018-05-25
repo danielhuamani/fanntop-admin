@@ -1,8 +1,10 @@
 <template>
-  <div class="col-6">
+  <div :class='[expand ? "col-12": "col-6"]'>
     <div class="card card--margin">
-      <div class="card-header">
+      <div class="card-header text-center">
           <h5 class="card-header__title">Cantidad de Pedidos</h5>
+          <i class='icon_expand fa fa-expand-alt' @click='expand=!expand'>
+          </i>
       </div>
       <div class="card-body">
         </div>
@@ -21,6 +23,7 @@ export default {
   name: 'dahsboardOrderCount',
   data () {
     return {
+      expand: false,
       reporte: '',
       load: false,
       create: '',

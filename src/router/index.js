@@ -15,6 +15,7 @@ import pagesRouter from './pages'
 import couponRouter from './coupon'
 import formRouter from './form'
 import userRouter from './user'
+import profileRouter from './security'
 import configurationRouter from './configuration'
 
 Vue.use(Router)
@@ -32,7 +33,8 @@ const routerChildren = [
   ...pagesRouter,
   ...formRouter,
   ...couponRouter,
-  ...userRouter]
+  ...userRouter,
+  ...profileRouter]
 
 export default new Router({
   mode: 'history',

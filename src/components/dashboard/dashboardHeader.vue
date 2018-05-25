@@ -2,8 +2,8 @@
   <div class="row">
     <div class="col-3">
       <div class="card">
-        <div class="card-header">
-          <h3 class='card-header__title'>Ingreso Mensual</h3>
+        <div class="card-header ">
+          <h3 class='card-header__title text-center'>Ingreso Mensual</h3>
         </div>
         <div class="card-body card-body--dashboard">
           <p class='card-body__dashboard'>S/ {{dashboard.total_sales_month}}</p>
@@ -14,7 +14,7 @@
     <div class="col-3">
       <div class="card">
         <div class="card-header">
-          <h3 class='card-header__title'>Ingreso Diario</h3>
+          <h3 class='card-header__title text-center'>Ingreso Diario</h3>
         </div>
         <div class="card-body card-body--dashboard">
           <p class='card-body__dashboard'>S/ {{dashboard.total_sales_date}}</p>
@@ -25,10 +25,10 @@
     <div class="col-3">
       <div class="card">
         <div class="card-header">
-          <h3 class='card-header__title'>Ordenes</h3>
+          <h3 class='card-header__title text-center'>Ordenes</h3>
         </div>
         <div class="card-body card-body--dashboard">
-          <p class='card-body__dashboard'>S/ {{dashboard.total_order_month}}</p>
+          <p class='card-body__dashboard'> {{dashboard.total_order_month}}</p>
           <span class='card-body__date'>{{dashboard.month}}</span>
         </div>
       </div>
@@ -36,11 +36,11 @@
     <div class="col-3">
       <div class="card">
         <div class="card-header">
-          <h3 class='card-header__title'>Productos Despachados</h3>
+          <h3 class='card-header__title text-center'>Productos Despachados</h3>
         </div>
         <div class="card-body card-body--dashboard">
-          <p class='card-body__dashboard'>S/ 120</p>
-          <span class='card-body__date'>01/05/2018</span>
+          <p class='card-body__dashboard'>{{dashboard.total_product}}</p>
+          <span class='card-body__date'>{{dashboard.day}}</span>
         </div>
       </div>
     </div>

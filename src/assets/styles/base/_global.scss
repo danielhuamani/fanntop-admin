@@ -11,6 +11,11 @@ html, body{
 .form-control--error{
     border: 1px solid $color-danger;
 }
+.form-group__errors{
+    p{
+        color: $color-danger;
+    }
+}
 .title_page{
     margin-bottom: 40px;
     text-transform: capitalize;

@@ -9,50 +9,25 @@
     <ul class="menu__nav">
       <li class="menu__nav__option">
         <router-link :to="{ name: 'dashboard'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="fa fa-home"></i>
+          <i class="far fa-home"></i>
           <span class='menu__name'>Dashboard</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
-        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Config')">
-          <i class="fa fa-cog"></i>
-          <span class='menu__name'>Configuración</span>
-        </a>
-        <ul class="menu__nav__sub" v-show="openMenu == 'Config'">
-          <li class="menu__nav__sub__option">
-            <router-link :to="{ name: 'configuration'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              <span class='menu__name'>Configuración</span>
-            </router-link>
-          </li>
-          <li class="menu__nav__sub__option">
-            <router-link :to="{ name: 'shipping_cost'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              <span class='menu__name'>Costos de envio</span>
-            </router-link>
-          </li>
-
-        </ul>
-      </li>
-      <li class="menu__nav__option">
-        <router-link :to="{ name: 'client'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="fa fa-users"></i>
-          <span class='menu__name'>Clientes</span>
+        <router-link :to="{ name: 'order'}" class="menu__nav__link" active-class="menu__nav__link--active">
+          <i class="far fa-truck"></i>
+          <span class='menu__name'>Ordenes</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
         <router-link :to="{ name: 'influencer'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="fa fa-child"></i>
+          <i class="far fa-child"></i>
           <span class='menu__name'>Influenciadores</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
-        <router-link :to="{ name: 'user'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="fa fa-users"></i>
-          <span class='menu__name'>Usuarios</span>
-        </router-link>
-      </li>
-      <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Producto')">
-          <i class="fa fa-shopping-cart"></i>
+          <i class="far fa-shopping-cart"></i>
           <span class='menu__name'>Productos</span></a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Producto'">
           <li class="menu__nav__sub__option">
@@ -79,24 +54,24 @@
       </li>
       <li class="menu__nav__option">
         <router-link :to="{ name: 'coupon'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="fa fa-users"></i>
+          <i class="far fa-users"></i>
           <span class='menu__name'>Cupones</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
-        <router-link :to="{ name: 'order'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="fa fa-truck"></i>
-          <span class='menu__name'>Pedidos</span>
+        <router-link :to="{ name: 'client'}" class="menu__nav__link" active-class="menu__nav__link--active">
+          <i class="far fa-users"></i>
+          <span class='menu__name'>Clientes</span>
         </router-link>
       </li>
       <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Pages')">
-          <i class="fa fa-list-alt"></i>
-          <span class='menu__name'>Pages</span></a>
+          <i class="far fa-list-alt"></i>
+          <span class='menu__name'>Páginas</span></a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Pages'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'home'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              <span class='menu__name'>Home</span>
+              <span class='menu__name'>Principal</span>
             </router-link>
           </li>
           <li class="menu__nav__sub__option">
@@ -109,21 +84,11 @@
               <span class='menu__name'>Preguntas Frecuentes</span>
             </router-link>
           </li>
-<!--           <li class="menu__nav__sub__option">
-            <router-link :to="{ name: 'terms_conditions'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Terminos Y Condiciones
-            </router-link>
-          </li>
-          <li class="menu__nav__sub__option">
-            <router-link :to="{ name: 'payment_methods'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
-              Formas de Pago
-            </router-link>
-          </li> -->
         </ul>
       </li>
       <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Forms')">
-          <i class="fa fa-table"></i>
+          <i class="far fa-table"></i>
           <span class='menu__name'>Formularios</span></a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Forms'">
           <li class="menu__nav__sub__option">
@@ -143,6 +108,35 @@
           </li>
         </ul>
       </li>
+      <li class="menu__nav__option">
+        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Config')">
+          <i class="far fa-cog"></i>
+          <span class='menu__name'>Configuración</span>
+        </a>
+        <ul class="menu__nav__sub" v-show="openMenu == 'Config'">
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'configuration'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              <span class='menu__name'>Enlaces</span>
+            </router-link>
+          </li>
+          <li class="menu__nav__sub__option">
+            <router-link :to="{ name: 'shipping_cost'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
+              <span class='menu__name'>Costos de envio</span>
+            </router-link>
+          </li>
+
+        </ul>
+      </li>
+
+
+
+      <li class="menu__nav__option">
+        <router-link :to="{ name: 'user'}" class="menu__nav__link" active-class="menu__nav__link--active">
+          <i class="far fa-users"></i>
+          <span class='menu__name'>Usuarios</span>
+        </router-link>
+      </li>
+
     </ul>
   </div>
 </template>

@@ -6,12 +6,13 @@
         <div class="header__content_user col-9 text-right">
             <div class="btn-group">
               <span class="header__user dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-user"></i>
+              <i class="far fa-user"></i>
                 {{user.email}}
               </span>
               <div class="dropdown-menu dropdown-menu-right">
-                <button class="dropdown-item" type="button">Action</button>
-                <button class="dropdown-item" type="button">Another action</button>
+                <router-link :to="{ name: 'profile'}" class="dropdown-item">  <i class="fa fa-user dropdown-menu__icon_out"></i>
+                  Mi Perfil
+                </router-link>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" @click.prevent="logout" href="#">
                     <i class="fa fa-sign-out-alt dropdown-menu__icon_out"></i>
