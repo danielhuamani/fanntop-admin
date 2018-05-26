@@ -97,7 +97,6 @@
       }
     }
     &__body{
-      margin-top: 20px;
       background: $color-white;
       &__link{
         color: $color-table-link;

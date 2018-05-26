@@ -32,9 +32,9 @@
     .alert_container{
         position: fixed;
         top: 56px;
-        width: calc(100% - 250px);
+        width: calc(100% - 180px);
         z-index: 200;
-        margin-left: 250px;
+        margin-left: 180px;
         left: 0;
         &__item{
           strong{

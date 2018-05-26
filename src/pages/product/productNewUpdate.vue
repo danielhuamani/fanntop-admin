@@ -99,10 +99,7 @@
     padding: 0px;
     // background: $color-panel;
   }
-  .row_wrapper{
-    width: calc( 100% - 250px);
-    margin-left: 250px;
-  }
+
   .fade-enter-active, .fade-leave-active {
     transition: opacity 0.2s
   }

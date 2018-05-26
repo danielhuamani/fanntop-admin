@@ -2,16 +2,16 @@
     <div class="table  ">
         <div class="table__header material d-flex justify-content-between">
           <div class="table__header__field col-1">
-            <label class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input">
-              <span class="custom-control-indicator"></span>
-            </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck1">
+              <label class="custom-control-label" for="customCheck1"></label>
+            </div>
           </div>
           <div :class="['table__header__field', field.col] " v-for="field in headerField">
             <h6>{{field.name}}</h6>
             <div class="table__header__orderBy" v-if="field.orderBy">
-              <i :class="['fa fa-angle-up table__header__orderBy__asc', isActiveOrderBy(field.field, 'asc')]" v-on:click="orderBy(field.field, 'asc')"></i>
-              <i :class="['fa fa-angle-down table__header__orderBy__desc', isActiveOrderBy(field.field, 'desc')]" v-on:click="orderBy(field.field, 'desc')"></i>
+              <i :class="['fa fa-angle-up table__header__orderBy__asc', isActiveOrderBy(field.fieldOrder, 'asc')]" v-on:click="orderBy(field.fieldOrder, 'asc')"></i>
+              <i :class="['fa fa-angle-down table__header__orderBy__desc', isActiveOrderBy(field.fieldOrder, 'desc')]" v-on:click="orderBy(field.fieldOrder, 'desc')"></i>
             </div>
           </div>
         </div>
@@ -39,9 +39,9 @@
   @import "~styles/abstract/variables";
 
   .table{
-    margin-top: 40px;
+    margin-top: 25px;
     &__header{
-      padding: 15px;
+      padding: 15px 0;
       background: $color-white;
       align-items: center;
       &__field{
@@ -52,7 +52,7 @@
       }
       &__orderBy{
         position: absolute;
-        right: 30px;
+        right: 15px;
         top: -9px;
         &__asc, &__desc{
           cursor: pointer;
@@ -66,7 +66,7 @@
       }
     }
     &__body{
-      margin-top: 20px;
+      margin-top: 2px;
       background: $color-white;
       &__link{
         color: $color-table-link;
@@ -76,7 +76,7 @@
         }
       }
       &__row{
-        padding: 10px 15px;
+        padding: 10px 0;
         background: $color-white;
         &__status{
           width: 16px;
@@ -88,6 +88,7 @@
         }
         h6{
           margin: 0;
+          font-size: 14px;
         }
       },
       &__row:nth-child(even){

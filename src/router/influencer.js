@@ -11,13 +11,13 @@ const influencerRouter = [
     beforeEnter: middlewareAuth
   },
   {
-    path: 'influencer/:id/update',
+    path: 'influencer/:id/actualizar',
     name: 'influencer_detail',
     component: influencerDetail,
     beforeEnter: middlewareAuth
   },
   {
-    path: 'influencer/create',
+    path: 'influencer/crear',
     name: 'influencer_create',
     component: influencerCreate,
     beforeEnter: middlewareAuth

@@ -21,8 +21,8 @@
     // background: $color-panel;
   }
   .row_wrapper{
-    width: calc( 100% - 250px);
-    margin-left: 250px;
+    width: calc( 100% - 180px);
+    margin-left: 180px;
     transition: 0.3s ease all;
   }
   .fade-enter-active, .fade-leave-active {

@@ -1,7 +1,7 @@
 @import "../abstract/variables";
 html, body{
     height: 100%;
-    background: $color-panel;
+    background: #f1f3f5;
 
 }
 
@@ -17,11 +17,12 @@ html, body{
     }
 }
 .title_page{
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-transform: capitalize;
 }
 .material{
-    box-shadow: 0 3px 3px rgba(0,0,0,0.05);
+    border-radius: 4px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.05);
     &__title{
         margin-bottom: 20px;
         border-bottom: 1px solid $color-gray-cl;
@@ -95,14 +96,32 @@ html, body{
     }
     &__image{
         margin-bottom: 15px;
+        height: 250px;
+        width: 100%;
+        cursor: pointer;
     }
     &__file{
         height: 250px;
         width: 100%;
         cursor: pointer;
         &__control{
-            height: 250px;
-            width: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 5;
+            height:100%;
+            padding: .375rem .75rem;
+            line-height: 1.5;
+            color: #495057;
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: #fff;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
             img{
                 display: block;
                 margin: auto;
@@ -155,4 +174,10 @@ i[class*="icon"]{
 }
 input[type='color'] {
     height: 38px;
+}
+.mx-datepicker{
+    width: 100% !important;
+}
+.mx-input{
+    height: 40px !important;
 }

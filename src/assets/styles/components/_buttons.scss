@@ -9,12 +9,11 @@
 }
 
 .btn-create{
-    background: $color-info;
-    color: $color-white;
-    &:hover{
-        color: $color-white;
-        background: darken( #09f, 5% );
-    }
+
+    border-radius: 0;
+    border-top-right-radius:0.25rem;
+    border-bottom-right-radius:0.25rem;
+
 }
 .btn--info{
     background: $color-info;

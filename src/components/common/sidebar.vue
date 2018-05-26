@@ -147,8 +147,8 @@
 
   .menu {
     background: #37485F;
-    width: 250px;
-    max-width: 250px;
+    width: 180px;
+    max-width: 180px;
     height: 100vh;
     position: fixed;
     top: 0;
@@ -171,7 +171,7 @@
       margin: 0;
       margin-top: 20px;
       padding: 0;
-      height: calc(100% - 250px);
+      height: calc(100% - 180px);
       overflow-y: scroll;
       &::-webkit-scrollbar {
           width: 10px;

@@ -32,13 +32,13 @@
         padding: 10px 0px;
         box-shadow: 0 1px 2px rgba(0,0,0,.1);
         position: fixed;
-        width: calc(100% - 250px );
+        width: calc(100% - 180px );
         z-index: 200;
         /* background: red; */
         top: 0;
         left: 0;
         right: 0;
-        margin-left: 250px;
+        margin-left: 180px;
         transition: 0.3s ease all;
         &__link_menu{
             font-size: 24px;

@@ -3,9 +3,10 @@
   <div class="row">
     <div class="col-12 page">
       <h3 class="title_page">Influenciador {{influencerName}}</h3>
-      <div class="page__header material d-flex  justify-content-end">
-
-      <a href="" class="btn btn-secondary btn-cancel" @click.prevent="goBack">
+      <div class="page__header material d-flex  justify-content-between">
+      <a href="" @click.prevent='modal.show=true' class='btn btn-danger '><i class='far fa-trash-alt'></i> Eliminar</a>
+      <div class="button-group">
+        <a href=""  class="btn btn-secondary btn-cancel" @click.prevent="goBack">
           <i class="fa fa-undo-alt"></i>
           Regresar
         </a>
@@ -14,19 +15,17 @@
           Guardar
         </a>
       </div>
+      </div>
       <div class="d-flex material content">
         <div class="col-12">
           <div class="row">
             <div class="col-2 content__field">
-              <label for="">¿Activo?</label>
-              <div class="checkbox">
-                <label class="label">
-                  <input  class="label__checkbox" v-model="influencer.is_active" type="checkbox" />
-                  <span class="label__text">
-                    <span class="label__check">
-                      <i class="fa fa-check icon"></i>
-                    </span>
-                  </span>
+              <label for="">Activo</label>
+              <div class="slider-checkbox">
+                <input type="checkbox" id="1"  v-model="influencer.is_active" />
+                <label class="label" for="1">
+                  <span class="fa fa-times slider-checkbox__status--inactive slider-checkbox__status"></span>
+                  <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
                 </label>
               </div>
             </div>
@@ -44,25 +43,25 @@
             </div>
             <div class="col-12 content__field">
               <label for="">Imagen</label>
-              <div class="content__image">
-                <label class="custom-file content__file">
-                <input type="file" id="file" class="custom-file-input content__file__input"  @change="fileUpload($event, 'image')">
+              <div class="content__image custom-file">
+                <input type="file" id="file" class="custom-file-input content__file__input"  @change="fileUpload($event, 'image')" lang="es">
+                <label class="custom-file-label content__file">
+                </label>
                 <span class="custom-file-control content__file__control">
                   <img :src="fileImage" alt="" width="225" height="225">
                 </span>
-                </label>
               </div>
 
             </div>
             <div class="col-12 content__field">
               <label for="">Banner</label>
-              <div class="content__image">
-                <label class="custom-file content__file" id="file_banner">
-                <input type="file" id="file_banner" class="custom-file-input content__file__input"  @change="fileUpload($event, 'banner')">
+              <div class="content__image custom-file">
+                <input type="file" id="file_banner" class="custom-file-input content__file__input"  @change="fileUpload($event, 'banner')" lang="es">
+                <label class="custom-file-label content__file">
+                </label>
                 <span class="custom-file-control content__file__control">
                   <img :src="fileImageBanner" alt="" width="225" height="225">
                 </span>
-                </label>
               </div>
 
             </div>
@@ -90,18 +89,31 @@
           </div>
         </div>
       </div>
+  <!--     <attribute-modal v-if="showAttributeModal" :show="showAttributeModal"
+    @close="showAttributeModal = false" :idModalAttributeOption='idModalAttributeOption'
+    :urlAttributeOption='urlAttributeOption' @reloadAttributeOption='reloadAttributeOption'>
+    </attribute-modal> -->
+      <modalDelete :modal='modal' @close='close'></modalDelete>
     </div>
   </div>
 </template>
 <script>
+  import modalDelete from '@/componentsGlobals/modalDelete'
   import VueCkeditor from 'vueckeditor'
   export default {
     name: 'influencerDetail',
     components: {
-      VueCkeditor
+      VueCkeditor,
+      modalDelete
     },
     data () {
       return {
+        modal: {
+          show: false,
+          message: '',
+          url: '',
+          urlRedirect: 'influencer'
+        },
         influencer: {
           id: null,
           name: '',
@@ -119,14 +131,17 @@
       }
     },
     created () {
+      this.modal.url = '/influencer/' + this.$route.params.id + '/'
       this.getInfluencer()
     },
     mounted () {
 
     },
     methods: {
+      close () {
+        this.modal.show = false
+      },
       fileUpload (e, typeImage) {
-        console.log(typeImage, 'typeImage')
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {
           return
@@ -163,6 +178,7 @@
           self.influencerName = response.data.name
           self.fileImage = response.data.image
           self.fileImageBanner = response.data.banner
+          self.modal.message = response.data.name
           // self.formData.append('image', response.data.image)
         })
       },
