@@ -1,16 +1,19 @@
 <template>
   <div class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Nueva Pregunta</h3>
-      <div class="page__header material d-flex  justify-content-end">
-        <a href="" class="btn btn-secondary btn-cancel" @click.prevent="goBack">
-          <i class="fa fa-undo-alt"></i>
-          Regresar
-        </a>
-        <a href="" class="btn btn-success btn-save" @click.prevent="saveData">
-          <i class="fa fa-save"></i>
-          Guardar
-        </a>
+      <h3 class="title_page">Pregunta {{pages.question}} </h3>
+      <div class="page__header material d-flex  justify-content-between">
+        <a href="" @click.prevent='modal.show=true' class='btn btn-danger '><i class='far fa-trash-alt'></i> Eliminar</a>
+        <div class="button-group">
+          <router-link :to="{ name: 'pages'}" class="btn btn-secondary btn-cancel">
+              <i class="fa fa-undo-alt"></i>
+              Cancelar
+            </router-link>
+          <a href="" class="btn btn-success btn-save" @click.prevent="saveData">
+            <i class="fa fa-save"></i>
+            Guardar
+          </a>
+        </div>
       </div>
       <div class="d-flex  ">
         <div class="col-8 ">
@@ -66,19 +69,27 @@
         </div>
 
       </div>
-
+      <modalDelete :modal='modal' @close='close'></modalDelete>
     </div>
   </div>
 </template>
 <script>
+  import modalDelete from '@/componentsGlobals/modalDelete'
   import VueCkeditor from 'vueckeditor'
   export default {
     name: 'frecuentQuestionUpdate',
     components: {
-      VueCkeditor
+      VueCkeditor,
+      modalDelete
     },
     data () {
       return {
+        modal: {
+          show: false,
+          message: '',
+          url: '',
+          urlRedirect: 'frecuent_question'
+        },
         pages: {
           question: '',
           content: '',
@@ -91,14 +102,15 @@
       }
     },
     created () {
+      this.modal.url = '/pages/frecuent-question/' + this.$route.params.id + '/'
       this.getFrecuentQuestion()
     },
     mounted () {
 
     },
     methods: {
-      goBack () {
-        this.$router.go(-1)
+      close () {
+        this.modal.show = false
       },
       getFrecuentQuestion () {
         const self = this
@@ -107,6 +119,7 @@
           params: self.params
         }).then(response => {
           self.pages = response.data
+          self.modal.message = response.data.question
         })
       },
       saveData () {

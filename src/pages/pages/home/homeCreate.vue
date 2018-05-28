@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Nueva Categoria</h3>
+      <h3 class="title_page">Nuevo Banner</h3>
       <div class="page__header material d-flex  justify-content-end">
         <a href="" class="btn btn-secondary btn-cancel" @click.prevent="goBack">
           <i class="fa fa-undo-alt"></i>

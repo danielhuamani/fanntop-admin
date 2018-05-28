@@ -2,12 +2,13 @@
     <div class="row">
       <div class="col-12">
         <h3 class="title_page">Preguntas y Respuestas</h3>
-        <search-global nameUrl="frecuent_question_create"></search-global>
+        <search-global v-on:search='search' :isFilter='isFilter' v-on:displayFilter='showFilter=true' nameUrl="frecuent_question_create"></search-global>
         <table-global v-on:orderBy="orderBy"  nameUrl="frecuent_question_update" :headerField="headerField" :tablaDataList="dataList" ></table-global>
       </div>
     </div>
 </template>
 <script>
+  import filter from '@/mixins/filter'
   import searchGlobal from '@/componentsGlobals/search'
   import tableGlobal from '@/componentsGlobals/table'
   export default {
@@ -16,11 +17,15 @@
       searchGlobal,
       tableGlobal
     },
+    mixins: [filter],
     data () {
       return {
+        isFilter: false,
+        showFilter: false,
         headerField: [
           {
             field: 'question',
+            fieldOrder: 'question',
             name: 'Pregunta',
             col: 'col-10',
             orderBy: true,
@@ -35,25 +40,24 @@
           }
         ],
         dataList: {},
-        params: {}
+        filter: {
+          field: '',
+          orderBy: '',
+          search: ''
+        }
       }
     },
     created () {
-      this.getHomeBanners()
+      this.getDataList()
     },
     methods: {
-      getHomeBanners () {
+      getDataList () {
         var self = this
         this.axios.get('/pages/frecuent-question/', {
-          params: self.params
+          params: self.filter
         }).then(response => {
           self.dataList = response.data
         })
-      },
-      orderBy (order) {
-        this.params = order
-        this.$router.push({name: 'frecuent_question', query: order})
-        this.getHomeBanners()
       }
     }
 

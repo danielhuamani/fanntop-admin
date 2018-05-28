@@ -1,7 +1,7 @@
 <template>
     <div class="row">
       <div class="col-12">
-        <h3 class="title_page">Ordenes</h3>
+        <h3 class="title_page">Costo de envío</h3>
         <div class="material content d-flex">
             <div class="col-4 content__field">
                 <label for="">Departamento</label>
@@ -22,12 +22,13 @@
                 </select>
             </div>
         </div>
-        <search-global class='content' ></search-global>
+        <search-global v-on:search='search' :isFilter='isFilter' v-on:displayFilter='showFilter=true' ></search-global>
         <table-global  v-on:orderBy="orderBy" nameUrl="shipping_cost_update" :headerField="headerField" :tablaDataList="dataList" ></table-global>
       </div>
     </div>
 </template>
 <script>
+  import filter from '@/mixins/filter'
   import searchGlobal from '@/componentsGlobals/search'
   import tableGlobal from '@/componentsGlobals/table'
   export default {
@@ -36,43 +37,50 @@
       searchGlobal,
       tableGlobal
     },
+    mixins: [filter],
     data () {
       return {
+        isFilter: false,
+        showFilter: false,
         headerField: [
           {
             field: 'price',
+            fieldOrder: 'price',
             name: 'Precio',
             col: 'col-5',
             orderBy: true,
-            is_boolean: false,
             type: 'text'
           },
           {
             field: 'full_ubigeo',
+            fieldOrder: 'ubigeo__desc_ubigeo_inei',
             name: 'Ubigeo',
             col: 'col-5',
             orderBy: true,
-            is_boolean: false,
             type: 'text'
           }
         ],
-        dataList: {},
-        params: {},
+        dataList: [],
         departamentos: [],
         departamento_select: '',
         provincia_select: '',
-        provincias: []
+        provincias: [],
+        filter: {
+          field: '',
+          orderBy: '',
+          search: ''
+        }
       }
     },
     created () {
-      this.getShippingCost()
+      this.getDataList()
       this.getDepartamentos()
     },
     methods: {
-      getShippingCost () {
+      getDataList () {
         var self = this
         this.axios.get('/shipping/shipping-cost/', {
-          params: self.params
+          params: self.filter
         }).then(response => {
           self.dataList = response.data
         })
@@ -87,7 +95,6 @@
       getProvincias () {
         var self = this
         let idDepartamento = self.departamento_select
-        console.log(idDepartamento, '---')
         if (idDepartamento) {
           this.axios.get('/ubigeo/provincias/', {
             params: {
@@ -105,19 +112,14 @@
         let idProvincia = self.provincia_select
         console.log(idProvincia, 'idProvincia')
         if (idProvincia) {
-          self.params['provincia'] = idProvincia
-          self.params['get_distritos'] = true
-          self.orderBy()
+          self.filter['provincia'] = idProvincia
+          self.filter['get_distritos'] = true
+          self.getDataList()
         } else {
-          self.params['provincia'] = ''
-          self.params['get_distritos'] = false
-          self.orderBy()
+          self.filter['provincia'] = ''
+          self.filter['get_distritos'] = false
+          self.getDataList()
         }
-      },
-      orderBy () {
-        console.log(this.params, '-')
-        this.$router.push({name: 'shipping_cost', query: this.params})
-        this.getShippingCost()
       }
     }
   }

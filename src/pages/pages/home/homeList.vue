@@ -2,12 +2,13 @@
     <div class="row">
       <div class="col-12">
         <h3 class="title_page">Home Banner</h3>
-        <search-global nameUrl="home_create"></search-global>
+        <search-global v-on:search='search' :isFilter='isFilter' v-on:displayFilter='showFilter=true' nameUrl="home_create"></search-global>
         <table-global v-on:orderBy="orderBy"  nameUrl="home_update" :headerField="headerField" :tablaDataList="dataList" ></table-global>
       </div>
     </div>
 </template>
 <script>
+  import filter from '@/mixins/filter'
   import searchGlobal from '@/componentsGlobals/search'
   import tableGlobal from '@/componentsGlobals/table'
   export default {
@@ -16,20 +17,24 @@
       searchGlobal,
       tableGlobal
     },
+    mixins: [filter],
     data () {
       return {
+        isFilter: false,
+        showFilter: false,
         headerField: [
           {
             field: 'name',
+            fieldOrder: 'name',
             name: 'Nombre',
-            col: 'col-6',
+            col: 'col-5',
             orderBy: true,
             type: 'text'
           },
           {
             field: 'image_crop',
             name: 'Image',
-            col: 'col-4',
+            col: 'col-5',
             is_image: true,
             orderBy: false,
             type: 'image'
@@ -43,26 +48,24 @@
           }
         ],
         dataList: {},
-        params: {}
+        filter: {
+          field: '',
+          orderBy: '',
+          search: ''
+        }
       }
     },
     created () {
-      this.getHomeBanners()
+      this.getDataList()
     },
     methods: {
-      getHomeBanners () {
+      getDataList () {
         var self = this
         this.axios.get('/pages/home/', {
-          params: self.params
+          params: self.filter
         }).then(response => {
           self.dataList = response.data
         })
-      },
-      orderBy (order) {
-        this.params = order
-        this.$router.push({name: 'home', query: order})
-        this.getHomeBanners()
-        console.log(order, 'order')
       }
     }
 
