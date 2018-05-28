@@ -8,7 +8,7 @@
               </div>
               <div class="modal-footer d-flex justify-content-center">
                   <a href="" @click.prevent="close" class='btn btn-dark'>No</a>
-                  <a href="" class='btn btn-danger'>Si</a>
+                  <a href="" @click.prevent='deleteId' class='btn btn-danger'>Si</a>
               </div>
           </div>
       </div>
@@ -31,7 +31,7 @@
       close () {
         this.$emit('close')
       },
-      delete () {
+      deleteId () {
         var self = this
         this.axios({
           method: 'delete',

@@ -205,7 +205,6 @@
           self.$emit('loading', false)
           self.$emit('alert', 'success', {'Se guardo correctamente': []})
           self.$router.push({name: 'influencer_detail', params: { id: response.data.id }})
-          console.log('response', response)
         }).catch(error => {
           self.$emit('loading', false)
           self.$emit('alert', status, error.response.data)

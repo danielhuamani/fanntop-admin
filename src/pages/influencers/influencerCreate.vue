@@ -16,15 +16,12 @@
         <div class="col-12">
           <div class="row">
             <div class="col-2 content__field">
-              <label for="">¿Activo?</label>
-              <div class="checkbox">
-                <label class="label">
-                  <input  class="label__checkbox" v-model="influencer.is_active" type="checkbox" />
-                  <span class="label__text">
-                    <span class="label__check">
-                      <i class="fa fa-check icon"></i>
-                    </span>
-                  </span>
+              <label for="">Activo</label>
+              <div class="slider-checkbox">
+                <input type="checkbox" id="1"  v-model="influencer.is_active" />
+                <label class="label" for="1">
+                  <span class="fa fa-times slider-checkbox__status--inactive slider-checkbox__status"></span>
+                  <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>
                 </label>
               </div>
             </div>
@@ -106,7 +103,8 @@
           title: '',
           meta_description: '',
           slug: '',
-          banner: ''
+          banner: '',
+          is_active: true
         },
         influencerName: '',
         fileImage: '',

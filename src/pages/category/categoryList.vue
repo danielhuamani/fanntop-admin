@@ -2,12 +2,13 @@
     <div class="row">
       <div class="col-12">
         <h3 class="title_page">Categorias</h3>
-        <search-global nameUrl="category_create"></search-global>
+        <search-global v-on:search='search' :isFilter='isFilter' v-on:displayFilter='showFilter=true' nameUrl="category_create"></search-global>
         <table-nivel-global  v-on:orderBy="orderBy" nameUrl="category_update" :headerField="headerField" :tablaDataList="dataList" ></table-nivel-global>
       </div>
     </div>
 </template>
 <script>
+  import filter from '@/mixins/filter'
   import searchGlobal from '@/componentsGlobals/search'
   import tableNivelGlobal from '@/componentsGlobals/tableNivel'
   export default {
@@ -16,19 +17,22 @@
       searchGlobal,
       tableNivelGlobal
     },
+    mixins: [filter],
     data () {
       return {
+        isFilter: false,
         headerField: [
           {
             field: 'name',
+            fieldOrder: 'name',
             name: 'Nombre',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false,
             type: 'text'
           },
           {
             field: 'slug',
+            fieldOrder: 'slug',
             name: 'Url',
             col: 'col-3',
             orderBy: true,
@@ -37,44 +41,41 @@
           },
           {
             field: 'position',
+            fieldOrder: 'position',
             name: 'Posición',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false,
             type: 'text'
           },
           {
             field: 'is_active',
+            fieldOrder: 'is_active',
             name: 'Activo',
             col: 'col-2',
             orderBy: false,
-            is_boolean: true,
             type: 'boolean'
           }
         ],
         dataList: {},
-        params: {}
+        filter: {
+          field: '',
+          orderBy: '',
+          search: '',
+          category: 'category'
+        }
       }
     },
     created () {
-      console.log('entro')
-      this.getData()
+      this.getDataList()
     },
     methods: {
-      getData () {
+      getDataList () {
         var self = this
-        self.params['category'] = 'category'
         this.axios.get('/category/category/', {
-          params: self.params
+          params: self.filter
         }).then(response => {
-          self.dataList = response.data
+          self.dataList = response.data.results
         })
-      },
-      orderBy (order) {
-        this.params = order
-        this.$router.push({name: 'category', query: order})
-        this.getData()
-        console.log(order, 'order')
       }
     }
   }

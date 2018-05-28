@@ -72,17 +72,15 @@
               <label for="">Categoria</label>
               <div class="product_category" :class="{'product_category--error': errors.has('category') }">
                 <div class="product_category__first"  v-for="category_first in categories">
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="category"  v-model="product.category" :value="category_first.id">
-                    <span class="custom-control-indicator"></span>
-                    <h6>{{category_first.name}}</h6>
-                  </label>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" :value="category_first.id" :id="'category_' + category_first.id" name="category" v-model="product.category" >
+                    <label class="custom-control-label" :for="'category_' + category_first.id">{{category_first.name}}</label>
+                  </div>
                   <div class="product_category__second" v-for="category_second in category_first.category_categories">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" @change="addCategoryParent($event, category_first.id)"  v-model="product.category" :value="category_second.id">
-                      <span class="custom-control-indicator"></span>
-                      <h6>{{category_second.name}}</h6>
-                    </label>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" @change="addCategoryParent($event, category_first.id)"  v-model="product.category" :id="'category_second' + category_second.id" :value="category_second.id">
+                      <label class="custom-control-label" :for="'category_second' + category_second.id">{{category_second.name}}</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -95,7 +93,7 @@
               </select>
             </div>
             <div class="col-12 content__field content__field--check" v-if="attributes_variations.length > 0">
-              <label for="">¿Variacion?</label>
+              <label for="">Variacion</label>
               <div class="slider-checkbox">
                 <input type="checkbox" id="1"  v-model="product.is_variation" @change="changeVariation($event)" />
                 <label class="label" for="1">
@@ -107,11 +105,10 @@
             <div class="col-12 content__field" v-if="product.is_variation">
 
               <div class="" v-for="variation in attributes_variations">
-                <label class="custom-control custom-checkbox">
-                  <input type="checkbox" :value="variation.id" class="custom-control-input" @change="updateAttributeId" v-model="product.attribute">
-                  <span class="custom-control-indicator"></span>
-                  {{variation.name}}
-                </label>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" :value="variation.id" class="custom-control-input" :id="'variation' + variation.id" @change="updateAttributeId" v-model="product.attribute">
+                  <label class="custom-control-label" :for="'variation' + variation.id"> {{variation.name}}</label>
+                </div>
               </div>
 
 
@@ -221,7 +218,7 @@
             fields: 'id,name'
           }
         }).then(response => {
-          self.influencers = response.data
+          self.influencers = response.data.results
         })
       },
       getCategories () {
@@ -232,7 +229,7 @@
             category: true
           }
         }).then(response => {
-          self.categories = response.data
+          self.categories = response.data.results
         })
       },
       getFamilies () {

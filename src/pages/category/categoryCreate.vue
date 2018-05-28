@@ -53,25 +53,21 @@
             <div class="col-12 content__field">
               <label for="">Categoria</label>
               <div class="category_content">
-                <label class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" name="category" v-model="category.category" value="">
-                  <span class="custom-control-indicator"></span>
-                  <h6>Default</h6>
-                </label>
+                <div class="custom-control custom-radio">
+                  <input id='default' type="radio" class="custom-control-input" name="category" v-model="category.category" value="">
+                  <label for='default' class="custom-control-label">Default</label>
+                </div>
                 <div class="category_content__first" v-for="category_first in categories">
-                  <label class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" name="category"  v-model="category.category" :value="category_first.id">
-                    <span class="custom-control-indicator"></span>
-                    <h6>{{category_first.name}}</h6>
-                  </label>
-                  <div class="category_content__second" v-for="category_second in category_first.category_categories">
-                    <label class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" disabled>
-                      <span class="custom-control-indicator"></span>
-                      <h6>{{category_second.name}}</h6>
-                    </label>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input"
+                     v-model="category.category" :id="'category_first' + category_first.id" :value="category_first.id">
+                    <label class="custom-control-label" :for="'category_first' + category_first.id">{{category_first.name}}</label>
                   </div>
-
+                  <div class="category_content__second custom-control custom-radio" v-for="category_second in category_first.category_categories">
+                    <input type="radio" class="custom-control-input"
+                     :id="'category_second' + category_first.id" disabled>
+                    <label class="custom-control-label" :for="'category_second' + category_second.id">{{category_second.name}}</label>
+                  </div>
                 </div>
 
               </div>

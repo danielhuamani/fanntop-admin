@@ -122,7 +122,7 @@
               <label class="custom-control custom-checkbox">
                 <input type="checkbox" v-model="product.is_variation" class="custom-control-input">
                 <span class="custom-control-indicator"></span>
-                ¿Variacion?
+                Variacion
               </label>
             </div>
             <div class="col-12 content__field" v-if="product.is_variation">

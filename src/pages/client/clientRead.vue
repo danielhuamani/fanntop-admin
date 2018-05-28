@@ -1,7 +1,7 @@
 <template>
   <form  @submit.prevent="saveProduct()" action=""  class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Nuevo Atributo</h3>
+      <h3 class="title_page">Cliente {{client.user.first_name}}</h3>
       <div class="page__header material d-flex  justify-content-end">
         <router-link :to="{ name: 'client'}" class="btn btn-secondary btn-cancel">
           <i class="fa fa-undo-alt"></i>
@@ -17,9 +17,9 @@
             <div class="col-4">
               <div class="row material content">
                 <div class="col-12 content__field content__field--check">
-                  <label for="">Es Activo</label>
+                  <label for="">Activo</label>
                   <div class="slider-checkbox">
-                    <input type="checkbox" id="1" v-model='client.is_active'/>
+                    <input type="checkbox" id="1" v-model='client.user.is_active' disabled/>
                     <label class="label" for="1">
                       <span class="fa fa-times slider-checkbox__status--inactive slider-checkbox__status"></span>
                       <span class="fa fa-check slider-checkbox__status slider-checkbox__status--active"></span>

@@ -54,7 +54,7 @@
       </li>
       <li class="menu__nav__option">
         <router-link :to="{ name: 'coupon'}" class="menu__nav__link" active-class="menu__nav__link--active">
-          <i class="far fa-users"></i>
+          <i class="far fa-gift"></i>
           <span class='menu__name'>Cupones</span>
         </router-link>
       </li>

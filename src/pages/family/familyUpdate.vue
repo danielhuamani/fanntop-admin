@@ -1,16 +1,19 @@
 <template>
   <form @submit.prevent="saveFamily('form-1')" action="" data-vv-scope="form-1" class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Nuevo Grupo Atributo</h3>
-      <div class="page__header material d-flex  justify-content-end">
-        <router-link :to="{ name: 'family'}" class="btn btn-secondary btn-cancel">
-          <i class="fa fa-undo-alt"></i>
-          Cancelar
-        </router-link>
-        <button class="btn btn-success btn-save">
-          <i class="fa fa-save"></i>
-          Guardar
-        </button>
+      <h3 class="title_page">Grupo Atributo {{family.name}}</h3>
+      <div class="page__header material d-flex  justify-content-between">
+        <a href="" @click.prevent='modal.show=true' class='btn btn-danger '><i class='far fa-trash-alt'></i> Eliminar</a>
+        <div class="button-group">
+          <router-link :to="{ name: 'family'}" class="btn btn-secondary btn-cancel">
+            <i class="fa fa-undo-alt"></i>
+            Cancelar
+          </router-link>
+          <button class="btn btn-success btn-save">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
       </div>
       <div class="d-flex  ">
         <div class="col-4 ">
@@ -28,6 +31,7 @@
         </family-group-read>
       </div>
     </div>
+    <modalDelete :modal='modal' @close='close'></modalDelete>
   </form>
 </template>
 <style lang="scss">
@@ -93,14 +97,22 @@
 </style>
 <script>
   import { EventBus } from '@/bus'
+  import modalDelete from '@/componentsGlobals/modalDelete'
   import familyGroupRead from '@/components/family/familyGroupRead'
   export default {
     name: 'familyUpdate',
     components: {
-      familyGroupRead
+      familyGroupRead,
+      modalDelete
     },
     data () {
       return {
+        modal: {
+          show: false,
+          message: '',
+          url: '',
+          urlRedirect: 'family'
+        },
         family: {
           id: null,
           name: ''
@@ -116,9 +128,12 @@
       this.getFamily()
     },
     mounted () {
-
+      this.modal.url = '/family/family/' + this.$route.params.id + '/'
     },
     methods: {
+      close () {
+        this.modal.show = false
+      },
       getFamily () {
         const id = this.$route.params.id
         const self = this
@@ -126,6 +141,7 @@
           this.axios.get('/family/family/' + id + '/', {
           }).then(response => {
             self.family = response.data
+            self.modal.message = response.data.name
           })
         }
       },

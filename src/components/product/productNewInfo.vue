@@ -73,7 +73,7 @@
         <div class="col-4 second_element">
           <div class="row  material content">
             <div class="col-12 content__field content__field--check" >
-              <label for="">Publicar?</label>
+              <label for="">Publicar</label>
               <div class="slider-checkbox">
                 <input type="checkbox" id="2"  v-model="product.is_published" />
                 <label class="label" for="2">
@@ -93,17 +93,15 @@
               <label for="">Categoria</label>
               <div class="product_category" :class="{'product_category--error': errors.has('category') }">
                 <div class="product_category__first"  v-for="category_first in categories">
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="category"  v-model="product.category" :value="category_first.id">
-                    <span class="custom-control-indicator"></span>
-                    <h6>{{category_first.name}}</h6>
-                  </label>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" :value="category_first.id" :id="'category_' + category_first.id" name="category" v-model="product.category" >
+                    <label class="custom-control-label" :for="'category_' + category_first.id">{{category_first.name}}</label>
+                  </div>
                   <div class="product_category__second" v-for="category_second in category_first.category_categories">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" @change="addCategoryParent($event, category_first.id)"  v-model="product.category" :value="category_second.id">
-                      <span class="custom-control-indicator"></span>
-                      <h6>{{category_second.name}}</h6>
-                    </label>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" @change="addCategoryParent($event, category_first.id)"  v-model="product.category" :id="'category_second' + category_second.id" :value="category_second.id">
+                      <label class="custom-control-label" :for="'category_second' + category_second.id">{{category_second.name}}</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -190,7 +188,7 @@
             fields: 'id,name'
           }
         }).then(response => {
-          self.influencers = response.data
+          self.influencers = response.data.results
         })
       },
       getCategories () {
@@ -201,7 +199,7 @@
             category: true
           }
         }).then(response => {
-          self.categories = response.data
+          self.categories = response.data.results
         })
       },
       getTypeAttr (typeAttr) {
@@ -248,6 +246,13 @@
           value = productAttrValue[0][typeAttr]
         }
         return value
+      },
+      addCategoryParent (e, idCategoryParent) {
+        if (e.target.checked) {
+          if (this.product.category.indexOf(idCategoryParent) === -1) {
+            this.product.category.push(idCategoryParent)
+          }
+        }
       },
       saveProduct (scope) {
         var self = this

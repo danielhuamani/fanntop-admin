@@ -2,12 +2,13 @@
     <div class="row">
       <div class="col-12">
         <h3 class="title_page">Clientes</h3>
-        <search-global ></search-global>
+        <search-global v-on:search='search' :isFilter='isFilter' v-on:displayFilter='showFilter=true' ></search-global>
         <table-global  v-on:orderBy="orderBy" nameUrl="client_read" :headerField="headerField" :tablaDataList="dataList" ></table-global>
       </div>
     </div>
 </template>
 <script>
+  import filter from '@/mixins/filter'
   import searchGlobal from '@/componentsGlobals/search'
   import tableGlobal from '@/componentsGlobals/table'
   export default {
@@ -16,62 +17,64 @@
       searchGlobal,
       tableGlobal
     },
+    mixins: [filter],
     data () {
       return {
+        isFilter: false,
+        showFilter: false,
         headerField: [
           {
             field: 'user.first_name',
+            fieldOrder: 'user__first_name',
             name: 'Nombre',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false,
             type: 'text'
           },
           {
             field: 'user.last_name',
+            fieldOrder: 'user__last_name',
             name: 'Apellidos',
             col: 'col-3',
             orderBy: true,
-            is_boolean: false,
             type: 'text'
           },
           {
             field: 'user.email',
+            fieldOrder: 'user__email',
             name: 'Email',
             col: 'col-3',
-            orderBy: false,
-            type: 'text'
+            type: 'text',
+            orderBy: true
           },
           {
             field: 'user.is_active',
+            fieldOrder: '',
             name: 'Activo',
             col: 'col-1',
             orderBy: false,
-            is_boolean: false,
             type: 'boolean'
           }
         ],
         dataList: {},
-        params: {}
+        filter: {
+          field: '',
+          orderBy: '',
+          search: ''
+        }
       }
     },
     created () {
-      this.getClient()
+      this.getDataList()
     },
     methods: {
-      getClient () {
+      getDataList () {
         var self = this
         this.axios.get('/customers/customers/', {
-          params: self.params
+          params: self.filter
         }).then(response => {
-          self.dataList = response.data
+          self.dataList = response.data.results
         })
-      },
-      orderBy (order) {
-        this.params = order
-        this.$router.push({name: 'client', query: order})
-        this.getClient()
-        console.log(order, 'order')
       }
     }
   }

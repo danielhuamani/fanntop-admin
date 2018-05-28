@@ -2,21 +2,21 @@
     <div class="table  ">
         <div class="table__header material d-flex justify-content-between">
           <div class="table__header__field col-1">
-            <label class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input">
-              <span class="custom-control-indicator"></span>
-            </label>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck1">
+              <label class="custom-control-label" for="customCheck1"></label>
+            </div>
           </div>
           <div :class="['table__header__field', field.col] " v-for="field in headerField">
             <h6>{{field.name}}</h6>
             <div class="table__header__orderBy" v-if="field.orderBy">
-              <i :class="['fa fa-angle-up table__header__orderBy__asc', isActiveOrderBy(field.field, 'asc')]" v-on:click="orderBy(field.field, 'asc')"></i>
-              <i :class="['fa fa-angle-down table__header__orderBy__desc', isActiveOrderBy(field.field, 'desc')]" v-on:click="orderBy(field.field, 'desc')"></i>
+              <i :class="['fa fa-angle-up table__header__orderBy__asc', isActiveOrderBy(field.fieldOrder, 'asc')]" v-on:click="orderBy(field.fieldOrder, 'asc')"></i>
+              <i :class="['fa fa-angle-down table__header__orderBy__desc', isActiveOrderBy(field.fieldOrder, 'desc')]" v-on:click="orderBy(field.fieldOrder, 'desc')"></i>
             </div>
           </div>
         </div>
         <div class="table__body material  ">
-            <div class="table__body__row " v-for="dataRow in tablaDataList">
+            <div class="table__body__row_first " v-for="dataRow in tablaDataList">
               <div class="table__body__row">
                 <router-link :to="{ name: nameUrl, params: { id: dataRow.id }}"  class="table__body__link d-flex justify-content-between align-items-center">
                   <div class=" col-1">
@@ -26,8 +26,9 @@
                     </label>
                   </div>
                   <div :class="[field.col]" v-for="field in headerField">
-                    <h6 v-if="!field.is_boolean">{{getFieldData(dataRow, field)}}</h6>
-                    <span v-else v-bind:class="[getFieldData(dataRow, field) ? 'bg-success' : '', 'table__body__row__status']">
+                    <h6 v-if="field.type == 'text'" >{{getFieldData(dataRow, field)}}</h6>
+                    <img :src="getFieldData(dataRow, field)" v-if="field.type == 'image'"/>
+                    <span v-if="field.type == 'boolean'" v-bind:class="[getFieldData(dataRow, field) ? 'bg-success' : '', 'table__body__row__status']">
                     </span>
                   </div>
                 </router-link>
@@ -41,8 +42,9 @@
                     </label>
                   </div>
                   <div :class="[field.col]" v-for="field in headerField">
-                    <h6 v-if="!field.is_boolean">{{getFieldData(datasecondRow, field)}}</h6>
-                    <span v-else v-bind:class="[getFieldData(datasecondRow, field) ? 'bg-success' : '', 'table__body__row__status']">
+                    <h6 v-if="field.type == 'text'" >{{getFieldData(dataRow, field)}}</h6>
+                    <img :src="getFieldData(dataRow, field)" v-if="field.type == 'image'"/>
+                    <span v-if="field.type == 'boolean'" v-bind:class="[getFieldData(dataRow, field) ? 'bg-success' : '', 'table__body__row__status']">
                     </span>
                   </div>
                 </router-link>
@@ -55,8 +57,9 @@
                       </label>
                     </div>
                     <div :class="[field.col]" v-for="field in headerField">
-                      <h6 v-if="!field.is_boolean">{{getFieldData(datathirdRow, field)}}</h6>
-                      <span v-else v-bind:class="[getFieldData(datathirdRow, field) ? 'bg-success' : '', 'table__body__row__status']">
+                      <h6 v-if="field.type == 'text'" >{{getFieldData(dataRow, field)}}</h6>
+                      <img :src="getFieldData(dataRow, field)" v-if="field.type == 'image'"/>
+                      <span v-if="field.type == 'boolean'" v-bind:class="[getFieldData(dataRow, field) ? 'bg-success' : '', 'table__body__row__status']">
                       </span>
                     </div>
                   </router-link>
@@ -72,7 +75,7 @@
   .table{
     margin-top: 40px;
     &__header{
-      padding: 15px;
+      padding: 15px 0;
       background: $color-white;
       align-items: center;
       &__field{
@@ -97,10 +100,10 @@
       }
     }
     &__body{
+      margin-top: 2px;
       background: $color-white;
       &__link{
         color: $color-table-link;
-        padding: 10px 15px;
         width: 100%;
         &--second{
           padding-left: 30px;
@@ -114,7 +117,7 @@
         }
       }
       &__row{
-
+        padding: 10px 0;
         background: $color-white;
 
         &--third{
@@ -130,6 +133,7 @@
         }
         h6{
           margin: 0;
+          font-size: 14px;
         }
       },
       &__row:nth-child(even){

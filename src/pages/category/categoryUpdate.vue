@@ -1,16 +1,19 @@
 <template>
   <div class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Nueva Categoria</h3>
-      <div class="page__header material d-flex  justify-content-end">
-        <router-link :to="{ name: 'category'}" class="btn btn-secondary btn-cancel">
-          <i class="fa fa-undo-alt"></i>
-          Cancelar
-        </router-link>
-        <a href="" class="btn btn-success btn-save" @click.prevent="saveCategory">
-          <i class="fa fa-save"></i>
-          Guardar
-        </a>
+      <h3 class="title_page">Categoría {{category.name}}</h3>
+      <div class="page__header material d-flex  justify-content-between">
+        <a href="" @click.prevent='modal.show=true' class='btn btn-danger '><i class='far fa-trash-alt'></i> Eliminar</a>
+        <div class="button-group">
+          <router-link :to="{ name: 'category'}" class="btn btn-secondary btn-cancel">
+            <i class="fa fa-undo-alt"></i>
+            Cancelar
+          </router-link>
+          <a href="" class="btn btn-success btn-save" @click.prevent="saveCategory">
+            <i class="fa fa-save"></i>
+            Guardar
+          </a>
+        </div>
       </div>
       <div class="d-flex  ">
         <div class="col-8 ">
@@ -37,7 +40,7 @@
         <div class="col-4 second_element">
           <div class="row  material content">
             <div class="col-12 content__field content__field--check">
-              <label for="">¿Activo?</label>
+              <label for="">Activo</label>
               <div class="slider-checkbox">
                 <input type="checkbox" id="1" v-model="category.is_active" />
                 <label class="label" for="1">
@@ -53,25 +56,21 @@
             <div class="col-12 content__field">
               <label for="">Categoria</label>
               <div class="category_content">
-                <label class="custom-control custom-radio">
-                  <input type="radio" class="custom-control-input" name="category" v-model="category.category" value="">
-                  <span class="custom-control-indicator"></span>
-                  <h6>Default</h6>
-                </label>
+                <div class="custom-control custom-radio">
+                  <input id='default' type="radio" class="custom-control-input" name="category" v-model="category.category" value="">
+                  <label for='default' class="custom-control-label">Default</label>
+                </div>
                 <div class="category_content__first" v-for="category_first in categories">
-                  <label class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" name="category"  v-model="category.category" :value="category_first.id">
-                    <span class="custom-control-indicator"></span>
-                    <h6>{{category_first.name}}</h6>
-                  </label>
-                  <div class="category_content__second" v-for="category_second in category_first.category_categories">
-                    <label class="custom-control custom-radio">
-                      <input type="radio" class="custom-control-input" disabled>
-                      <span class="custom-control-indicator"></span>
-                      <h6>{{category_second.name}}</h6>
-                    </label>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input"
+                     v-model="category.category" :id="'category_first' + category_first.id" :value="category_first.id">
+                    <label class="custom-control-label" :for="'category_first' + category_first.id">{{category_first.name}}</label>
                   </div>
-
+                  <div class="category_content__second custom-control custom-radio" v-for="category_second in category_first.category_categories">
+                    <input type="radio" class="custom-control-input"
+                     :id="'category_second' + category_first.id" disabled>
+                    <label class="custom-control-label" :for="'category_second' + category_second.id">{{category_second.name}}</label>
+                  </div>
                 </div>
 
               </div>
@@ -101,6 +100,7 @@
         </div>
       </div>
     </div>
+    <modalDelete :modal='modal' @close='close'></modalDelete>
   </div>
 </template>
 <style lang="scss">
@@ -114,14 +114,22 @@
   }
 </style>
 <script>
+  import modalDelete from '@/componentsGlobals/modalDelete'
   import VueCkeditor from 'vueckeditor'
   export default {
     name: 'categoryUpdate',
     components: {
-      VueCkeditor
+      VueCkeditor,
+      modalDelete
     },
     data () {
       return {
+        modal: {
+          show: false,
+          message: '',
+          url: '',
+          urlRedirect: 'category'
+        },
         category: {
           id: '',
           name: '',
@@ -130,7 +138,7 @@
           title: '',
           meta_description: '',
           slug: '',
-          category: null
+          category: ''
         },
         fileImage: '',
         formData: new FormData(),
@@ -138,6 +146,7 @@
       }
     },
     created () {
+      this.modal.url = '/category/category/' + this.$route.params.id + '/'
       this.getCategories()
       this.getCategory()
       // this.initialGetCategory(2, categories.data)
@@ -147,6 +156,12 @@
       this.category_value_initial = this.$route.params.id
     },
     methods: {
+      close () {
+        this.modal.show = false
+      },
+      changeCategory (e) {
+        console.log(e, e.target.value)
+      },
       fileUpload (e) {
         var files = e.target.files || e.dataTransfer.files
         if (!files.length) {
@@ -175,7 +190,6 @@
         self.formData.append('is_active', this.category.is_active)
         self.formData.append('position', this.category.position)
         self.formData.append('category', this.category.category)
-        console.log(self.formData)
         this.axios({
           method: 'PATCH',
           url: '/category/category/' + this.$route.params.id + '/',
@@ -212,6 +226,8 @@
         }).then(response => {
           self.category = response.data
           self.fileImage = response.data.image
+          self.modal.message = response.data.name
+
           // self.initialGetCategory(2, response.data)
         })
       }

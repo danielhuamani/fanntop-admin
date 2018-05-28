@@ -1,16 +1,19 @@
 <template>
   <form @submit.prevent="saveData()" action=""  class="row">
     <div class="col-12 page">
-      <h3 class="title_page">Nuevo Cupon</h3>
-      <div class="page__header material d-flex  justify-content-end">
-        <router-link :to="{ name: 'coupon'}" class="btn btn-secondary btn-cancel">
-          <i class="fa fa-undo-alt"></i>
-          Cancelar
-        </router-link>
-        <button class="btn btn-success btn-save">
-          <i class="fa fa-save"></i>
-          Guardar
-        </button>
+      <h3 class="title_page">Cupon {{coupon.name}}</h3>
+      <div class="page__header material d-flex  justify-content-between">
+        <a href="" @click.prevent='modal.show=true' class='btn btn-danger '><i class='far fa-trash-alt'></i> Eliminar</a>
+        <div class="button-group">
+          <router-link :to="{ name: 'coupon'}" class="btn btn-secondary btn-cancel">
+            <i class="fa fa-undo-alt"></i>
+            Cancelar
+          </router-link>
+          <button class="btn btn-success btn-save">
+            <i class="fa fa-save"></i>
+            Guardar
+          </button>
+        </div>
       </div>
       <div class="d-flex  ">
         <div class="col-12 ">
@@ -19,7 +22,7 @@
               <h5 class="material__title">Informacion Basica</h5>
               <div class="row">
                 <div class="col-12 content__field content__field--check">
-                  <label for="">es activo?</label>
+                  <label for="">Activo</label>
                   <div class="slider-checkbox">
                     <input type="checkbox" id="2" v-model="coupon.is_active" />
                     <label class="label" for="2">
@@ -76,76 +79,33 @@
                 </div>
               </div>
             </div>
-
-<!--   -->
-
           </div>
 
         </div>
-       <!--  <div class="col-8 second_element">
-          <div class="row material content">
-            <div class="col-12 ">
-              <div class="row">
-                <div class="col-12 content__field">
-                  <label for="">Cantidad de cupones a generar</label>
-                  <input type="text" name="quantity_generate"  v-model="coupon.quantity_generate" class="form-control">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row material content">
-            <div class="col-12 ">
-              <h5 class="material__title">Cupones</h5>
-              <div class="row">
-                <div class="col-4">
-                  <strong for="">Code</strong>
-                </div>
-                <div class="col-2">
-                  <strong for="">es usado</strong>
-                </div>
-                <div class="col-3">
-                  <strong for="">Dia validado</strong>
-                </div>
-                <div class="col-3">
-                  <strong for="">Cliente</strong>
-                </div>
-
-              </div>
-              <br>
-              <div class="row" v-for='generate in couponGenerates'>
-                <div class="col-4">
-                  {{generate.code}}
-                </div>
-                <div class="col-2">
-                  <span  v-bind:class="[generate.is_used ? 'status_active' : '', 'status_inactive']">
-                  </span>
-                </div>
-                <div class="col-3">
-                  {{generate.date_validated}}
-                </div>
-                <div class="col-3">
-                  {{generate.client}}
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div> -->
 
       </div>
     </div>
+    <modalDelete :modal='modal' @close='close'></modalDelete>
   </form>
 </template>
 <script>
+  import modalDelete from '@/componentsGlobals/modalDelete'
   import { EventBus } from '@/bus'
   import DatePicker from 'vue2-datepicker'
   export default {
     name: 'couponUpdate',
     components: {
-      DatePicker
+      DatePicker,
+      modalDelete
     },
     data () {
       return {
+        modal: {
+          show: false,
+          message: '',
+          url: '',
+          urlRedirect: 'coupon'
+        },
         time2: '',
         shortcuts: [
           {
@@ -182,6 +142,7 @@
       }
     },
     created () {
+      this.modal.url = '/promotion/coupon/' + this.$route.params.id + '/'
       this.getInfluencers()
       this.getCoupon()
       this.getCouponGenerate()
@@ -190,6 +151,9 @@
 
     },
     methods: {
+      close () {
+        this.modal.show = false
+      },
       getCoupon () {
         var self = this
         var id = this.$route.params.id
@@ -197,6 +161,7 @@
 
         }).then(response => {
           self.coupon = response.data
+          self.modal.message = response.data.name
         })
       },
       getCouponGenerate () {

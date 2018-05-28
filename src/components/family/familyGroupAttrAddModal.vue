@@ -19,11 +19,10 @@
                         <input type="text" name="" v-model='familyAttribute.position' value="" class="form-control">
                       </div>
                       <div class="col-6 content__field">
-                        <label for="">Obligatorio</label>
-                        <label class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input" v-model="familyAttribute.is_required">
-                          <span class="custom-control-indicator"></span>
-                        </label>
+                        <div class="custom-control custom-checkbox">
+                          <input type="checkbox" v-model="familyAttribute.is_required" class="custom-control-input" id="customCheck1">
+                          <label class="custom-control-label" for="customCheck1">Obligatorio</label>
+                        </div>
                       </div>
                     </div>
 
