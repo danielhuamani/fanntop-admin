@@ -1,58 +1,63 @@
 <template>
-    <div class="container grid grid-login page_login">
+    <div class="container-fluid grid grid-login page_login">
         <div class="row row--form justify-content-center align-items-center">
-          <div class="form-login">
-              <div class="row justify-content-center form-login__content-title  align-items-center">
+          <div class="col  col-sm-6 col-md-7 background d-none d-sm-block">
 
-                <img src="../../assets/img/fanntop.svg" width="60" height="60" class=" ">
+          </div>
+          <div class="col-12 col-sm-6 col-md-5 background_login">
+            <div class="form-login">
+                <div class="row justify-content-center form-login__content-title  align-items-center">
 
-              </div>
+                  <img src="../../assets/img/fanntop.svg" width="80" height="80" class=" ">
 
-              <form v-on:submit.prevent="loginSubmit" class="ui large form ui form error" method="POST" action=".">
+                </div>
 
-                  <div class="alert alert-danger" v-if="existError">
-                    <div class="header" v-if="errorLogin.email.length > 0">
-                      <p class="alert__header">email</p>
-                      <ul class="alert__list">
-                        <li v-for="error_email in errorLogin.email">
-                          {{error_email}}
-                        </li>
-                      </ul>
+                <form v-on:submit.prevent="loginSubmit" class="ui large form ui form error" method="POST" action=".">
+
+                    <div class="alert alert-danger" v-if="existError">
+                      <div class="header" v-if="errorLogin.email.length > 0">
+                        <p class="alert__header">email</p>
+                        <ul class="alert__list">
+                          <li v-for="error_email in errorLogin.email">
+                            {{error_email}}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="header" v-if="errorLogin.password.length > 0">
+                        <p class="alert__header">password</p>
+                        <ul class="alert__list">
+                          <li v-for="error_password in errorLogin.password">
+                            {{error_password}}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="header" v-if="errorLogin.non_field_errors.length > 0">
+                        <ul class="alert__list">
+                          <li v-for="error_non_field_errors in errorLogin.non_field_errors">
+                            {{error_non_field_errors}}
+                          </li>
+                        </ul>
+                      </div>
                     </div>
-                    <div class="header" v-if="errorLogin.password.length > 0">
-                      <p class="alert__header">password</p>
-                      <ul class="alert__list">
-                        <li v-for="error_password in errorLogin.password">
-                          {{error_password}}
-                        </li>
-                      </ul>
-                    </div>
-                    <div class="header" v-if="errorLogin.non_field_errors.length > 0">
-                      <ul class="alert__list">
-                        <li v-for="error_non_field_errors in errorLogin.non_field_errors">
-                          {{error_non_field_errors}}
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                  <div class="ui stacked segment">
-                    <div class="input-group form-group">
-                      <span class="input-group-addon" id="basic-addon1">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                      </span>
-                      <input placeholder="email" class="form-control" type="email" name="email" v-model="login.email">
+                    <div class="ui stacked segment">
+                      <div class="input-group form-group">
+                        <span class="input-group-prepend" id="basic-addon1">
+                          <i class="fa fa-user input-group-text" aria-hidden="true"></i>
+                        </span>
+                        <input placeholder="email" class="form-control" type="email" name="email" v-model="login.email">
+                      </div>
+
+                      <div class="input-group form-group">
+                        <span class="input-group-prepend" id="basic-addon1">
+                          <i class="fa fa-unlock-alt input-group-text"></i>
+                        </span>
+                        <input class="form-control" placeholder="password" type="password" v-model="login.password">
+                      </div>
+                      <button class="btn btn-block btn-primary">Ingresar</button>
                     </div>
 
-                    <div class="input-group form-group">
-                      <span class="input-group-addon" id="basic-addon1">
-                        <i class="fa fa-unlock-alt"></i>
-                      </span>
-                      <input class="form-control" placeholder="password" type="password" v-model="login.password">
-                    </div>
-                    <button class="btn btn-block btn-primary">Ingresar</button>
-                  </div>
-
-              </form>
+                </form>
+            </div>
           </div>
         </div>
     </div>
@@ -63,11 +68,34 @@
   .row--form{
     height: 100vh;
   }
+  .background{
+    background-image: url('../../assets/img/tienda-online.jpg');
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    position: relative;
+    &:after{
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,.6);
+      left: 0;
+    }
+  }
+  .background_login{
+    background: white;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
   .form-login{
-    width: 350px;
+    width: 100%;
     max-width: 350px;
     padding: 15px;
-    background: $color-white;
+    margin:auto;
     &__content-title{
       margin-bottom: 10px;
     }
