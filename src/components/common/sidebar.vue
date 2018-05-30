@@ -4,7 +4,7 @@
         <img src="../../assets/img/fanntop.svg"  width="60" height="60" class="rounded img-responsive">
     </div>
     <h6 class="menu__title">
-      Menu Navegación
+      Menu
     </h6>
     <ul class="menu__nav">
       <li class="menu__nav__option">
@@ -28,7 +28,9 @@
       <li class="menu__nav__option">
         <a href="" class="menu__nav__link" @click.prevent="SubMenu('Producto')">
           <i class="far fa-shopping-cart"></i>
-          <span class='menu__name'>Productos</span></a>
+          <span class='menu__name'>Productos</span>
+          <i class="far fa-angle-down float-right icon__arrow"></i>
+        </a>
         <ul class="menu__nav__sub" v-show="openMenu == 'Producto'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'product'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
@@ -146,14 +148,23 @@
   @import "~styles/abstract/variables";
 
   .menu {
-    background: #37485F;
-    width: 180px;
-    max-width: 180px;
+    background: $sidebar;
+    width: 200px;
+    max-width: 200px;
     height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
     transition: 0.3s ease all;
+    border-right: 1px solid rgba(0,0,0,0.12);
+    box-sizing: border-box;
+    i{
+      color: $color-grey;
+    }
+    .icon__arrow{
+      font-size: 22px;
+      margin-top: 0px;
+    }
     &__name{
       display: inline;
     }
@@ -161,17 +172,16 @@
       padding: 20px 10px;
       display: flex;
       justify-content: center;
-      background: darken( $color-sidebar, 5% );
     }
     &__title{
-      padding: 10px;
-      color: $color-white;
+      padding: 5px 10px;
+      color: $color-grey;;
     }
     &__nav{
       margin: 0;
       margin-top: 20px;
       padding: 0;
-      height: calc(100% - 180px);
+      height: calc(100% - 200px);
       overflow-y: scroll;
       &::-webkit-scrollbar {
           width: 10px;
@@ -205,12 +215,11 @@
           list-style-type: none;
         }
         &__link{
-          color: $color-white;
-          padding: 10px 10px 10px 30px;
+          color: $color-grey;
+          padding: 8px 10px 8px 30px;
           display: block;
           &:hover, &--active{
-            background: darken( $color-sidebar, 5% );
-            color: $color-white;
+            color: $color-info;
             text-decoration: none;
             transition: 0.3s ease all;
             font-weight: bold;
@@ -221,15 +230,18 @@
         list-style-type: none;
       }
       &__link{
-        color: $color-white;
+        color: $color-grey;
         padding: 10px;
         display: block;
         &:hover, &--active{
-          background: darken( $color-sidebar, 5% );
-          color: $color-white;
+          // background: darken( $color-grey, 10% );
+          color: $color-info;
           text-decoration: none;
           transition: 0.3s ease all;
           font-weight: bold;
+          i{
+            color: $color-info;
+          }
         }
       }
     }

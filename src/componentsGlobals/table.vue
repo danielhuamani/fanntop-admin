@@ -71,7 +71,7 @@
       &__link{
         color: $color-table-link;
         &:hover{
-          color: $color-black;
+          color: $color-grey;
           text-decoration: none;
         }
       }
@@ -89,6 +89,7 @@
         h6{
           margin: 0;
           font-size: 14px;
+
         }
       },
       &__row:nth-child(even){

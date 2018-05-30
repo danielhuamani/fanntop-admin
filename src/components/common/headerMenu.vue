@@ -9,16 +9,17 @@
               <i class="far fa-user"></i>
                 {{user.email}}
               </span>
-              <div class="dropdown-menu dropdown-menu-right">
-                <router-link :to="{ name: 'profile'}" class="dropdown-item">  <i class="fa fa-user dropdown-menu__icon_out"></i>
-                  Mi Perfil
-                </router-link>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" @click.prevent="logout" href="#">
-                    <i class="fa fa-sign-out-alt dropdown-menu__icon_out"></i>
-                    Salir
+              <div class="drop_menu">
+                <div class="dropdown-menu dropdown-menu-right">
+                  <router-link :to="{ name: 'profile'}" class="dropdown-item">  <i class="far fa-user dropdown-menu__icon_out"></i>
+                    Mi Perfil
+                  </router-link>
+                  <a class="dropdown-item" @click.prevent="logout" href="#">
+                      <i class="far fa-sign-out-alt dropdown-menu__icon_out"></i>
+                      Salir
 
-                </a>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -28,31 +29,45 @@
 <style lang="scss">
     @import "~styles/abstract/variables";
     .header{
-        background: $color-white;
+        background: #193d7d;
         padding: 10px 0px;
         box-shadow: 0 1px 2px rgba(0,0,0,.1);
         position: fixed;
-        width: calc(100% - 180px );
+        width: calc(100% - 200px );
         z-index: 200;
         /* background: red; */
         top: 0;
         left: 0;
         right: 0;
-        margin-left: 180px;
+        margin-left: 200px;
         transition: 0.3s ease all;
         &__link_menu{
             font-size: 24px;
             cursor: pointer;
+            color: white;
         }
         &__user{
             cursor: pointer;
+            color: white;
         }
-        .dropdown-menu{
+        .drop_menu{
+          .dropdown-menu{
+              top: 10px ;
+              transition: 0.3s ease all;
+              margin: 0;
+              padding: 0;
+              box-shadow: 0 1px 2px rgba(0,0,0,.1);
+              &__icon_out{
+                margin-right: 10px;
+              }
+              .dropdown-item{
+                padding: 10px;
+              }
+          }
+          .show{
+            opacity: 1;
             top: 20px !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,.1);
-            &__icon_out{
-              margin-right: 10px;
-            }
+          }
         }
     }
     .header_active{
