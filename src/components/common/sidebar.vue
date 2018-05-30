@@ -247,8 +247,20 @@
     }
   }
   .menu_active{
-    width: 0px;
+    width: 100px;
     overflow: hidden;
+    .menu__nav__link{
+      .menu__name{
+        display: none;
+      }
+    }
+    .menu__nav__sub__link{
+      padding-left: 0;
+      margin-left: 8px;
+    }
+    .menu__nav__link{
+      margin-left: 25px;
+    }
   }
 </style>
 

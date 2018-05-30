@@ -29,13 +29,14 @@
 <style lang="scss">
     @import "~styles/abstract/variables";
     .header{
-        background: #193d7d;
+        background: $sidebar;
         padding: 10px 0px;
         box-shadow: 0 1px 2px rgba(0,0,0,.1);
         position: fixed;
         width: calc(100% - 200px );
         z-index: 200;
         /* background: red; */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
         top: 0;
         left: 0;
         right: 0;
@@ -44,11 +45,11 @@
         &__link_menu{
             font-size: 24px;
             cursor: pointer;
-            color: white;
+            color: $color-info;
         }
         &__user{
             cursor: pointer;
-            color: white;
+            color: $color-info;
         }
         .drop_menu{
           .dropdown-menu{
@@ -71,8 +72,9 @@
         }
     }
     .header_active{
-      width:100%;
-      margin-left:0;
+      width: calc(100% - 100px );
+      margin-left:100px;
+
     }
 </style>
 <script>
