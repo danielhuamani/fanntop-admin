@@ -22,11 +22,10 @@
               <div class="col-8">
                 <div class="row">
                   <div class="col-3" v-for="option in attr.attribute_options">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" v-model="selected_attributes" @change="generateProductVariant($event, attr.id, option.option, attr.name)" :value="option.id" class="custom-control-input" >
-                      <span class="custom-control-indicator"></span>
-                      {{option.option}}
-                    </label>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" v-model="selected_attributes" @change="generateProductVariant($event, attr.id, option.option, attr.name)" :value="option.id" class="custom-control-input"  :id="'option' + option.id">
+                      <label class="custom-control-label" :for="'option' + option.id"> {{option.option}}</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -57,12 +56,13 @@
               <h4 class="variations__header__title">Favorito</h4>
             </div>
           </div>
-          <div class="row variations__body align-items-center" v-for='productVariant in mergeProduct'>
+          <div class="row variations__body align-items-center" v-for='(productVariant, index) in mergeProduct'>
             <div class="col-1">
-              <label class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant"   @change='selectVariation($event)' :value="isCheckedVariant(productVariant)">
-                <span class="custom-control-indicator"></span>
-              </label>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant"   @change='selectVariation($event)' :id='index' :value="isCheckedVariant(productVariant)">
+                <label class="custom-control-label" :for='index'>
+                </label>
+              </div>
             </div>
             <div class="col-3">
               <h4 class="variations__body__title" v-for="product in productVariant">{{product.name}}</h4>
@@ -125,7 +125,8 @@ export default {
       mergeProduct: [],
       selectIdsProductVariant: [],
       selectAttrProduct: [],
-      is_featured: []
+      is_featured: [],
+      productAttr: []
     }
   },
   created () {
@@ -185,19 +186,23 @@ export default {
       const self = this
       console.log(levelOne, levelTwo)
       self.mergeProduct = []
+      var existFirst = 0
+      var existSecond = 0
       for (var one in levelOne) {
         for (var two in levelTwo) {
-          // for (var excludeAttr in this.excludeAttributeOption) {
-          //   var add = true
-          //   if (this.excludeAttributeOption[excludeAttr].indexOf(parseInt(levelOne[one]['attribute_id'])) === -1 && this.excludeAttributeOption[excludeAttr].indexOf(parseInt(levelTwo[two]['attribute_id'])) === -1) {
-          //     add = false
-          //   }
-          // }
-          // console.log(add, 'add')
-          // if (add) {
-          //   self.mergeProduct.push([levelOne[one], levelTwo[two]])
-          // }
-          self.mergeProduct.push([levelOne[one], levelTwo[two]])
+          var add = true
+          for (var excludeAttr in this.excludeAttributeOption) {
+            existFirst = self.excludeAttributeOption[excludeAttr].indexOf(parseInt(levelOne[one]['attribute_id']))
+            existSecond = self.excludeAttributeOption[excludeAttr].indexOf(parseInt(levelTwo[two]['attribute_id']))
+            if (existFirst !== -1 && existSecond !== -1 && existSecond !== existFirst) {
+              add = false
+            }
+          }
+          if (add) {
+            self.mergeProduct.push([levelOne[one], levelTwo[two]])
+          }
+
+          // self.mergeProduct.push([levelOne[one], levelTwo[two]])
         }
       }
 
@@ -217,7 +222,6 @@ export default {
     selectVariation (e) {
       const self = this
       let productVariant = self.selectIdsProductVariant.map((key, index) => {
-        console.log(self.selectIdsProductVariant, key, index, 'nds')
         return {
           'stock': 0,
           'price': 0,
@@ -225,7 +229,8 @@ export default {
           'attribute_option': key
         }
       })
-      self.$emit('productAttributes', productVariant)
+      self.productAttr = productVariant
+      // self.$emit('productAttributes', productVariant)
     },
     changeIsFeatured (productVariant) {
       // var attributes = Object.keys(productVariant).filter((key, index) => {

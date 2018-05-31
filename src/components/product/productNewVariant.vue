@@ -59,16 +59,16 @@
                 </div>
               </div>
             </div>
-            <productNewAttrVariant v-if="shoProduct" :attributesOption='productClassAttribute.attribute' :excludeAttributeOption='excludeAttributeOption'></productNewAttrVariant>
+            <productNewAttrVariant v-if="shoProduct" :attributesOption='productClassAttribute.attribute'  :excludeAttributeOption='excludeAttributeOption'></productNewAttrVariant>
           </div>
           <div class="col-4 second_element">
             <div class="row material content">
               <div class="col-12  content__field">
                 <div class="" v-for="attribute in productClassAttribute.attribute">
-                  <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" :value='attribute.id' checked='checked' disabled="disabled" >
-                    <span class="custom-control-indicator"></span>{{attribute.name}}
-                  </label>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" :id="'attribute' + attribute.id" class="custom-control-input" :value='attribute.id' checked='checked' disabled="disabled" >
+                    <label class="custom-control-label" :for="'attribute' + attribute.id"> {{attribute.name}}</label>
+                  </div>
                 </div>
               </div>
               <div class="col-12 content__field">
@@ -146,10 +146,10 @@
     computed: {
       excludeAttributeOption () {
         let attributes = this.products.map(function (val) {
-          let attributesIds = val.attribute_option.map(function (attribute) {
-            return attribute.id
-          })
-          return attributesIds
+          console.log(val, 'valllsdsds')
+          if (val.attribute_option.length > 0) {
+            return val.attribute_option
+          }
         })
         if (attributes.length > 0) {
           return attributes

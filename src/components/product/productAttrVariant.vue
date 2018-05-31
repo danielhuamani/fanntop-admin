@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="col-12">
     <div class="row">
-      <div class="col-12 material content">
+      <div class="col-12">
       <h5 class="material__title">Variantes</h5>
       <div class="row">
           <div class="col-12">
@@ -14,19 +14,18 @@
               </div>
             </div>
           </div>
-          <div class="col-12" v-for="attr in AttributesOption">
+          <div class="col-12" v-for="(attr, index) in AttributesOption">
             <div class="row">
               <div class="col-4">
                 {{attr.name}}
               </div>
               <div class="col-8">
                 <div class="row">
-                  <div class="col-3" v-for="option in attr.attribute_options">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" v-model="selected_attributes" @change="generateProductVariant($event, attr.id, option.option, attr.name)" :value="option.id" class="custom-control-input" >
-                      <span class="custom-control-indicator"></span>
-                      {{option.option}}
-                    </label>
+                  <div class="col-3" v-for="(option, inde) in attr.attribute_options">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" v-model="selected_attributes" :id='"option" + inde + index' @change="generateProductVariant($event, attr.id, option.option, attr.name)" :value="option.id" class="custom-control-input" >
+                      <label class="custom-control-label" :for="'option' + inde + index"> {{option.option}}</label>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -55,12 +54,12 @@
           <h4 class="variations__header__title">Favorito</h4>
         </div>
       </div>
-      <div class="row variations__body align-items-center" v-for='productVariant in mergeProduct'>
+      <div class="row variations__body align-items-center" v-for='(productVariant, index) in mergeProduct'>
         <div class="col-1">
-          <label class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant"   @change='selectVariation($event)' :value="isCheckedVariant(productVariant)">
-            <span class="custom-control-indicator"></span>
-          </label>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant" :id="'productVariant' + index"  @change='selectVariation($event)' :value="isCheckedVariant(productVariant)">
+            <label class="custom-control-label" :for="'productVariant' + index"> </label>
+          </div>
         </div>
         <div class="col-3">
           <h4 class="variations__body__title" v-for="product in productVariant">{{product.name}}</h4>
