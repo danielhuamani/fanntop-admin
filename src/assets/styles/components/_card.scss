@@ -59,3 +59,39 @@
         }
     }
 }
+.card_img{
+    position: relative;
+    $root: &;
+    &:hover{
+        #{$root}__overlay{
+            display: block;
+        }
+    }
+    &__overlay{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        background: rgba(0,0,0,0.5);
+        display: none;
+    }
+    &__delete{
+        position: absolute;
+        top: 45%;
+        left: 0;
+        right: 0;
+        margin: auto;
+        color: $color-danger;
+        background: white;
+        font-size: 20px;
+        padding: 5px;
+        border-radius: 4px;
+        width: 30px;
+        cursor: pointer;
+        transition: .3s ease all;
+        &:hover{
+            background: $color-danger;
+            color:white;
+        }
+    }
+}

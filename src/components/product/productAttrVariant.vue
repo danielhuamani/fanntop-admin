@@ -1,88 +1,88 @@
 <template lang="html">
-  <div class="col-12">
-    <div class="row">
+  <div class="col-12 ">
+    <div class="row material content">
       <div class="col-12">
-      <h5 class="material__title">Variantes</h5>
-      <div class="row">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-4">
-                Atributo
-              </div>
-              <div class="col-8">
-                Valores
+        <h5 class="material__title">Variantes</h5>
+        <div class="row">
+            <div class="col-12">
+              <div class="row">
+                <div class="col-4">
+                  Atributo
+                </div>
+                <div class="col-8">
+                  Valores
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-12" v-for="(attr, index) in AttributesOption">
-            <div class="row">
-              <div class="col-4">
-                {{attr.name}}
-              </div>
-              <div class="col-8">
-                <div class="row">
-                  <div class="col-3" v-for="(option, inde) in attr.attribute_options">
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" v-model="selected_attributes" :id='"option" + inde + index' @change="generateProductVariant($event, attr.id, option.option, attr.name)" :value="option.id" class="custom-control-input" >
-                      <label class="custom-control-label" :for="'option' + inde + index"> {{option.option}}</label>
+            <div class="col-12" v-for="(attr, index) in AttributesOption">
+              <div class="row">
+                <div class="col-4">
+                  {{attr.name}}
+                </div>
+                <div class="col-8">
+                  <div class="row">
+                    <div class="col-3" v-for="(option, inde) in attr.attribute_options">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" v-model="selected_attributes" :id='"option" + inde + index' @change="generateProductVariant($event, attr.id, option.option, attr.name)" :value="option.id" class="custom-control-input" >
+                        <label class="custom-control-label" :for="'option' + inde + index"> {{option.option}}</label>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-      </div>
-    </div>
-    <div class="col-12 material content variations">
-      <h5 class="material__title">Variaciones</h5>
-      <div class="row variations__header">
-        <div class="col-1">
-        </div>
-        <div class="col-3">
-          <h4 class="variations__header__title">Variación</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__header__title">Precio</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__header__title">SKU</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__header__title">Inventario</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__header__title">Favorito</h4>
         </div>
       </div>
-      <div class="row variations__body align-items-center" v-for='(productVariant, index) in mergeProduct'>
-        <div class="col-1">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant" :id="'productVariant' + index"  @change='selectVariation($event)' :value="isCheckedVariant(productVariant)">
-            <label class="custom-control-label" :for="'productVariant' + index"> </label>
+      <div class="col-12 mt-4 variations">
+        <h5 class="material__title">Variaciones</h5>
+        <div class="row variations__header">
+          <div class="col-1">
+          </div>
+          <div class="col-3">
+            <h4 class="variations__header__title">Variación</h4>
+          </div>
+          <div class="col-2">
+            <h4 class="variations__header__title">Precio</h4>
+          </div>
+          <div class="col-2">
+            <h4 class="variations__header__title">SKU</h4>
+          </div>
+          <div class="col-2">
+            <h4 class="variations__header__title">Inventario</h4>
+          </div>
+          <div class="col-2">
+            <h4 class="variations__header__title">Favorito</h4>
           </div>
         </div>
-        <div class="col-3">
-          <h4 class="variations__body__title" v-for="product in productVariant">{{product.name}}</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">-</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">-</h4>
-        </div>
-        <div class="col-2">
-          <h4 class="variations__body__title">-</h4>
-        </div>
-        <div class="col-2">
+        <div class="row variations__body align-items-center" v-for='(productVariant, index) in mergeProduct'>
+          <div class="col-1">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant" :id="'productVariant' + index"  @change='selectVariation($event)' :value="isCheckedVariant(productVariant)">
+              <label class="custom-control-label" :for="'productVariant' + index"> </label>
+            </div>
+          </div>
+          <div class="col-3">
+            <h4 class="variations__body__title" v-for="product in productVariant">{{product.name}}</h4>
+          </div>
+          <div class="col-2">
+            <h4 class="variations__body__title">-</h4>
+          </div>
+          <div class="col-2">
+            <h4 class="variations__body__title">-</h4>
+          </div>
+          <div class="col-2">
+            <h4 class="variations__body__title">-</h4>
+          </div>
+          <div class="col-2">
 
-       <!--    <label class="custom-control custom-radio" >
-            <input type="radio" name="variation" class="custom-control-input" v-model='is_featured' @change='changeIsFeatured(productVariant)'
-             :value='getValueAttr(productVariant)'>
-            <span class="custom-control-indicator"></span>
-          </label> -->
+         <!--    <label class="custom-control custom-radio" >
+              <input type="radio" name="variation" class="custom-control-input" v-model='is_featured' @change='changeIsFeatured(productVariant)'
+               :value='getValueAttr(productVariant)'>
+              <span class="custom-control-indicator"></span>
+            </label> -->
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>

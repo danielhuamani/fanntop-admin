@@ -59,16 +59,18 @@
           <div class="row variations__body align-items-center" v-for='(productVariant, index) in mergeProduct'>
             <div class="col-1">
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant"   @change='selectVariation($event)' :id='index' :value="isCheckedVariant(productVariant)">
+                <input type="checkbox" class="custom-control-input" v-model="selectIdsProductVariant"   :id='index' @change='selectVariation($event)' :value="isCheckedVariant(productVariant)">
                 <label class="custom-control-label" :for='index'>
                 </label>
+                <!-- @change='selectVariation($event)'  -->
               </div>
             </div>
             <div class="col-3">
-              <h4 class="variations__body__title" v-for="product in productVariant">{{product.name}}</h4>
+              <h4 class="variations__body__title" v-for="(product, index) in productVariant">{{product.name}}</h4>
             </div>
             <div class="col-2">
               <h4 class="variations__body__title">-</h4>
+              <!-- <input type="number" class='form-control' @keyUp='addStock($event, index)'> -->
             </div>
             <div class="col-2">
               <h4 class="variations__body__title">-</h4>
@@ -84,6 +86,12 @@
                 <span class="custom-control-indicator"></span>
               </label> -->
             </div>
+          </div>
+        </div>
+
+        <div class="col-12 mt-3" v-if='productAttr.length > 0'>
+          <div class="row justify-content-end">
+            <a href="" class='btn btn-primary' @click.prevent='addProductClassAttr'>Agregar</a>
           </div>
         </div>
       </div>
@@ -114,6 +122,7 @@
 }
 </style>
 <script>
+import { EventBus } from '@/bus'
 export default {
   name: 'productNewAttrVariant',
   props: ['attributesOption', 'excludeAttributeOption'],
@@ -126,7 +135,9 @@ export default {
       selectIdsProductVariant: [],
       selectAttrProduct: [],
       is_featured: [],
-      productAttr: []
+      productAttr: [
+
+      ]
     }
   },
   created () {
@@ -154,7 +165,6 @@ export default {
           })
         }
       } else {
-        console.log('else', self.products_attributes[idParent], idParent, name, 'name', nameParent)
         self.products_attributes[idParent] = self.products_attributes[idParent].filter(dict => {
           return dict.attribute_id !== e.target.value
         })
@@ -201,23 +211,8 @@ export default {
           if (add) {
             self.mergeProduct.push([levelOne[one], levelTwo[two]])
           }
-
-          // self.mergeProduct.push([levelOne[one], levelTwo[two]])
         }
       }
-
-      // self.mergeProduct = self.mergeProduct.map(function (index, elem) {
-      //       return something;
-      //     })
-      //     if (this.excludeAttributeOption.length > 0) {
-      //       for (var excludeAttr in this.excludeAttributeOption) {
-      //         if (excludeAttr.indexOf(levelOne[one]) === -1 && excludeAttr.indexOf(levelOne[two]) === -1) {
-      //           self.mergeProduct.push([levelOne[one], levelTwo[two]])
-      //         }
-      //       }
-      //     } else {
-      //       self.mergeProduct.push([levelOne[one], levelTwo[two]])
-      //     }
     },
     selectVariation (e) {
       const self = this
@@ -231,6 +226,9 @@ export default {
       })
       self.productAttr = productVariant
       // self.$emit('productAttributes', productVariant)
+    },
+    addStock (e, index) {
+
     },
     changeIsFeatured (productVariant) {
       // var attributes = Object.keys(productVariant).filter((key, index) => {
@@ -249,6 +247,15 @@ export default {
         return parseInt(productVariant[key]['attribute_id'])
       })
       return attributes
+    },
+    addProductClassAttr () {
+      var self = this
+      this.axios.post('/product/product-create-attributes/' + self.$route.params.id + '/', {
+        data: self.productAttr
+      }).then(response => {
+        EventBus.$emit('alert_bus', 'success', {'Se guardo correctamente': []})
+        // self.$emit('resetProducts')
+      })
     }
   }
   // computed: {

@@ -42,6 +42,15 @@
               <span class='menu__name'>Categoria</span>
             </router-link>
           </li>
+        </ul>
+      </li>
+      <li class="menu__nav__option">
+        <a href="" class="menu__nav__link" @click.prevent="SubMenu('Atributos')">
+          <i class="far fa-list"></i>
+          <span class='menu__name'>Atributos</span>
+          <i class="far fa-angle-down float-right icon__arrow"></i>
+        </a>
+        <ul class="menu__nav__sub" v-show="openMenu == 'Atributos'">
           <li class="menu__nav__sub__option">
             <router-link :to="{ name: 'family'}" class="menu__nav__sub__link" active-class="menu__nav__link--active">
               <span class='menu__name'>Grupo Atributos</span>
@@ -191,7 +200,7 @@
           // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
           -webkit-border-radius: 10px;
           border-radius: 10px;
-          background:rgba(0,0,0,0.1);
+          background:rgba($color-gray-cl,0.1);
       }
 
       /* Handle */
@@ -200,13 +209,13 @@
           border-radius: 10px;
           // background: rgba($color-gray-cl, 0.7);
           // -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-          background:rgba(0,0,0,0.2);
+          background:rgba($color-gray-cl,0.2);
       }
       &::-webkit-scrollbar-thumb:window-inactive {
-        background:rgba(0,0,0,0.2);
+        background:rgba($color-gray-cl,0.2);
       }
       &::-webkit-scrollbar-thumb:hover {
-        background:rgba(0,0,0,0.4);
+        background:rgba($color-gray-cl,0.4);
       }
       &__sub{
         margin: 0;

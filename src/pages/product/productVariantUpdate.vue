@@ -17,8 +17,8 @@
       </div>
       <div class="d-flex  ">
         <div class="col-8 ">
-          <div class="row  ">
-            <div class="col-12 material content">
+          <div class="row  material content">
+            <div class="col-12 ">
               <h5 class="material__title">Galeria Imagenes</h5>
               <div class="row">
                 <div class="col-12">
@@ -28,6 +28,7 @@
                     <span class="custom-file-control content__file__control">
                       <img :src="fileImage" alt="" width="225" height="225">
                     </span>
+                    <i v-if='!fileImage' class="far fa-images content__image__icon"></i>
                     </label>
                   </div>
                 </div>
@@ -35,7 +36,12 @@
               </div>
               <div class="row">
                 <div class="col-3" v-for="images in galeryImages">
-                  <img :src="images.image_crop" alt="" width="100%" >
+                  <div class="card_img">
+                    <img :src="images.image_crop" alt="" width="100%" >
+                    <div class="card_img__overlay">
+                      <i class='far fa-trash card_img__delete' @click.prevent='deleteImg(images.id)'></i>
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -193,6 +199,18 @@
             status = 'danger'
           }
           this.$emit('alert', status, error.response.data)
+        })
+      },
+      deleteImg (idImg) {
+        const self = this
+        this.axios({
+          method: 'delete',
+          url: '/product/product-image/' + idImg + '/',
+          params: {
+            'product_id': self.$route.params.id_variant_update
+          }
+        }).then(response => {
+          self.getImages()
         })
       }
     }

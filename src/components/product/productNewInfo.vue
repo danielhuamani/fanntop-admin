@@ -2,7 +2,7 @@
   <form action='' class='row' @submit.prevent="saveProduct()" >
     <div class="col-12">
       <div class="page__header content material d-flex  justify-content-end">
-        <router-link :to="{ name: 'category'}" class="btn btn-secondary btn-cancel">
+        <router-link :to="{ name: 'product'}" class="btn btn-secondary btn-cancel">
           <i class="fa fa-undo-alt"></i>
           Cancelar
         </router-link>
@@ -83,6 +83,10 @@
               </div>
             </div>
             <div class="col-12 content__field">
+              <label for="">Precio Estimado</label>
+              <input type="number" class='form-control' v-model='product.price'>
+            </div>
+            <div class="col-12 content__field">
               <label for="">Influenciador</label>
               <select  name="influencer"  v-validate="'required'" class="custom-select" :class="{'input': true, 'form-control--error': errors.has('influencer') }" v-model='product.influencer'>
                 <option value=""  >Seleccione influenciador</option>
@@ -143,7 +147,8 @@
           influencer: '',
           product_class_product_attr_value: [],
           family_name: '',
-          is_published: false
+          is_published: false,
+          price: ''
         },
         categories: [],
         influencers: [],
@@ -177,6 +182,7 @@
           self.product.influencer = data.influencer
           self.product.product_class_product_attr_value = data.product_class_product_attr_value
           self.product.family_name = data.family_name
+          self.product.price = data.price
           self.product.is_published = data.is_published
           self.$store.dispatch('updatefamilyGroupAttr', data.family)
         })
@@ -269,7 +275,7 @@
               }
             }).then(response => {
               self.product.product_class_product_attr_value = response.data.product_class_product_attr_value
-              EventBus.$emit('alert', 'success', {'Se guardo correctamente': []})
+              EventBus.$emit('alert_bus', 'success', {'Se guardo correctamente': []})
               self.$router.push({name: 'product_update', params: { id: response.data.id }})
             }).catch(error => {
               let status = ''

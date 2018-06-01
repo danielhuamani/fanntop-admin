@@ -99,6 +99,17 @@ html, body{
         height: 250px;
         width: 100%;
         cursor: pointer;
+        &__icon{
+            font-size: 160px !important;
+            position: absolute;
+            z-index: 100;
+            left: 0;
+            text-align: center;
+            top: 20%;
+            right: 0;
+            margin: auto;
+            display: inline-block;
+        }
     }
     &__file{
         height: 250px;

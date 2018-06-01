@@ -14,8 +14,8 @@
       </div>
       <div class="d-flex  ">
         <div class="col-8 ">
-          <div class="row  ">
-            <div class="col-12 material content">
+          <div class="row  material content">
+            <div class="col-12 ">
               <h5 class="material__title">Informacion Basica</h5>
               <div class="row">
                 <div class="col-12 content__field">
@@ -26,23 +26,22 @@
                   <label for="">Descripción</label>
                   <VueCkeditor height='100' language='es' v-model="product.description"></VueCkeditor>
                 </div>
+                <div class="col-12">
+                  <label for="">Caracteristicas</label>
+                  <VueCkeditor height='100' language='es' v-model="product.characteristics"></VueCkeditor>
 
+                </div>
               </div>
             </div>
+
+          </div>
+          <div class="row">
             <productAttrVariant v-if="product.attribute.length > 0 && product.is_variation" v-on:productAttributes='productAttributes' :is_variation="product.is_variation" :attribute_ids='product.attribute'>
-            </productAttrVariant v-if="product.family" :family_id="product.family">
+            </productAttrVariant>
             <!-- <productVariant>
             </productVariant> -->
             <productInfo v-if="product.family" :family_id="product.family">
             </productInfo>
-            <div class="col-12 material content">
-              <h5 class="material__title">Caracteristicas</h5>
-              <div class="row">
-                <div class="col-12 content__field">
-                  <VueCkeditor height='100' language='es' v-model="product.characteristics"></VueCkeditor>
-                </div>
-              </div>
-            </div>
           </div>
 
         </div>
@@ -61,6 +60,10 @@
                 </label>
               </div>
             </div> -->
+            <div class="col-12 content__field">
+              <label for="">Precio Estimado</label>
+              <input type="number" class='form-control' v-model='product.price'>
+            </div>
             <div class="col-12 content__field">
               <label for="">Influenciador</label>
               <select  name="influencer"  v-validate="'required'" class="custom-select" :class="{'input': true, 'form-control--error': errors.has('influencer') }" v-model='product.influencer'>
@@ -103,36 +106,39 @@
               </div>
             </div>
             <div class="col-12 content__field" v-if="product.is_variation">
-
               <div class="" v-for="variation in attributes_variations">
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" :value="variation.id" class="custom-control-input" :id="'variation' + variation.id" @change="updateAttributeId" v-model="product.attribute">
                   <label class="custom-control-label" :for="'variation' + variation.id"> {{variation.name}}</label>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
 
       </div>
-      <div class="d-flex material content">
-        <div class="col-12">
-          <h4 class="material__title">Seo</h4>
-          <div class="row">
-            <div class="col-12 content__field">
-              <label for="">Title</label>
-              <input type="text" name="title" v-validate="'required'" :class="{'input': true, 'form-control--error': errors.has('title') }"  v-model="product.title" class="form-control">
+      <div class="d-flex">
+        <div class="col-8  ">
+          <div class="row material content">
+            <div class="col-12">
+              <h4 class="material__title">Seo</h4>
             </div>
-            <div class="col-12 content__field">
-              <label for="">Meta Description</label>
-              <input type="text" v-model="product.meta_description" class="form-control">
-            </div>
-            <div class="col-12 content__field">
-              <label for="">Url</label>
-              <input type="text" name="slug" v-validate="'required'" :class="{'input': true, 'form-control--error': errors.has('slug') }" v-model="product.slug" class="form-control">
-              <p class="content__seo text-primary">{{product.slug | slugify}}</p>
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12 content__field">
+                  <label for="">Title</label>
+                  <input type="text" name="title" v-validate="'required'" :class="{'input': true, 'form-control--error': errors.has('title') }"  v-model="product.title" class="form-control">
+                </div>
+                <div class="col-12 content__field">
+                  <label for="">Meta Description</label>
+                  <input type="text" v-model="product.meta_description" class="form-control">
+                </div>
+                <div class="col-12 content__field">
+                  <label for="">Url</label>
+                  <input type="text" name="slug" v-validate="'required'" :class="{'input': true, 'form-control--error': errors.has('slug') }" v-model="product.slug" class="form-control">
+                  <p class="content__seo text-primary">{{product.slug | slugify}}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -190,7 +196,8 @@
           is_variation: false,
           is_published: false,
           product_class_products: [],
-          product_class_product_attr_value: []
+          product_class_product_attr_value: [],
+          price: ''
         },
         categories: [],
         influencers: [],
@@ -239,7 +246,7 @@
             fields: 'id,name'
           }
         }).then(response => {
-          self.families = response.data
+          self.families = response.data.results
         })
       },
       saveProduct (scope) {
@@ -252,7 +259,7 @@
               url: '/product/product/',
               data: self.product
             }).then(response => {
-              EventBus.$emit('alert', 'success', {'Se guardo correctamente': []})
+              EventBus.$emit('alert_bus', 'success', {'Se guardo correctamente': []})
               self.$router.push({name: 'product_update', params: { id: response.data.id }})
             }).catch(error => {
               console.log('err', error)

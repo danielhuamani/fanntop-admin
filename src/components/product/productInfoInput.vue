@@ -1,6 +1,6 @@
 <template lang="html">
   <input type="text" :name='nameValidate' data-vv-name='nameValidate' v-on:keyup="updateAttrValue($event.target.value)"
-  v-validate="'required'" :key="nameValidate" :value='getValue()' :field="nameValidate"
+  v-validate="'required'" :key="nameValidate" v-model='input' :field="nameValidate"
   :class="{'form-control--error': errors.has(nameValidate) }"  class="form-control">
 </template>
 
@@ -23,11 +23,12 @@ export default {
       return this.valueAttr
     },
     updateAttrValue (value) {
+      const self = this
       this.$store.dispatch('updateProductClassAttrValue', {
         attribute: this.id_attr,
         type: 'value_input',
-        value: value,
-        id: this.valueId
+        value: self.input,
+        id: self.valueId
       })
     }
   }
