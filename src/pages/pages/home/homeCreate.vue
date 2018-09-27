@@ -20,6 +20,10 @@
               <input type="text" v-model="home.name" class="form-control">
             </div>
             <div class="col-12 content__field">
+              <label for="">Url</label>
+              <input type="text" v-model="home.url" class="form-control">
+            </div>
+            <div class="col-12 content__field">
               <label for="">Imagen</label>
               <div class="content__image">
                 <label class="custom-file content__file">
@@ -73,7 +77,8 @@
           name: '',
           image: '',
           is_active: false,
-          position: 0
+          position: 0,
+          url: ''
         },
         categoryName: '',
         fileImage: '',
@@ -118,6 +123,7 @@
         self.formData.append('name', this.home.name)
         self.formData.append('is_active', this.home.is_active)
         self.formData.append('position', this.home.position)
+        self.formData.append('url', this.home.url)
         this.axios({
           method: 'post',
           url: '/pages/home/',

@@ -135,7 +135,7 @@
           margin: 0;
           font-size: 14px;
         }
-      },
+      }
       &__row:nth-child(even){
         background: #f9f9f9;
       }
