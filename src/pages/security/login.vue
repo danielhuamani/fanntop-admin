@@ -69,7 +69,7 @@
     height: 100vh;
   }
   .background{
-    background-image: url('../../assets/img/fanntop.jpeg');
+    background-image: url('../../assets/img/fanntop.png');
     width: 100%;
     height: 100vh;
     background-size: cover;
