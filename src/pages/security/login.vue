@@ -44,14 +44,14 @@
                         <span class="input-group-prepend" id="basic-addon1">
                           <i class="fa fa-user input-group-text" aria-hidden="true"></i>
                         </span>
-                        <input placeholder="username" class="form-control" type="email" name="email" v-model="login.email">
+                        <input placeholder="Username" class="form-control" type="email" name="email" v-model="login.email">
                       </div>
 
                       <div class="input-group form-group">
                         <span class="input-group-prepend" id="basic-addon1">
                           <i class="fa fa-unlock-alt input-group-text"></i>
                         </span>
-                        <input class="form-control" placeholder="password" type="password" v-model="login.password">
+                        <input class="form-control" placeholder="Password" type="password" v-model="login.password">
                       </div>
                       <button class="btn btn-block btn--login">Ingresar</button>
                     </div>
