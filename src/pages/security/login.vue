@@ -6,17 +6,17 @@
           </div>
           <div class="col-12 col-sm-6 col-md-5 background_login">
             <div class="form-login">
-                <div class="row justify-content-center form-login__content-title  align-items-center">
+               <!--  <div class="row justify-content-center form-login__content-title  align-items-center">
 
                   <img src="../../assets/img/fanntop.svg" width="80" height="80" class=" ">
 
                 </div>
-
+ -->
                 <form v-on:submit.prevent="loginSubmit" class="ui large form ui form error" method="POST" action=".">
 
                     <div class="alert alert-danger" v-if="existError">
                       <div class="header" v-if="errorLogin.email.length > 0">
-                        <p class="alert__header">email</p>
+                        <p class="alert__header">username</p>
                         <ul class="alert__list">
                           <li v-for="error_email in errorLogin.email">
                             {{error_email}}
@@ -44,7 +44,7 @@
                         <span class="input-group-prepend" id="basic-addon1">
                           <i class="fa fa-user input-group-text" aria-hidden="true"></i>
                         </span>
-                        <input placeholder="email" class="form-control" type="email" name="email" v-model="login.email">
+                        <input placeholder="username" class="form-control" type="email" name="email" v-model="login.email">
                       </div>
 
                       <div class="input-group form-group">
@@ -53,7 +53,7 @@
                         </span>
                         <input class="form-control" placeholder="password" type="password" v-model="login.password">
                       </div>
-                      <button class="btn btn-block btn-primary">Ingresar</button>
+                      <button class="btn btn-block btn--login">Ingresar</button>
                     </div>
 
                 </form>
@@ -67,6 +67,10 @@
   @import "~styles/abstract/_variables";
   .row--form{
     height: 100vh;
+  }
+  .btn--login{
+    background: #512DE7;
+    color:white;
   }
   .background{
     background-image: url('../../assets/img/fanntop.png');
