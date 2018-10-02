@@ -1,7 +1,7 @@
 <template>
   <div class="menu" v-bind:class="{ menu_active: getMenuActive }" >
     <div class="menu__container_logo ">
-        <img src="../../assets/img/logo_fanntop_2.png"  width="160" class="rounded img-responsive">
+        <img src="../../assets/img/logo_fanntop.svg"  width="160" class="rounded img-responsive">
     </div>
     <h6 class="menu__title">
       Menu
